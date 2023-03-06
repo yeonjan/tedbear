@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        /* flex-direction: row; */
+        justify-content: center;
+
+        /* 어묵 꼬치의 수직 방향 정렬 */
+        align-items: center;
+        height: 80vh;
+        background: gray;
+      }
+
+      .item {
+        /* 원래 컨텐츠 영역을 제외한 여백을 1;1:1.. 로 나눈 것이다. */
+        flex-grow: 1;
+
+        /*  컨텐츠가 점유하는 영역을 0으로 인식 */
+        flex-basis: 0;
+        padding: 2em;
+        border: 3px solid black;
+        font-size: 3rem;
+        background: white;
+      }
+
+      /* .item:nth-child(1) {
+        flex-grow: 1;
+      }
+      .item:nth-child(2) {
+        flex-grow: 5;
+      }
+      .item:nth-child(3) {
+        flex-grow: 2;
+      }
+      .item:nth-child(4) {
+        flex-grow: 3;
+      }
+      .item:nth-child(5) {
+        flex-grow: 1;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item">AAA</div>
+      <div class="item">B</div>
+      <div class="item">CCCC</div>
+      <div class="item">DDD</div>
+      <div class="item">E</div>
+    </div>
+  </body>
+</html>

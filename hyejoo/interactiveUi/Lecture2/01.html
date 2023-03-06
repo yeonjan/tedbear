@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      .world {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60vw;
+        height: 60vh;
+        background: #fff000;
+
+        /* 3D 처럼 보이게 원근감 속성을 준다.  */
+        perspective: 500px;
+      }
+      .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 150px;
+        /*em => card의 font-size 기준 */
+        border-radius: 0.5em;
+        /* rem => html root font-size 기준 */
+        font-size: 1.5rem;
+        background: red;
+        transform: rotateY(45deg);
+        /* word가 아닌 card에 perspective속성을 주면 균일한 형태로 보임 */
+        /* transform: perspective(500px) rotateY(45deg); */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="world">
+      <div class="card">A</div>
+      <div class="card">B</div>
+      <div class="card">C</div>
+    </div>
+  </body>
+</html>

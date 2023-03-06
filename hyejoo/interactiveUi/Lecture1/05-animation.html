@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      body {
+        background: #222;
+      }
+      @keyframes spaceship-ani {
+        /* 100%와 to와, 0%는 from */
+        to {
+          /* 5100 / 2한 값이 2550px */
+          /* https://www.inflearn.com/questions/181701/2550px-0-%EC%97%90-%EB%8C%80%ED%95%9C-%EC%A0%9C%EA%B0%80-%EC%9D%B4%ED%95%B4%ED%95%9C-%EB%82%B4%EC%9A%A9-%EA%B7%B8%EB%A6%BC%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EC%9C%A0%ED%95%A0%EA%B2%8C%EC%9A%94 */
+          background-position: -2550px 0;
+        }
+      }
+      /* 이미지 크기의 가로 세로의 절반값으로 가져오는 경우가 많음 => 고해상도 대응*/
+      .spaceship {
+        width: 150px;
+        height: 150px;
+
+        /* background size는 /로 구분
+        이미지 사이즈 : 5100 * 300 px 
+        계산 빨리되는 걸 기준으로(나머지는 auto)
+        background의 height는 150px
+        => / auto 150px*/
+        background: url("images/sprite_spaceship.png") no-repeat 0 0 / cover;
+        /* 5100 / 300 = 17단계  */
+        animation: spaceship-ani 1s infinite steps(17);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="spaceship"></div>
+
+    <!-- frame by frame animation => 이미지 스프라이트란 걸  써야 함-->
+    <!-- gif의 단점 => 투명도가 적용이 안됨, 또 png로 하면 우리가 맘대로 animation 제어가 가능  -->
+  </body>
+</html>

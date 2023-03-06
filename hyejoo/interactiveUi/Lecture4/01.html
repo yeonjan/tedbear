@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .characters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #fff000;
+      }
+      .ilbuni {
+        width: 100px;
+        cursor: pointer;
+      }
+      .characters .ilbuni {
+        display: inline-block;
+      }
+      .special {
+        border: 10px dashed red;
+      }
+    </style>
+    <script>
+      //  load되고 나서 실행
+      // load => 문서에 있는 리소스까지 전부다 laod됐을 때
+      //   // domcontentloaded => dom구조만 load가 되면
+      //   window.addEventListener("DOMContentLoaded", function () {
+      //     const ilbuni = document.querySelector(".ilbuni.c");
+
+      //     function clickIlbuniHandler() {
+      //       ilbuni.classList.toggle("special");
+      //     }
+
+      //     ilbuni.addEventListener("click", clickIlbuniHandler);
+      //   });
+      // 그러나 head에 script 쓰는거 비추
+    </script>
+  </head>
+  <body>
+    <div class="characters">
+      <div class="ilbuni a">
+        <img src="images/ilbuni_0.png" alt="일분이" />
+      </div>
+      <div class="ilbuni b">
+        <img src="images/ilbuni_1.png" alt="일분이" />
+      </div>
+      <div class="ilbuni c">
+        <img src="images/ilbuni_2.png" alt="일분이" />
+      </div>
+      <div class="ilbuni d">
+        <img src="images/ilbuni_3.png" alt="일분이" />
+      </div>
+    </div>
+
+    <script>
+      // 직접 타이핑 해보세요
+      // const ilbuni = document.querySelector(".ilbuni:nth-child(3)");
+      // ilbuni.addEventListener("click", function () {
+      //   ilbuni.classList.add("special");
+      // });
+
+      // 전역 변수 => 남발하지 말자!!
+      // 함수도 전역변수가 된다.
+
+      // 따라서 전역변수를 피하려면 함수 안에 넣자!!
+
+      (function () {
+        const characters = document.querySelector(".characters");
+
+        function clickHandler(e) {
+          // this : 이벤트가 등록되어 있는 객체
+          // e : 이벤트 객체
+          // e.currentTarget : this란 같은 애
+          // e.target : 내가 클릭한 애
+        }
+
+        characters.addEventListener("click", clickHandler);
+      })(); // 뒤에 ()를 붙이면 이 함수를 호출한다는 뜻
+    </script>
+  </body>
+</html>

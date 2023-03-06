@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      @keyframes sample-ani {
+        /* 시작 점 */
+        0% {
+          /* 이동 X */
+          transform: translate(0, 0);
+        }
+        /* 중간 */
+        50% {
+          background: red;
+          transform: translate(300px, 0);
+        }
+        /* 끝 점 */
+        100% {
+          /*  */
+          transform: translate(400px, 500px);
+        }
+      }
+      .box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+        border: 2px solid #000;
+        background: #fff000;
+
+        /* animation은 keyframe을 추가할 숙 있다. */
+        /* 2s 동안  */
+        /* infinite 키워드 붙이면 무한 반복, 숫자를 붙이면 숫자횟수만큼 반복 */
+        /* alternate 키워드는 animation 방향을 결정해줌
+           alternate-reverse  */
+        /* linear : 등속도  */
+        animation: sample-ani 2s linear forwards 3;
+      }
+
+      /* 마우스 올렸을 때 animaton 정지 */
+      .box:hover {
+        animation-play-state: paused;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Animation</h1>
+    <div class="box">BOX</div>
+  </body>
+</html>

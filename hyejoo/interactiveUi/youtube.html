@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <iframe
+      id="video-player"
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/NcKLNP8x_QA"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </body>
+
+  <script>
+    var player;
+    var checkInt; // save this as a var in this scope so we can clear it later
+
+    function onYouTubePlayerAPIReady() {
+      player = new YT.Player("player");
+      console.log("??");
+      startInterval();
+    }
+    window.onload(onYouTubePlayerAPIReady());
+    function startInterval() {
+      //checks every 100ms to see if the video has reached 6s
+      checkInt = setInterval(function () {
+        if (player.getCurrentTime() > 6) {
+          changeSrc();
+          clearInterval(checkInt);
+        }
+      }, 100);
+    }
+
+    function changeSrc() {
+      player.loadVideoById(xxxxx);
+    }
+  </script>
+</html>
