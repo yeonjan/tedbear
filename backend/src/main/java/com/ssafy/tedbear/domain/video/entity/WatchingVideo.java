@@ -1,14 +1,18 @@
 package com.ssafy.tedbear.domain.video.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.ssafy.tedbear.domain.member.entity.Member;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,5 +39,13 @@ public class WatchingVideo {
 
 	@NotNull
 	@Column(name = "updated_date")
-	private Timestamp updatedDate;
+	private LocalDateTime updatedDate;
+
+	@ManyToOne
+	@JoinColumn(name = "video_no")
+	private Video video;
+
+	@ManyToOne
+	@JoinColumn(name = "member_no")
+	private Member member;
 }

@@ -4,7 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,4 +26,11 @@ public class MemberShortsLog {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
+	@ManyToOne
+	@JoinColumn(name = "member_no")
+	private Member member;
+
+	@ManyToOne
+	@JoinColumn(name = "sentence_no")
+	private Sentence sentence;
 }

@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.model.BaseEntity;
 
 import lombok.AccessLevel;
@@ -28,4 +31,12 @@ public class SpeakingRecord extends BaseEntity {
 	@NotNull
 	@Column(name = "match_status")
 	private boolean matchStatus;
+
+	@ManyToOne
+	@JoinColumn(name = "sentence_no")
+	private Sentence sentence;
+
+	@ManyToOne
+	@JoinColumn(name = "member_no")
+	private Member member;
 }
