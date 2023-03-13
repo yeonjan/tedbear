@@ -9,27 +9,31 @@ import SeungPage from 'pages/SeungPage';
 import YuhaPage from 'pages/YuhaPage';
 import JuPage from 'pages/JuPage';
 import GlobalStyle from 'GlobalStyle';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme } from 'theme';
 
 function App() {
   return (
-    <div className="App">
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<LayoutPage />}>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/collection" element={<CollectionPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Route>
+    <>
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<LayoutPage />}>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/game" element={<GamePage />} />
+              <Route path="/collection" element={<CollectionPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
 
-          <Route path="/seung" element={<SeungPage />} />
-          <Route path="/yuha" element={<YuhaPage />} />
-          <Route path="/ju" element={<JuPage />} />
-          <Route path="/" element={<LandingPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            <Route path="/seung" element={<SeungPage />} />
+            <Route path="/yuha" element={<YuhaPage />} />
+            <Route path="/ju" element={<JuPage />} />
+            <Route path="/" element={<LandingPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
   );
 }
 
