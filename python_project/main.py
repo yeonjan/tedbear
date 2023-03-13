@@ -47,16 +47,25 @@ def get_script_by_video_id(video_id):
     merged_text = ''
     scripts = []
     remain = ''
+    time = None
     for row in YouTubeTranscriptApi.get_transcript(video_id, languages=['en']):
         merged_text += row['text'].replace('\n', ' ') + ' '
         raw_script = row['text']
         stripped_text = raw_script.strip()
         remain = remain + ' ' + stripped_text
+        if time is None:
+            time = row['start']
         if stripped_text[-1] in '.!?':
-            scripts.append(remain.strip().replace('\n', ' '))
+            scripts.append([remain.strip().replace('\n', ' '), time])
             remain = ''
+            time = None
+
+
     # print(*merged_text.split('.'),sep='.\n')
-    # print(*scripts, sep='\n')
+    # with open('./sample.txt','w',encoding='utf-8') as file:
+    #     for script in scripts:
+    #         file.write(f'{script[0]} : {script[1]}\n')
+    #     # print(*scripts, sep='\n')
     print(f'문장의 수 : {len(scripts)}')
     return scripts
 
@@ -153,18 +162,17 @@ def append_script_to_json():
             print(len(current_data[key]['scripts']))
             continue
         try:
-            print('callMethod', len(current_data[key]['scripts']))
             scripts = get_script_by_video_id(key)
-            cnt += 1
         except:
-            traceback.print_exc()
-            continue
-        # current_data[key]['scripts'] = scripts
-        # if cnt % 50 == 0:
-        #     with open(file_name, 'w') as outfile:
-        #         json.dump(current_data, outfile, indent=4)
-        #     cnt = 0
-        #     print('저장완료!!!!' + '==' * 100)
+            scripts = []
+            # traceback.print_exc()
+        cnt += 1
+        current_data[key]['scripts'] = scripts
+        if cnt % 50 == 0:
+            with open(file_name, 'w') as outfile:
+                json.dump(current_data, outfile, indent=4)
+            cnt = 0
+            print('저장완료!!!!' + '==' * 100)
     with open(file_name, 'w') as outfile:
         json.dump(current_data, outfile, indent=4)
 
@@ -176,3 +184,9 @@ if __name__ == '__main__':
 
     # append_data_to_json()
     append_script_to_json()
+    # current_file = open(file_name)
+    # current_data = json.load(current_file)
+    # for key in current_data.keys():
+    #     del current_data[key]['scripts']
+    # with open(file_name, 'w') as outfile:
+    #     json.dump(current_data, outfile, indent=4)
