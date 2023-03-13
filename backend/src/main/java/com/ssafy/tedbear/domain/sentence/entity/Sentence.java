@@ -1,0 +1,44 @@
+package com.ssafy.tedbear.domain.sentence.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@Table(name = "sentence_tb")
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Sentence {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long no;
+
+	@NotNull
+	private int score;
+
+	@NotNull
+	@Column(columnDefinition = "TEXT")
+	private String content;
+
+	@NotNull
+	@Column(columnDefinition = "TEXT")
+	private String translation;
+
+	@NotNull
+	@Column(name = "start_time")
+	private int startTime;
+
+	@NotNull
+	@Column(name = "end_time")
+	private int endTime;
+}
