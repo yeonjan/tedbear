@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from 'components/common/NavBar';
+import NavBar2 from 'components/common/NavBar2';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const LayoutPage = () => {
 
   return (
     <Wrapper>
-      {pathname !== '/test' && <NavBar />}
+      {pathname !== '/test' && <NavBar2 />}
       <OutletWrapper>
         <Outlet />
       </OutletWrapper>
