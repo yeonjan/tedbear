@@ -60,7 +60,6 @@ def get_script_by_video_id(video_id):
             remain = ''
             time = None
 
-
     # print(*merged_text.split('.'),sep='.\n')
     # with open('./sample.txt','w',encoding='utf-8') as file:
     #     for script in scripts:
@@ -70,7 +69,7 @@ def get_script_by_video_id(video_id):
     return scripts
 
 
-def crawilng(pageToken, key, old_data, channel_id, order):
+def crawilng(pageToken, key, old_data, channel_id, order, publishedBefore):
     url = 'https://www.googleapis.com/youtube/v3/search?'
     query_params = {'part': 'snippet',
                     'channelId': channel_id,
@@ -80,7 +79,7 @@ def crawilng(pageToken, key, old_data, channel_id, order):
                     'videoDuration': 'medium',
                     'type': 'video',
                     'key': key,
-                    'publishedBefore': '2015-01-01T00:00:00Z'
+                    'publishedBefore': publishedBefore
                     }
     if pageToken is not None:
         query_params['pageToken'] = pageToken
@@ -136,7 +135,7 @@ def append_data_to_json():
         print(f'key: {key} , order: {order}')
         while True:
             try:
-                next_token, data = crawilng(token, key, current_data, channel_id, order)
+                next_token, data = crawilng(token, key, current_data, channel_id, order,'2014-01-01T00:00:00Z')
                 current_data.update(data)
                 token = next_token
                 print('one cycle end!!', token)
@@ -182,7 +181,7 @@ if __name__ == '__main__':
     TEDX_CHANNEL_ID = 'UCsT0YIqwnpJCM-mx7-gSA4Q'
     file_name = 'data/video_data.json'
 
-    # append_data_to_json()
+    append_data_to_json()
     append_script_to_json()
     # current_file = open(file_name)
     # current_data = json.load(current_file)
