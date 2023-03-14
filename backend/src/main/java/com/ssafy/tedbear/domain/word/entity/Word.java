@@ -30,11 +30,9 @@ public class Word {
 	@NotNull
 	private String content;
 
-	@NotNull
 	@Column(columnDefinition = "TEXT")
 	private String mean;
 
-	@NotNull
 	private int score;
 
 	@OneToMany(mappedBy = "word")

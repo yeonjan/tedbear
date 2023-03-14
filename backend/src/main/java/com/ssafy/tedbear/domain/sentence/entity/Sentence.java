@@ -34,7 +34,6 @@ public class Sentence {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
-	@NotNull
 	@Column(columnDefinition = "TEXT")
 	private String translation;
 
