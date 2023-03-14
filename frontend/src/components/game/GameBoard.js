@@ -3,7 +3,7 @@ import GameCard from 'components/game/GameCard';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import { ReactComponent as Question } from 'assets/img/question.svg';
 
 // <Game>
@@ -17,7 +17,7 @@ const Game = styled.div`
     .card {
       width: 14%;
       user-select: none;
-      height: 200px;
+      height: 300px;
       padding: 10px;
       box-sizing: border-box;
       text-align: center;
@@ -265,14 +265,14 @@ const GameBoard = () => {
           margin: '30px 30px 30px 30px',
           position: 'absolute',
           left: '50%',
-          top: '5%',
+          top: '7%',
           transform: 'translate(-50%, -50%)',
         }}
       ></Question>
       <Paper
         elevation={3} // shadow
         style={{
-          padding: 50,
+          padding: 70,
           margin: '75px 30px 30px 30px',
           // border: '1px solid black',
         }}
@@ -292,18 +292,33 @@ const GameBoard = () => {
           {/* {gameOver && <GameOver restartGame={restartGame} />} */}
         </div>
       </Paper>
-      <Box
-        m={1}
-        //margin
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-end"
+
+      {/* 동그란 화살표 버튼 */}
+      <IconButton
+        sx={{
+          boxShadow: 3,
+          width: '3rem',
+          height: '3rem',
+          bgcolor: theme =>
+            theme.palette.mode === 'dark' ? '#101010' : '#fff',
+          color: theme =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+        }}
+        style={{
+          padding: 20,
+          margin: '30px 30px 30px 30px',
+          position: 'absolute',
+          left: '96.5%',
+          top: '55%',
+          transform: 'translate(-50%, -50%)',
+          border: '1px solid #FFFFFF',
+          background: '#FFFFFF',
+        }}
+        variant="outlined"
+        onClick={handleNext}
       >
-        {/* 동그란 화살표 버튼 */}
-        <IconButton variant="next" onClick={handleNext}>
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-        </IconButton>
-      </Box>
+        <ArrowForwardIosIcon></ArrowForwardIosIcon>
+      </IconButton>
     </Game>
   );
 };
