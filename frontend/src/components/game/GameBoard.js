@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Card from 'components/game/Card';
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 // <Game>
 const Game = styled.div`
@@ -257,9 +258,10 @@ const GameBoard = () => {
         ))}
         {/* {gameOver && <GameOver restartGame={restartGame} />} */}
       </div>
-      <Button variant="next" onClick={handleNext}>
-        Next
-      </Button>
+      {/* 동그란 화살표 버튼 */}
+      <IconButton variant="next" onClick={handleNext}>
+        <ArrowForwardIosIcon></ArrowForwardIosIcon>
+      </IconButton>
     </Game>
   );
 };
