@@ -137,7 +137,7 @@ const StyledSignout = styled(Signout)`
   width: 24px;
 `;
 
-const NavBar = (props: Props) => {
+const NavBar2 = (props: Props) => {
   // navbar 펼치기
   const openNavbar = () => {
     props.setOpen(!props.open);
@@ -145,22 +145,25 @@ const NavBar = (props: Props) => {
 
   // question 정리
   // 1. 아래에서 LogoSmall을 div로 안감싸면 메뉴를 열 때 로고 버튼도 다시 랜더링 된다..
+  // 2. Link to도 div 속성이 있는 것 같다. 아래 로고 클릭할 때 로고, 이름 따로따로 Link단 거 수정해야함.
 
   return (
     <Nav open={props.open}>
-      <Link to="/home">
-        <LogoBox>
+      <LogoBox>
+        <Link to="/home">
           <IconDiv open={props.open}>
             <StyledLogoSmall />
           </IconDiv>
+        </Link>
+        <Link to="/home">
           <IconName open={props.open}>
             <span>TEDBEAR</span>
           </IconName>
-          <OpenBtn onClick={openNavbar}>
-            {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
-          </OpenBtn>
-        </LogoBox>
-      </Link>
+        </Link>
+        <OpenBtn onClick={openNavbar}>
+          {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
+        </OpenBtn>
+      </LogoBox>
 
       <NavList>
         <Link to="/home">
@@ -228,4 +231,4 @@ const NavBar = (props: Props) => {
   );
 };
 
-export default NavBar;
+export default NavBar2;
