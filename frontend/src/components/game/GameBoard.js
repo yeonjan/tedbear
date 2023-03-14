@@ -15,9 +15,9 @@ const Game = styled.div`
     perspective: 1000px;
     margin-bottom: -15px;
     .card {
-      width: 20%;
+      width: 14%;
       user-select: none;
-      height: 112px;
+      height: 200px;
       padding: 10px;
       box-sizing: border-box;
       text-align: center;
@@ -49,7 +49,6 @@ const Game = styled.div`
         font-size: 50px;
         line-height: 120px;
         cursor: pointer;
-        // color: darken(#ee6910, 30%);
         color: ${props => props.theme.whiteColor};
         display: flex;
         align-items: center;
@@ -57,7 +56,12 @@ const Game = styled.div`
       }
       .front {
         transform: rotateY(180deg);
+        font-size: 50px;
         line-height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* cursor: pointer; */
         text-emphasis: none;
         img {
           vertical-align: middle;
