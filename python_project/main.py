@@ -69,7 +69,7 @@ def get_script_by_video_id(video_id):
     return scripts
 
 
-def crawilng(pageToken, key, old_data, channel_id, order, publishedBefore):
+def crawilng(pageToken, key, old_data, channel_id, order, publishedAfter, publishedBefore):
     url = 'https://www.googleapis.com/youtube/v3/search?'
     query_params = {'part': 'snippet',
                     'channelId': channel_id,
@@ -79,6 +79,7 @@ def crawilng(pageToken, key, old_data, channel_id, order, publishedBefore):
                     'videoDuration': 'medium',
                     'type': 'video',
                     'key': key,
+                    'publishedAfter': publishedAfter,
                     'publishedBefore': publishedBefore
                     }
     if pageToken is not None:
@@ -119,34 +120,39 @@ def append_data_to_json():
     # channel_id_list = [TEDX_CHANNEL_ID, TED_CHANNEL_ID]
     order_list = ['date', 'rating', 'title', 'viewCount']
     file_name = 'data/video_data.json'
-    for idx in range(4):
-        current_file = open(file_name)
-        current_data = json.load(current_file)
+    for dyear in range(1, 14, 4):
+        for idx in range(4):
+            current_file = open(file_name)
+            current_data = json.load(current_file)
 
-        key = key_list[idx]
-        channel_id = TED_CHANNEL_ID
-        order = order_list[idx]
-        token = None
+            key = key_list[idx]
+            channel_id = TED_CHANNEL_ID
+            order = 'date'
+            token = None
+            year = 2008 + idx + dyear
+            published_after = f'{year}-01-01T00:00:00Z'
+            published_before = f'{year + 1}-01-01T00:00:00Z'
 
-        start_len = len(current_data.keys())
-        current_file.close()
-        print('=' * 100)
-        print(f'{idx}번째 START CRAWLING!!!!')
-        print(f'key: {key} , order: {order}')
-        while True:
-            try:
-                next_token, data = crawilng(token, key, current_data, channel_id, order,'2014-01-01T00:00:00Z')
-                current_data.update(data)
-                token = next_token
-                print('one cycle end!!', token)
-            except Exception as e:
-                traceback.print_exc()
-                break
-            if token is None:
-                break
-        print('전체크롤링 결과 : ', start_len, '->', len(current_data.keys()))
-        with open(file_name, 'w') as outfile:
-            json.dump(current_data, outfile, indent=4)
+            start_len = len(current_data.keys())
+            current_file.close()
+            print('=' * 100)
+            print(f'{idx}번째 START CRAWLING!!!!')
+            print(f'key: {key} , order: {order}')
+            while True:
+                try:
+                    next_token, data = crawilng(token, key, current_data, channel_id, order, published_after,
+                                                published_before)
+                    current_data.update(data)
+                    token = next_token
+                    print('one cycle end!!', token)
+                except Exception as e:
+                    traceback.print_exc()
+                    break
+                if token is None:
+                    break
+            print('전체크롤링 결과 : ', start_len, '->', len(current_data.keys()))
+            with open(file_name, 'w') as outfile:
+                json.dump(current_data, outfile, indent=4)
 
 
 import random
@@ -176,16 +182,25 @@ def append_script_to_json():
         json.dump(current_data, outfile, indent=4)
 
 
+def delete_script():
+    current_file = open(file_name)
+    current_data = json.load(current_file)
+    for key in current_data.keys():
+        del current_data[key]['scripts']
+    with open(file_name, 'w') as outfile:
+        json.dump(current_data, outfile, indent=4)
+
+
 if __name__ == '__main__':
     TED_CHANNEL_ID = 'UCAuUUnT6oDeKwE6v1NGQxug'
     TEDX_CHANNEL_ID = 'UCsT0YIqwnpJCM-mx7-gSA4Q'
     file_name = 'data/video_data.json'
 
     append_data_to_json()
-    append_script_to_json()
-    # current_file = open(file_name)
-    # current_data = json.load(current_file)
-    # for key in current_data.keys():
-    #     del current_data[key]['scripts']
-    # with open(file_name, 'w') as outfile:
-    #     json.dump(current_data, outfile, indent=4)
+    # append_script_to_json()
+
+    # delete_script()
+
+    current_file = open(file_name)
+    current_data = json.load(current_file)
+    print(len(current_data.keys()))
