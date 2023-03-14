@@ -47,25 +47,24 @@ def get_script_by_video_id(video_id):
     merged_text = ''
     scripts = []
     remain = ''
-    time = None
+    start_time = None
     for row in YouTubeTranscriptApi.get_transcript(video_id, languages=['en']):
         merged_text += row['text'].replace('\n', ' ') + ' '
         raw_script = row['text']
         stripped_text = raw_script.strip()
         remain = remain + ' ' + stripped_text
-        if time is None:
-            time = row['start']
+        if start_time is None:
+            start_time = row['start']
         if stripped_text[-1] in '.!?':
-            scripts.append([remain.strip().replace('\n', ' '), time])
+            script = {}
+            script['content'] = remain.replace('\n', ' ').strip()
+            script['start_time'] = round(start_time, 1)
+            script['end_time'] = round(row['start'] + row['duration'], 1)
+            scripts.append(script)
             remain = ''
-            time = None
+            start_time = None
 
-    # print(*merged_text.split('.'),sep='.\n')
-    # with open('./sample.txt','w',encoding='utf-8') as file:
-    #     for script in scripts:
-    #         file.write(f'{script[0]} : {script[1]}\n')
-    #     # print(*scripts, sep='\n')
-    print(f'문장의 수 : {len(scripts)}')
+    # print(f'문장의 수 : {len(scripts)}')
     return scripts
 
 
@@ -163,23 +162,20 @@ def append_script_to_json():
     current_data = json.load(current_file)
     cnt = 1
     for key in current_data.keys():
-        if 'scripts' in current_data[key].keys():
-            print(len(current_data[key]['scripts']))
-            continue
-        try:
-            scripts = get_script_by_video_id(key)
-        except:
-            scripts = []
-            # traceback.print_exc()
         cnt += 1
-        current_data[key]['scripts'] = scripts
-        if cnt % 50 == 0:
-            with open(file_name, 'w') as outfile:
-                json.dump(current_data, outfile, indent=4)
-            cnt = 0
-            print('저장완료!!!!' + '==' * 100)
+        if 'scripts' not in current_data[key].keys():
+            try:
+                scripts = get_script_by_video_id(key)
+            except:
+                scripts = []
+            current_data[key]['scripts'] = scripts
+            print(f'{cnt}번째 자막 추출 완료!')
+            if cnt % 100 == 0:
+                with open(file_name, 'w') as outfile:
+                    json.dump(current_data, outfile)
+                print('저장완료!!!!' + '==' * 100)
     with open(file_name, 'w') as outfile:
-        json.dump(current_data, outfile, indent=4)
+        json.dump(current_data, outfile)
 
 
 def delete_script():
@@ -196,9 +192,8 @@ if __name__ == '__main__':
     TEDX_CHANNEL_ID = 'UCsT0YIqwnpJCM-mx7-gSA4Q'
     file_name = 'data/video_data.json'
 
-    append_data_to_json()
+    # append_data_to_json()
     append_script_to_json()
-
 
     # current_file = open(file_name)
     # current_data = json.load(current_file)
