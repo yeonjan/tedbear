@@ -14,6 +14,7 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "sentence_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Sentence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
