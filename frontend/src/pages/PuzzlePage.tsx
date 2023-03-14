@@ -32,12 +32,29 @@ const PuzzlePage = () => {
           >
             <PuzzleCover></PuzzleCover>
           </Box>
-          <Box sx={{ width: '50%', maxWidth: 500 }}>
-            <Typography color="white" variant="h1" gutterBottom>
+          <Box
+            textAlign="center"
+            sx={{ margin: '180px', width: '50%', maxWidth: 500 }}
+          >
+            <Typography
+              // display="inline"
+              align="center"
+              color="white"
+              fontSize={'150px'}
+              // gutterBottom
+            >
               PUZZLE
             </Typography>
-            <Typography color="white" variant="h2" gutterBottom>
-              문장의 빈칸을 채워 곰돌이 퍼즐을 완성하세요!
+            <Typography
+              // display="inline"
+              align="center"
+              color="white"
+              fontSize={'45px'}
+              gutterBottom
+            >
+              문장의 빈칸을 채워
+              <hr></hr>
+              곰돌이 퍼즐을 완성해요!
             </Typography>
             <Button
               className="start-button"
@@ -45,6 +62,7 @@ const PuzzlePage = () => {
               size="large"
               onClick={handleStart}
               style={{
+                margin: '50px',
                 width: '16em',
                 height: '8em',
               }}
