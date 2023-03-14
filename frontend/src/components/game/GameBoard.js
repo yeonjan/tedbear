@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, Paper } from '@mui/material';
+import { ReactComponent as Question } from 'assets/img/question.svg';
 
 // <Game>
 const Game = styled.div`
@@ -254,11 +255,21 @@ const GameBoard = () => {
 
   return (
     <Game>
+      <Question
+        style={{
+          padding: 50,
+          margin: '30px 30px 30px 30px',
+          position: 'absolute',
+          left: '50%',
+          top: '5%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      ></Question>
       <Paper
         elevation={3} // shadow
         style={{
-          padding: 30,
-          margin: '30px 30px 30px 30px',
+          padding: 50,
+          margin: '75px 30px 30px 30px',
           // border: '1px solid black',
         }}
       >
