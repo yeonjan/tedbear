@@ -46,6 +46,10 @@ public class Member extends BaseEntity {
 	@NotNull
 	private String nickname;
 
+	@Column(name = "refresh_token")
+	@NotNull
+	private String refreshToken;
+
 	@NotNull
 	@Column(name = "sns_type")
 	@Enumerated(EnumType.STRING)
