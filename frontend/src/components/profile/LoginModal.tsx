@@ -78,12 +78,17 @@ interface Props {
 }
 
 const LoginModal = ({ setOpenModal }: Props) => {
+  const KakaoLogin = () => {
+    window.location.href =
+      'https://kauth.kakao.com/oauth/authorize?client_id=e7c1204fb5b00edcc9f6a3cf3e92e736&redirect_uri=http:localhost:3000&response_type=code';
+  };
+
   return (
     <div>
       <DarkBackground onClick={() => setOpenModal(false)} />
       <Modal>
         <div style={{ marginBottom: '20px' }}>
-          <KakaoButton BgColor={'#FEE500'}>
+          <KakaoButton BgColor={'#FEE500'} onClick={KakaoLogin}>
             <StyledKakaoImg></StyledKakaoImg>
             카카오로 시작하기
           </KakaoButton>
