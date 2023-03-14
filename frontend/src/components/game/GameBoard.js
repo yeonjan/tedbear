@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Card from 'components/game/Card';
+import GameCard from 'components/game/GameCard';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import Paper from '@mui/material/Paper';
+import { Box, Paper } from '@mui/material';
 
 // <Game>
 const Game = styled.div`
@@ -24,6 +24,15 @@ const Game = styled.div`
       transition: 0.6s;
       transform-style: preserve-3d;
       position: relative;
+      // custom
+      /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); */
+      transition: 0.4s;
+      &:hover {
+        scale: 1.04;
+        /* box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); */
+        transition: 0.4s;
+      }
+      // card
       div {
         backface-visibility: hidden;
         position: absolute;
@@ -255,7 +264,7 @@ const GameBoard = () => {
       >
         <div className="game-board">
           {cardList.map((card, index) => (
-            <Card
+            <GameCard
               key={index}
               id={index}
               name={card.name}
@@ -268,10 +277,18 @@ const GameBoard = () => {
           {/* {gameOver && <GameOver restartGame={restartGame} />} */}
         </div>
       </Paper>
-      {/* 동그란 화살표 버튼 */}
-      <IconButton variant="next" onClick={handleNext}>
-        <ArrowForwardIosIcon></ArrowForwardIosIcon>
-      </IconButton>
+      <Box
+        m={1}
+        //margin
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="flex-end"
+      >
+        {/* 동그란 화살표 버튼 */}
+        <IconButton variant="next" onClick={handleNext}>
+          <ArrowForwardIosIcon></ArrowForwardIosIcon>
+        </IconButton>
+      </Box>
     </Game>
   );
 };
