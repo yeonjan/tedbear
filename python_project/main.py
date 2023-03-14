@@ -197,10 +197,9 @@ if __name__ == '__main__':
     file_name = 'data/video_data.json'
 
     append_data_to_json()
-    # append_script_to_json()
+    append_script_to_json()
 
-    # delete_script()
 
-    current_file = open(file_name)
-    current_data = json.load(current_file)
-    print(len(current_data.keys()))
+    # current_file = open(file_name)
+    # current_data = json.load(current_file)
+    # print(len(current_data.keys()))
