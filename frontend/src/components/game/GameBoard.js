@@ -3,6 +3,7 @@ import Card from 'components/game/Card';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Paper from '@mui/material/Paper';
 
 // <Game>
 const Game = styled.div`
@@ -244,20 +245,29 @@ const GameBoard = () => {
 
   return (
     <Game>
-      <div className="game-board">
-        {cardList.map((card, index) => (
-          <Card
-            key={index}
-            id={index}
-            name={card.name}
-            flipped={card.flipped}
-            // matched={card.matched}
-            // 최대 12장까지 뒤집을 수 있음
-            clicked={flippedCards.length === 12 ? {} : handleClick}
-          />
-        ))}
-        {/* {gameOver && <GameOver restartGame={restartGame} />} */}
-      </div>
+      <Paper
+        elevation={3} // shadow
+        style={{
+          padding: 30,
+          margin: '30px 30px 30px 30px',
+          // border: '1px solid black',
+        }}
+      >
+        <div className="game-board">
+          {cardList.map((card, index) => (
+            <Card
+              key={index}
+              id={index}
+              name={card.name}
+              flipped={card.flipped}
+              // matched={card.matched}
+              // 최대 12장까지 뒤집을 수 있음
+              clicked={flippedCards.length === 12 ? {} : handleClick}
+            />
+          ))}
+          {/* {gameOver && <GameOver restartGame={restartGame} />} */}
+        </div>
+      </Paper>
       {/* 동그란 화살표 버튼 */}
       <IconButton variant="next" onClick={handleNext}>
         <ArrowForwardIosIcon></ArrowForwardIosIcon>
