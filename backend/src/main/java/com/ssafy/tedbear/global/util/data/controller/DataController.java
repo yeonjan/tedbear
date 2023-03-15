@@ -29,4 +29,9 @@ public class DataController {
 		dataService.initCategory();
 	}
 
+	@GetMapping("/init-sentence-score")
+	public void initSentenceScore() {
+		dataService.initSentenceScore();
+	}
+
 }

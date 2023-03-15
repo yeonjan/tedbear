@@ -6,4 +6,6 @@ public interface DataService {
 	void initVideoSentence();
 
 	void initCategory();
+
+	void initSentenceScore();
 }

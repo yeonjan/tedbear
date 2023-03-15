@@ -2,6 +2,7 @@ package com.ssafy.tedbear.global.util.data.service;
 
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
@@ -20,6 +22,7 @@ import com.ssafy.tedbear.domain.video.repository.VideoCategoryRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
+import com.ssafy.tedbear.global.util.CalcScoreUtil;
 import com.ssafy.tedbear.global.util.JSONParseUtil;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
 
@@ -82,7 +85,6 @@ public class DataServiceImpl implements DataService {
 				String thumbnailUrl = (String)element.get("thumbnail_url");
 				String videoUrl = (String)element.get("video_url");
 
-
 				Video video = Video.builder()
 					.videoCategory(videoCategory)
 					.watchId((String)watchId)
@@ -125,5 +127,27 @@ public class DataServiceImpl implements DataService {
 		}
 	}
 
-	;
+	@Override
+	@Transactional
+	public void initSentenceScore() {
+		List<Sentence> sentenceList = sentenceRepository.findAll();
+		for (Sentence sentence : sentenceList) {
+
+			String content = sentence.getContent();
+			double gf = CalcScoreUtil.getGunningFog(content);
+			double fr = CalcScoreUtil.getFleschReadingEase(content);
+			double fk = CalcScoreUtil.getFleshKincaidGradeLevel(content);
+
+			gf = CalcScoreUtil.processScore(gf, "gf");
+			fr = CalcScoreUtil.processScore(fr, "fr");
+			fk = CalcScoreUtil.processScore(fk, "fk");
+
+			int score = 0;
+			if (16 <= content.length() && content.length() <= 350)
+				score = CalcScoreUtil.getScore(gf, fr, fk);
+
+			sentence.setScores(gf, fr, fk, score);
+		}
+	}
+
 }

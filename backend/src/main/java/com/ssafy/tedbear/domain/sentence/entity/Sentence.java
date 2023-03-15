@@ -2,6 +2,7 @@ package com.ssafy.tedbear.domain.sentence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,8 +50,23 @@ public class Sentence {
 	@Column(name = "end_time")
 	private int endTime;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "video_no")
 	private Video video;
 
+	@Column(name = "gunning_fog")
+	private Double gunningFog;
+
+	@Column(name = "flesch_reading_ease")
+	private Double fleschReadingEase;
+
+	@Column(name = "flesch_kincaid_grade_level")
+	private Double fleshKincaidGradeLevel;
+
+	public void setScores(double gf, double fr, double fk,int score) {
+		this.gunningFog = gf;
+		this.fleschReadingEase = fr;
+		this.fleshKincaidGradeLevel = fk;
+		this.score = score;
+	}
 }
