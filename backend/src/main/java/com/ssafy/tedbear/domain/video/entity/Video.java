@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -29,10 +30,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@ToString
 public class Video {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
+
+	@Column(unique = true)
+	@NotNull
+	private String watchId;
 
 	@NotNull
 	private int score;

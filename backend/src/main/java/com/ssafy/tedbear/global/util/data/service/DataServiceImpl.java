@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.global.util.data.service;
 
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -11,13 +12,16 @@ import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
+import com.ssafy.tedbear.domain.video.entity.Video;
 import com.ssafy.tedbear.domain.video.entity.VideoCategory;
 import com.ssafy.tedbear.domain.video.repository.VideoCategoryRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.global.util.JSONParseUtil;
+import com.ssafy.tedbear.global.util.TimeParseUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +45,7 @@ public class DataServiceImpl implements DataService {
 			scoreMap.put("B2", 1432);
 			scoreMap.put("C1", 1790);
 			scoreMap.put("C2", 2148);
+
 			// wordRepository.deleteAll();
 			List<Word> wordList = new ArrayList<>();
 			for (LinkedHashMap element : jsonList) {
@@ -49,7 +54,7 @@ public class DataServiceImpl implements DataService {
 					.score(scoreMap.get(element.get("level")))
 					.build();
 				wordList.add(word);
-				// wordRepository.save(word);
+				wordRepository.save(word);
 			}
 			// wordRepository.saveAll(wordList);
 
@@ -64,27 +69,40 @@ public class DataServiceImpl implements DataService {
 		try {
 			LinkedHashMap json = JSONParseUtil.getLinkedHashMapFromJson("/data/video_data.json");
 
-			for (Object key : json.keySet()) {
-				LinkedHashMap element = (LinkedHashMap)json.get(key);
-				System.out.println(element.keySet());
-			}
-			Object key = "tB5J9qgM2zI";
-			LinkedHashMap test = (LinkedHashMap)json.get(key);
-			System.out.println(test);
-			VideoCategory videoCategory = videoCategoryRepository.findById(
-				Long.valueOf((String)test.get("category_no"))).get();
-			String title = (String)test.get("title");
-			String date = (String)test.get("published_at");
-			String thumbnailUrl = (String)test.get("thumbnail_url");
-			String videoUrl = (String)test.get("video_url");
-			// List<List<String,String>>
-			// System.out.println(test.get("scripts"));
-			System.out.println(videoCategory);
-			System.out.println(title);
-			System.out.println(date);
-			System.out.println(thumbnailUrl);
-			System.out.println(videoUrl);
+			for (Object watchId : json.keySet()) {
+				if (videoRepository.findByWatchId((String)watchId) != null) {
+					System.out.println(watchId + "는 이미 DB에 존재합니다");
+					continue;
+				}
+				LinkedHashMap element = (LinkedHashMap)json.get(watchId);
+				VideoCategory videoCategory = videoCategoryRepository.findById(
+					Long.valueOf((String)element.get("category_no"))).get();
+				String title = (String)element.get("title");
+				String date = (String)element.get("published_at");
+				String thumbnailUrl = (String)element.get("thumbnail_url");
+				String videoUrl = (String)element.get("video_url");
 
+
+				Video video = Video.builder()
+					.videoCategory(videoCategory)
+					.watchId((String)watchId)
+					.title(title)
+					.publishedDate(TimeParseUtil.string2Time(date, "yyyy-MM-dd'T'HH:mm:ss'Z'"))
+					.thumbnailUrl(thumbnailUrl)
+					.videoUrl(videoUrl)
+					.build();
+				videoRepository.save(video);
+				List<Sentence> sentenceList = new ArrayList<>();
+				for (LinkedHashMap script : (List<LinkedHashMap>)element.get("scripts")) {
+					Sentence sentence = Sentence.builder().content((String)script.get("content"))
+						.startTime(((BigDecimal)script.get("start_time")).intValue())
+						.endTime(((BigDecimal)script.get("end_time")).intValue())
+						.video(video)
+						.build();
+					sentenceList.add(sentence);
+				}
+				sentenceRepository.saveAll(sentenceList);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
