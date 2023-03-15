@@ -1,4 +1,4 @@
-import { Stack, Paper, Button, Box } from '@mui/material';
+import { Stack, Box, Paper, Button } from '@mui/material';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 
@@ -27,67 +27,85 @@ const BookmarkBoard = () => {
   return (
     <div>
       <Bookmark>
-        <Stack>
-          <Button
-            className="unclicked-button"
-            variant="contained"
-            size="large"
-            onClick={handleVideoBookmark}
+        <Box>
+          <Stack>
+            <Button
+              className="unclicked-button"
+              variant="contained"
+              size="large"
+              onClick={handleVideoBookmark}
+              style={{
+                margin: '0px 0px 0px 50px',
+                borderRadius: '30px 0px 0px 30px',
+                width: '4em',
+                height: '9em',
+                // position: 'absolute',
+                left: '5%',
+                // top: '60%',
+                transform: 'translate(-95%, 330%)',
+              }}
+            >
+              {' '}
+              <Typography align="center" color="white" fontSize={'30px'}>
+                영상
+              </Typography>
+            </Button>
+            <Button
+              className="clicked-button"
+              variant="contained"
+              size="large"
+              onClick={handleSentenceBookmark}
+              style={{
+                margin: '0px 0px 0px 50px',
+                borderRadius: '30px 0px 0px 30px',
+                width: '4em',
+                height: '9em',
+                // position: 'absolute',
+                left: '5%',
+                // top: '73.5%',
+                transform: 'translate(-95%, 330%)',
+              }}
+            >
+              <Typography align="center" color="white" fontSize={'30px'}>
+                문장
+              </Typography>
+            </Button>
+            <Button
+              className="unclicked-button"
+              variant="contained"
+              size="large"
+              onClick={handleWordBookmark}
+              style={{
+                margin: '0px 0px 0px 50px',
+                borderRadius: '30px 0px 0px 30px',
+                width: '4em',
+                height: '9em',
+                // position: 'absolute',
+                left: '5%',
+                // top: '87%',
+                transform: 'translate(-95%, 330%)',
+              }}
+            >
+              {' '}
+              <Typography align="center" color="white" fontSize={'30px'}>
+                단어
+              </Typography>
+            </Button>
+          </Stack>
+          <Paper
+            elevation={3}
             style={{
-              margin: '0px 0px 0px 50px',
-              borderRadius: '30px 0px 0px 30px',
-              width: '4em',
-              height: '8em',
+              width: '1500px',
+              height: '416px',
+              padding: 100,
+              margin: '0px 0px 0px 0px',
+              // position: 'absolute',
+              left: '42%',
+              top: '80%',
+              transform: 'translate(9, 9%)',
             }}
-          >
-            {' '}
-            <Typography align="center" color="white" fontSize={'30px'}>
-              영상
-            </Typography>
-          </Button>
-          <Button
-            className="clicked-button"
-            variant="contained"
-            size="large"
-            onClick={handleSentenceBookmark}
-            style={{
-              margin: '0px 0px 0px 50px',
-              borderRadius: '30px 0px 0px 30px',
-              width: '4em',
-              height: '8em',
-            }}
-          >
-            <Typography align="center" color="white" fontSize={'30px'}>
-              문장
-            </Typography>
-          </Button>
-          <Button
-            className="unclicked-button"
-            variant="contained"
-            size="large"
-            onClick={handleWordBookmark}
-            style={{
-              margin: '0px 0px 0px 50px',
-              borderRadius: '30px 0px 0px 30px',
-              width: '4em',
-              height: '8em',
-            }}
-          >
-            {' '}
-            <Typography align="center" color="white" fontSize={'30px'}>
-              단어
-            </Typography>
-          </Button>
-        </Stack>
-        <Paper
-          elevation={3}
-          style={{
-            width: '1500x',
-            height: '400px',
-            padding: 100,
-            margin: '0px 100px 50px 150px', //책갈피 50px
-          }}
-        ></Paper>
+          ></Paper>
+        </Box>
       </Bookmark>
     </div>
   );
