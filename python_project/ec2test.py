@@ -15,8 +15,18 @@ def translate_free(question):
         time.sleep(2)
         result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget")
         if result:
-            break
-    print(question, "->", result.text)
+            return result.text
+
+
+def init_driver():
+    chrome_driver = ChromeDriverManager().install()
+    chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--no-sandbox')
+    # chrome_options.add_argument("--single-process")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(chrome_driver, options=chrome_options)
+    return driver
 
 
 if __name__ == '__main__':
@@ -24,18 +34,11 @@ if __name__ == '__main__':
                            database='tedbearDB',
                            autocommit=True)
     cursor = conn.cursor()
-    sql = 'SELECT * FROM word_tb;'
+    sql = 'SELECT * FROM sentence_tb;'
     cursor.execute(sql)
     rows = cursor.fetchall()
 
-    chrome_driver = ChromeDriverManager().install()
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--single-process")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(chrome_driver, options=chrome_options)
-
+    driver = init_driver()
     URL = 'https://papago.naver.com/?sk=en&tk=ko'
     driver.get(URL)
     time.sleep(3)
@@ -43,7 +46,11 @@ if __name__ == '__main__':
 
     # ------------------
 
-    for row in rows:
-        no, content, _, _ = row
-        translate_free(content)
+    for idx, row in enumerate(rows):
+        no, content, *trash = row
+        translate_content = translate_free(content)
+        sql = 'update sentence_tb set translation = %s where no = %s'
+        cursor.execute(sql, (translate_content, no))
+        print(idx, translate_content)
+    cursor.close()
     driver.close()
