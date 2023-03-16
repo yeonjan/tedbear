@@ -7,7 +7,8 @@ import Leaf3 from 'assets/img/landingLeaf3.svg';
 import LandingBear from 'assets/img/landingBear.svg';
 import GreenBall from 'assets/img/greenBall.svg';
 import PinkBall from 'assets/img/pinkBall.svg';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import LoginModal from 'components/profile/LoginModal';
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.bgColor};
@@ -164,15 +165,18 @@ const Content5 = styled(Content1)`
 `;
 
 const LandingPage = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   return (
     <Wrapper>
+      {modalOpen && <LoginModal setOpenModal={setModalOpen} />}
       <Content1>
         <HomeTextBox>
           <Title>
             Let&apos;s Learn with <span>TedBear</span>
           </Title>
           <SubTitle>TedBear로 영어 스피킹 연습을 해보세요!</SubTitle>
-          <StartBtn>Get Started</StartBtn>
+          <StartBtn onClick={() => setModalOpen(true)}>Get Started</StartBtn>
         </HomeTextBox>
         <HomeImgBox>
           <SmogImg src={Smog} />

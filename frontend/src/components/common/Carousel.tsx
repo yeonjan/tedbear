@@ -15,8 +15,8 @@ interface Props {
 
 const Carousel = ({ data }: Props) => {
   const navigate = useNavigate();
-  const handleClick = (url: string): void => {
-    console.log(url);
+  const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
+    navigate('/learning', { state: e });
   };
 
   const settings = {
@@ -40,7 +40,7 @@ const Carousel = ({ data }: Props) => {
             <div
               className="card__container--inner--card"
               key={index}
-              onClick={handleClick(item.url)}
+              onClick={() => handleClick(item.id)}
             >
               <img
                 src={item.url}
