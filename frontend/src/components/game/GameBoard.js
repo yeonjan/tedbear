@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Paper } from '@mui/material';
 import { ReactComponent as Question } from 'assets/img/question.svg';
+import { useNavigate } from 'react-router-dom';
 
 // <Game>
 const Game = styled.div`
@@ -100,20 +101,21 @@ const Game = styled.div`
 // Function
 
 const GameBoard = () => {
+  const navigate = useNavigate();
   // 12개
   const cards = [
-    'water',
-    'coffee',
-    'love',
-    'like',
-    'hate',
-    'disturb',
-    'node',
-    'die',
-    'bottle',
-    'seal',
-    'board',
-    'soon',
+    { word: 'water', mean: '물' },
+    { word: 'coffee', mean: '커피' },
+    { word: 'love', mean: '사랑' },
+    { word: 'like', mean: '좋아한다' },
+    { word: 'hate', mean: '싫어한다' },
+    { word: 'disturb', mean: '방해하다' },
+    { word: 'node', mean: '노드' },
+    { word: 'die', mean: '죽다' },
+    { word: 'bottle', mean: '병' },
+    { word: 'card', mean: '카드' },
+    { word: 'soon', mean: '곧' },
+    { word: 'board', mean: '게시판' },
   ];
 
   ///////////// HELPER FUNCTION /////////////
@@ -135,10 +137,11 @@ const GameBoard = () => {
   ///////////// SETUP /////////////
 
   const [cardList, setCardList] = useState(
-    shuffle(cards).map((name, index) => {
+    shuffle(cards).map((pair, index) => {
       return {
         id: index,
-        name: name,
+        name: pair.word,
+        mean: pair.mean,
         flipped: false,
         // matched: false,
       };
@@ -174,6 +177,7 @@ const GameBoard = () => {
 
   const handleNext = () => {
     console.log(flippedCards);
+    navigate('/home');
   };
 
   // RETURN
@@ -203,6 +207,7 @@ const GameBoard = () => {
               key={index}
               id={index}
               name={card.name}
+              mean={card.mean}
               flipped={card.flipped}
               // 최대 12장까지 뒤집을 수 있음
               clicked={flippedCards.length === 12 ? {} : handleClick}
