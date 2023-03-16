@@ -12,6 +12,9 @@ import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from 'theme';
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 function App() {
   return (
     <>
