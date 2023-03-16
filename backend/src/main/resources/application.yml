@@ -17,6 +17,13 @@ spring:
       use-new-id-generator-mappings: false
     properties:
       hibernate:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${google-client-id}
+            client-secret: ${google-client-secret}
 
 
 logging:
