@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import Card from 'components/game/Card';
+import GameCard from 'components/game/GameCard';
 import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Paper } from '@mui/material';
+import { ReactComponent as Question } from 'assets/img/question.svg';
 
 // <Game>
 const Game = styled.div`
@@ -11,9 +15,9 @@ const Game = styled.div`
     perspective: 1000px;
     margin-bottom: -15px;
     .card {
-      width: 20%;
+      width: 14%;
       user-select: none;
-      height: 112px;
+      height: 280px;
       padding: 10px;
       box-sizing: border-box;
       text-align: center;
@@ -21,6 +25,11 @@ const Game = styled.div`
       transition: 0.6s;
       transform-style: preserve-3d;
       position: relative;
+      transition: 0.4s;
+      &:hover {
+        scale: 1.04;
+        transition: 0.4s;
+      }
       div {
         backface-visibility: hidden;
         position: absolute;
@@ -36,7 +45,6 @@ const Game = styled.div`
         font-size: 50px;
         line-height: 120px;
         cursor: pointer;
-        // color: darken(#ee6910, 30%);
         color: ${props => props.theme.whiteColor};
         display: flex;
         align-items: center;
@@ -44,7 +52,11 @@ const Game = styled.div`
       }
       .front {
         transform: rotateY(180deg);
+        font-size: 50px;
         line-height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-emphasis: none;
         img {
           vertical-align: middle;
@@ -57,28 +69,8 @@ const Game = styled.div`
         transform: rotateY(180deg);
         color: ${props => props.theme.pointLightColor};
       }
-      /* &.matched {
-        transform: rotateY(180deg);
-        .front {
-          box-shadow: 0 0 0 2px rgba(#000, 0.05) inset;
-          animation: selected 0.8s 0s ease 1;
-          animation-fill-mode: both;
-          opacity: 0.2;
-        }
-      } */
     }
   }
-
-  /* .restart-button {
-    width: 12em;
-    height: 3em;
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-    border-radius: 4px;
-    font-size: 12px;
-    background-color: #6d1124;
-    border: 0;
-  } */
 
   .centered {
     width: 100%;
@@ -108,19 +100,20 @@ const Game = styled.div`
 // Function
 
 const GameBoard = () => {
+  // 12개
   const cards = [
-    'TV',
-    'TV',
-    'VT',
-    'VT',
-    'hbird',
-    'hbird',
-    'name',
-    'name',
+    'water',
+    'coffee',
+    'love',
+    'like',
+    'hate',
+    'disturb',
+    'node',
+    'die',
+    'bottle',
     'seal',
-    'seal',
-    'tracks',
-    'tracks',
+    'board',
+    'soon',
   ];
 
   ///////////// HELPER FUNCTION /////////////
@@ -170,79 +163,80 @@ const GameBoard = () => {
       }
       return card;
     });
+
     let updateFlipped = flippedCards;
     updateFlipped.push(currentCard);
-    setFlippedCards(updateFlipped);
+    setFlippedCards(updateFlipped); // 뒤집힌 카드들
     setCardList(updateCards);
-
-    //if 2 cards are flipped, check if they are a match
-    if (flippedCards.length === 2) {
-      setTimeout(() => {
-        check();
-      }, 750);
-    }
   };
 
-  const check = () => {
-    let updateCards = cardList;
-    if (
-      flippedCards[0].name === flippedCards[1].name &&
-      flippedCards[0].index !== flippedCards[1].index
-    ) {
-      // updateCards[flippedCards[0].index].matched = true;
-      // updateCards[flippedCards[1].index].matched = true;
-      // isGameOver();
-    } else {
-      updateCards[flippedCards[0].index].flipped = false;
-      updateCards[flippedCards[1].index].flipped = false;
-    }
-    setCardList(updateCards);
-    setFlippedCards([]);
+  // 다음 버튼을 클릭하면, 지금까지 뒤집은 카드의 정보를 back에 전송(post)하고 다음 페이지로 navigate 한다.
+
+  const handleNext = () => {
+    console.log(flippedCards);
   };
 
-  // const isGameOver = () => {
-  //   let done = true;
-  //   cardList.forEach(card => {
-  //     if (!card.matched) done = false;
-  //   });
-  //   setGameOver(done);
-  // };
-
-  ///////////// RESTART - REDO SETUP /////////////
-
-  const restartGame = () => {
-    setCardList(
-      shuffle(cards).map((name, index) => {
-        return {
-          id: index,
-          name: name,
-          flipped: false,
-          // matched: false,
-        };
-      }),
-    );
-
-    setFlippedCards([]);
-    // setGameOver(false);
-  };
-
-  ///////////// DISPLAY /////////////
+  // RETURN
 
   return (
     <Game>
-      <div className="game-board">
-        {cardList.map((card, index) => (
-          <Card
-            key={index}
-            id={index}
-            name={card.name}
-            flipped={card.flipped}
-            // matched={card.matched}
-            clicked={flippedCards.length === 2 ? {} : handleClick}
-          />
-        ))}
-        {/* {gameOver && <GameOver restartGame={restartGame} />} */}
-      </div>
+      <Question
+        style={{
+          padding: 40,
+          margin: '30px 30px 30px 30px',
+          position: 'absolute',
+          left: '50%',
+          top: '7%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      ></Question>
+      <Paper
+        elevation={3}
+        style={{
+          padding: 100,
+          margin: '75px 30px 30px 30px',
+        }}
+      >
+        <div className="game-board">
+          {cardList.map((card, index) => (
+            <GameCard
+              key={index}
+              id={index}
+              name={card.name}
+              flipped={card.flipped}
+              // 최대 12장까지 뒤집을 수 있음
+              clicked={flippedCards.length === 12 ? {} : handleClick}
+            />
+          ))}
+        </div>
+      </Paper>
+
+      {/* 동그란 화살표 버튼 */}
+      <IconButton
+        sx={{
+          boxShadow: 3,
+          width: '3rem',
+          height: '3rem',
+          bgcolor: theme =>
+            theme.palette.mode === 'dark' ? '#101010' : '#fff',
+          color: theme =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+        }}
+        style={{
+          padding: 20,
+          margin: '30px 30px 30px 30px',
+          position: 'absolute',
+          left: '96.5%',
+          top: '51%',
+          transform: 'translate(-50%, -50%)',
+          border: '1px solid #FFFFFF',
+          background: '#FFFFFF',
+        }}
+        variant="outlined"
+        onClick={handleNext}
+      >
+        <ArrowForwardIosIcon></ArrowForwardIosIcon>
+      </IconButton>
     </Game>
   );
 };
