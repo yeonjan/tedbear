@@ -15,7 +15,7 @@ URL = 'https://papago.naver.com/?sk=en&tk=ko'
 driver.get(URL)
 time.sleep(3)
 
-question = input('번역할 단어를 입력하세요 : ')
+question = input('번역할 단어를 입력하세요 :')
 
 form = driver.find_element(By.CSS_SELECTOR, "textarea#txtSource")
 form.send_keys(question)
