@@ -4,7 +4,12 @@ from selenium.webdriver.common.by import By
 import time
 
 chrome_driver = ChromeDriverManager().install()
-driver = webdriver.Chrome(chrome_driver)
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument("--single-process")
+chrome_options.add_argument("--disable-dev-shm-usage")
+driver = webdriver.Chrome(chrome_driver, options=chrome_options)
 
 URL = 'https://papago.naver.com/?sk=en&tk=ko'
 driver.get(URL)
