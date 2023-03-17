@@ -11,15 +11,18 @@ import JuPage from 'pages/JuPage';
 import LearningPage from 'pages/LearningPage';
 import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from 'theme';
+import { darkTheme, lightTheme } from 'theme';
+import { useState } from 'react';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
+  const [toggle, setToggle] = useState<boolean>(false);
+
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={!toggle ? lightTheme : darkTheme}>
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
@@ -34,7 +37,10 @@ function App() {
             <Route path="/seung" element={<SeungPage />} />
             <Route path="/yuha" element={<YuhaPage />} />
             <Route path="/ju" element={<JuPage />} />
-            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/"
+              element={<LandingPage toggle={toggle} setToggle={setToggle} />}
+            />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
