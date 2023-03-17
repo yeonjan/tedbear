@@ -35,10 +35,11 @@ if __name__ == '__main__':
     try:
         no_start, no_end = sys.argv[1:]
     except:
-        no_start, no_end = 500, 510
+        no_start, no_end = 500, 5100
     sql = f'SELECT * FROM sentence_tb where translation is null and no between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
+    print('rows 길이 : ',len(rows))
     driver = init_driver()
     URL = 'https://papago.naver.com/?sk=en&tk=ko'
     driver.get(URL)
