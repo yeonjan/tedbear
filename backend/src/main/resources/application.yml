@@ -18,6 +18,10 @@ spring:
     properties:
       hibernate:
   security:
+    jwt:
+      token:
+        secret-key: ${secret-key}
+        expire-length: 3600000
     oauth2:
       client:
         registration:
