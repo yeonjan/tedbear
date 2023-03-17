@@ -9,20 +9,18 @@ import sys
 def translate_free(question):
     form.clear()
     form.send_keys(question)
-    result = None
-    while not result:
-        time.sleep(1)
-        result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget").text
+    time.sleep(3)
+    result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget").text
     return result
 
 
 def init_driver():
     chrome_driver = ChromeDriverManager().install()
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--single-process")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--no-sandbox')
+    # chrome_options.add_argument("--single-process")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(chrome_driver, options=chrome_options)
     return driver
 
@@ -39,7 +37,7 @@ if __name__ == '__main__':
     sql = f'SELECT * FROM sentence_tb where translation is null and no between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
-    print('rows 길이 : ',len(rows))
+    print('rows 길이 : ', len(rows))
     driver = init_driver()
     URL = 'https://papago.naver.com/?sk=en&tk=ko'
     driver.get(URL)
