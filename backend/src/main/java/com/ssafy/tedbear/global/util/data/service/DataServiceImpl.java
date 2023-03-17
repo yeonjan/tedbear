@@ -160,11 +160,13 @@ public class DataServiceImpl implements DataService {
 	@Override
 	@Transactional
 	public void initSentenceWord() {
+		System.out.println("문장에 있는 모든 단어 넣기 시작!!!");
 		List<Sentence> sentenceList = sentenceRepository.findAll();
 		Map<String, List<Sentence>> wordMap = new HashMap<>();
 		String specialWordRegex = "[\",.\\[\\]?!+():`“,;@\\&\\\\\\^”]*";
 		String noWordRegex = "^[0-9!@#\\$%\\^\\&\\*\\(\\)\\-\\+=\\[\\]\\{\\}\\|\\:\\;\\,\'<>\\.\\?\\/]*$|^\'|\'$";
-
+		int sentenceCnt = 0;
+		int sentenceAll = sentenceList.size();
 		for (Sentence sentence : sentenceList) {
 			String content = sentence.getContent();
 			for (String word : content.split("\\s+")) {
@@ -179,6 +181,8 @@ public class DataServiceImpl implements DataService {
 				}
 				wordMap.get(processedWord).add(sentence);
 			}
+			System.out.println(String.format("문장에서 단어 추출 ... %d / %d", sentenceCnt++, sentenceAll));
+
 		}
 
 		List<WordSentence> wordSentenceList = new ArrayList<>();
@@ -200,9 +204,9 @@ public class DataServiceImpl implements DataService {
 					.build();
 				wordSentenceList.add(wordSentence);
 			}
-			System.out.println(String.format("%d / %d", cnt, all));
+			System.out.println(String.format("추출된 단어 DB에 삽입중 ... %d / %d", cnt++, all));
 		}
-		System.out.println(wordSentenceList.size()+" 저장 중...");
+		System.out.println(wordSentenceList.size() + " 저장 중...");
 		wordSentenceRepository.saveAll(wordSentenceList);
 		System.out.println("저장 완료!!!!!!");
 	}
