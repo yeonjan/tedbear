@@ -37,7 +37,6 @@ if __name__ == '__main__':
     sql = 'SELECT * FROM sentence_tb;'
     cursor.execute(sql)
     rows = cursor.fetchall()
-
     driver = init_driver()
     URL = 'https://papago.naver.com/?sk=en&tk=ko'
     driver.get(URL)
@@ -48,7 +47,7 @@ if __name__ == '__main__':
 
     for idx, row in enumerate(rows):
         no, content, *trash = row
-        translate_content = translate_free(content)
+        translate_content = translate_free(content.replace('\\',''))
         sql = 'update sentence_tb set translation = %s where no = %s'
         cursor.execute(sql, (translate_content, no))
         print(idx, translate_content)
