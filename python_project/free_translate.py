@@ -11,7 +11,7 @@ def translate_free(question):
     form.send_keys(question)
     result = None
     while not result:
-        time.sleep(5)
+        time.sleep(1)
         result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget").text
     return result
 
