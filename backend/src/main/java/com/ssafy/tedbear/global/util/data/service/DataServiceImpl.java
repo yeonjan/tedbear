@@ -5,9 +5,13 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.core.io.ClassPathResource;
@@ -21,7 +25,9 @@ import com.ssafy.tedbear.domain.video.entity.VideoCategory;
 import com.ssafy.tedbear.domain.video.repository.VideoCategoryRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
+import com.ssafy.tedbear.domain.word.entity.WordSentence;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
+import com.ssafy.tedbear.domain.word.repository.WordSentenceRepository;
 import com.ssafy.tedbear.global.util.CalcScoreUtil;
 import com.ssafy.tedbear.global.util.JSONParseUtil;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
@@ -34,6 +40,7 @@ public class DataServiceImpl implements DataService {
 	private final VideoRepository videoRepository;
 	private final SentenceRepository sentenceRepository;
 	private final WordRepository wordRepository;
+	private final WordSentenceRepository wordSentenceRepository;
 	private final VideoCategoryRepository videoCategoryRepository;
 
 	@Override
@@ -150,4 +157,53 @@ public class DataServiceImpl implements DataService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public void initSentenceWord() {
+		List<Sentence> sentenceList = sentenceRepository.findAll();
+		Map<String, List<Sentence>> wordMap = new HashMap<>();
+		String specialWordRegex = "[\",.\\[\\]?!+():`“,;@\\&\\\\\\^”]*";
+		String noWordRegex = "^[0-9!@#\\$%\\^\\&\\*\\(\\)\\-\\+=\\[\\]\\{\\}\\|\\:\\;\\,\'<>\\.\\?\\/]*$|^\'|\'$";
+
+		for (Sentence sentence : sentenceList) {
+			String content = sentence.getContent();
+			for (String word : content.split("\\s+")) {
+				String processedWord = word
+					.trim()
+					.replaceAll(specialWordRegex, "")
+					.replaceAll(noWordRegex, "")
+					.toLowerCase();
+
+				if (!wordMap.containsKey(processedWord)) {
+					wordMap.put(processedWord, new ArrayList<>());
+				}
+				wordMap.get(processedWord).add(sentence);
+			}
+		}
+
+		List<WordSentence> wordSentenceList = new ArrayList<>();
+		int cnt = 0;
+		int all = wordMap.size();
+		for (String content : wordMap.keySet()) {
+			Optional<Word> optionalWord = wordRepository.findByContent(content);
+			Word word = null;
+			if (optionalWord.isPresent()) {
+				word = optionalWord.get();
+			} else {
+				word = Word.builder().content(content).score(0).build();
+				wordRepository.save(word);
+			}
+			for (Sentence sentence : wordMap.get(content)) {
+				WordSentence wordSentence = WordSentence.builder()
+					.word(word)
+					.sentence(sentence)
+					.build();
+				wordSentenceList.add(wordSentence);
+			}
+			System.out.println(String.format("%d / %d", cnt, all));
+		}
+		System.out.println(wordSentenceList.size()+" 저장 중...");
+		wordSentenceRepository.saveAll(wordSentenceList);
+		System.out.println("저장 완료!!!!!!");
+	}
 }
