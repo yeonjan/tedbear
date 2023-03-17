@@ -3,19 +3,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
 import pymysql
+import sys
 
 
 def translate_free(question):
     form.clear()
     form.send_keys(question)
-    button = driver.find_element(By.CSS_SELECTOR, "button#btnTranslate")
-    button.click()
-
-    while True:
-        time.sleep(2)
-        result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget")
-        if result:
-            return result.text
+    time.sleep(3)
+    result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget")
+    return result.text
 
 
 def init_driver():
@@ -34,7 +30,8 @@ if __name__ == '__main__':
                            database='tedbearDB',
                            autocommit=True)
     cursor = conn.cursor()
-    sql = 'SELECT * FROM sentence_tb;'
+    no_start, no_end = sys.argv[1:]
+    sql = f'SELECT * FROM sentence_tb where translation is null and between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
     driver = init_driver()
@@ -42,14 +39,17 @@ if __name__ == '__main__':
     driver.get(URL)
     time.sleep(3)
     form = driver.find_element(By.CSS_SELECTOR, "textarea#txtSource")
-
     # ------------------
 
-    for idx, row in enumerate(rows):
+    for row in rows:
+        start = time.time()
         no, content, *trash = row
-        translate_content = translate_free(content.replace('\\',''))
+        content = content.replace('\\', '')
+        translate_content = translate_free(content.replace('\\', '')) if len(
+            content) < 5000 else 'NO SCRIPT BECAUSE TOO LONG'
         sql = 'update sentence_tb set translation = %s where no = %s'
         cursor.execute(sql, (translate_content, no))
-        print(idx, translate_content)
+        end = time.time()
+        print(f'{no} : {translate_content[:30]} ... {(end - start):.2f} sec')
     cursor.close()
     driver.close()

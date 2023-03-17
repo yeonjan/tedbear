@@ -1,21 +1,18 @@
-from collections import deque
-
 N = int(input())
-arr = [(idx + 1, move) for idx, move in enumerate(map(int, input().split()))]
-queue = deque(arr)
-answer = []
+arr = [*map(int, input().split())]
 
-while queue:
-    idx, move = queue.popleft()
-    answer.append(idx)
-    if move > 0:
-        move -= 1
-    while move and queue:
-        if move > 0:
-            queue.append(queue.popleft())
-            move -= 1
-        else:
-            queue.appendleft(queue.pop())
-            move += 1
+result = set()
+for bit in range(1, 1 << N):
+    cur = 0
+    for i in range(N):
+        if bit & (1 << i):
+            cur += arr[i]
+    result.add(cur)
 
-print(*answer)
+num = 1
+while True:
+    if num in result:
+        num += 1
+    else:
+        print(num)
+        break
