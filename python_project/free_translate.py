@@ -9,9 +9,11 @@ import sys
 def translate_free(question):
     form.clear()
     form.send_keys(question)
-    time.sleep(5)
-    result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget")
-    return result.text
+    result = None
+    while not result:
+        time.sleep(5)
+        result = driver.find_element(By.CSS_SELECTOR, "div#txtTarget").text
+    return result
 
 
 def init_driver():
@@ -33,7 +35,7 @@ if __name__ == '__main__':
     try:
         no_start, no_end = sys.argv[1:]
     except:
-        no_start,no_end = 500,510
+        no_start, no_end = 500, 510
     sql = f'SELECT * FROM sentence_tb where translation is null and no between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
