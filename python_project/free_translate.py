@@ -31,7 +31,7 @@ if __name__ == '__main__':
                            autocommit=True)
     cursor = conn.cursor()
     no_start, no_end = sys.argv[1:]
-    sql = f'SELECT * FROM sentence_tb where translation is null and between {no_start} and {no_end}'
+    sql = f'SELECT * FROM sentence_tb where translation is null and no between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
     driver = init_driver()
