@@ -1,7 +1,4 @@
 import Carousel from 'components/common/Carousel';
-import styled from 'styled-components';
-
-const Main = styled.div``;
 
 interface Props {
   url: string;
@@ -40,9 +37,9 @@ const HomePage = () => {
     },
   ];
   return (
-    <Main style={{ marginLeft: '10%' }}>
+    <>
       <Carousel data={data}></Carousel>
-    </Main>
+    </>
   );
 };
 
