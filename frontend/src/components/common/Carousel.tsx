@@ -1,57 +1,95 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Slider from 'react-slick';
+import styled from 'styled-components';
 
 interface Props {
   data: any;
 }
 
-// const SlickArrowLeft = ({ currentSlide:, slideCount, ...props }: SlickProps) => {
-//   return <button {...props}>왼쪽</button>;
-// };
+interface Thumnail {
+  url: string;
+  id: number;
+}
 
-// const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => {
-//   return <button {...props}>오른쪽</button>;
-// };
+const Wrapper = styled.div`
+  overflow: hidden;
+  position: relative;
+  .left-arrow,
+  .right-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: yellow;
+    border: 1px solid black;
+  }
+
+  .left-arrow {
+    left: 24px;
+    background-color: yellow;
+  }
+
+  .right-arrow {
+    right: 24px;
+    background-color: yellow;
+  }
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  transition: all 0.3s ease-out;
+  > * {
+    width: 32.3%;
+    flex-shrink: 0;
+    flex-grow: 1;
+    border-radius: 5%;
+    margin-left: 1%;
+  }
+`;
 
 const Carousel = ({ data }: Props) => {
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [length, setLength] = useState(data.length);
+
   const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
     navigate('/learning', { state: e });
   };
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    // prevArrow: <SlickArrowLeft />,
-    // nextArrow: <SlickArrowRight />,
+  useEffect(() => {
+    console.log('렌더링');
+    setLength(data.length);
+  }, [data]);
+
+  const next = () => {
+    if (currentIndex < length - 3) {
+      setCurrentIndex(prevState => prevState + 1);
+    }
   };
+
+  const prev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prevState => prevState - 1);
+    }
+  };
+
   return (
-    <div
-      className="card__container"
-      style={{ width: '70vw', height: '50vh', marginTop: '2%' }}
-    >
-      <Slider {...settings} className="card__container--inner">
-        {data.map((item: any, index: any) => {
-          return (
-            <div
-              className="card__container--inner--card"
-              key={index}
-              onClick={() => handleClick(item.id)}
-            >
-              <img
-                src={item.url}
-                alt="hero_img"
-                style={{ width: '100%', height: '100%' }}
-              />
-            </div>
-          );
+    <Wrapper>
+      {currentIndex > 0 && (
+        <button onClick={prev} className="left-arrow">
+          Left
+        </button>
+      )}
+      <ContentBox style={{ transform: `translateX(-${currentIndex * 33.3}%)` }}>
+        {data.map((Thumnail: Thumnail, idx: number) => {
+          return <img key={idx} src={Thumnail.url} alt="" />;
         })}
-      </Slider>
-    </div>
+      </ContentBox>
+      {currentIndex < length - 3 && (
+        <button onClick={next} className="right-arrow">
+          Right
+        </button>
+      )}
+    </Wrapper>
   );
 };
 
