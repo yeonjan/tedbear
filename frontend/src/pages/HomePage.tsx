@@ -3,8 +3,13 @@ import styled from 'styled-components';
 
 const Main = styled.div``;
 
+interface Props {
+  url: string;
+  id: string;
+}
+
 const HomePage = () => {
-  const data: Array<{ url: string; id: string }> = [
+  const data: Props[] = [
     {
       url: 'https://img.youtube.com/vi/6Af6b_wyiwI/0.jpg',
       id: '6Af6b_wyiwI',
@@ -35,8 +40,7 @@ const HomePage = () => {
     },
   ];
   return (
-    <Main style={{ width: '50%', marginLeft: '10%' }}>
-      <h1>Your Recommended Videos</h1>
+    <Main style={{ width: '80%', marginLeft: '10%' }}>
       <Carousel data={data}></Carousel>
     </Main>
   );

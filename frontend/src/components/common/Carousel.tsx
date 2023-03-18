@@ -3,50 +3,55 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface Props {
-  data: any;
-}
-
-interface Thumnail {
   url: string;
-  id: number;
+  id: string;
 }
 
 const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
-  .left-arrow,
-  .right-arrow {
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-    background-color: yellow;
-    border: 1px solid black;
-  }
-
-  .left-arrow {
-    left: 24px;
-    background-color: yellow;
-  }
-
-  .right-arrow {
-    right: 24px;
-    background-color: yellow;
-  }
 `;
 
 const ContentBox = styled.div`
   display: flex;
   transition: all 0.3s ease-out;
   > * {
-    width: 32.3%;
+    width: 31.3%;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 5%;
-    margin-left: 1%;
+    margin-left: 2%;
   }
 `;
 
-const Carousel = ({ data }: Props) => {
+const TitleWithButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  .buttom-wrapper {
+    width: 10%;
+    display: flex;
+  }
+`;
+
+const LeftButton = styled.button<{ curIndex: number }>`
+  width: 50%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: yellow;
+  border: 1px solid black;
+  visibility: ${props => props.curIndex <= 0 && 'hidden'};
+`;
+
+const RightButton = styled.button<{ curIndex: number; totalLength: number }>`
+  width: 50%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: yellow;
+  border: 1px solid black;
+  visibility: ${props => props.curIndex >= props.totalLength - 3 && 'hidden'};
+`;
+
+const Carousel = ({ data }: { data: Props[] }) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(data.length);
@@ -55,10 +60,10 @@ const Carousel = ({ data }: Props) => {
     navigate('/learning', { state: e });
   };
 
-  useEffect(() => {
-    console.log('렌더링');
-    setLength(data.length);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log('렌더링');
+  //   setLength(data.length);
+  // }, [data]); >> data가 바뀌지 않는다면 없어도 됨
 
   const next = () => {
     if (currentIndex < length - 3) {
@@ -74,21 +79,34 @@ const Carousel = ({ data }: Props) => {
 
   return (
     <Wrapper>
-      {currentIndex > 0 && (
-        <button onClick={prev} className="left-arrow">
-          Left
-        </button>
-      )}
+      <TitleWithButton>
+        <h1>Recommended Videos</h1>
+        <div className="buttom-wrapper">
+          (
+          <LeftButton
+            onClick={prev}
+            className="left-arrow"
+            curIndex={currentIndex}
+          >
+            Left
+          </LeftButton>
+          ) (
+          <RightButton
+            onClick={next}
+            className="right-arrow"
+            curIndex={currentIndex}
+            totalLength={length}
+          >
+            Right
+          </RightButton>
+          )
+        </div>
+      </TitleWithButton>
       <ContentBox style={{ transform: `translateX(-${currentIndex * 33.3}%)` }}>
-        {data.map((Thumnail: Thumnail, idx: number) => {
+        {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}
       </ContentBox>
-      {currentIndex < length - 3 && (
-        <button onClick={next} className="right-arrow">
-          Right
-        </button>
-      )}
     </Wrapper>
   );
 };
