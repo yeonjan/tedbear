@@ -22,7 +22,7 @@ const SeungPage = () => {
     width: '640',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      start: 0,
+      start: 5,
       end: 10,
       controls: 0,
       autoplay: 1,
