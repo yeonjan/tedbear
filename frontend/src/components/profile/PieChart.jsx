@@ -1,15 +1,24 @@
 import Chart from 'react-apexcharts';
 
-const series = [15, 5, 20, 5, 5, 10, 10, 10, 10, 10];
+// 비율
+const series = [15, 5, 10, 10, 10, 10, 10, 10, 10, 10];
 
 const options = {
   // chart type
   chart: {
     type: 'polarArea',
   },
-  // label custom
+  // 간격
+  stroke: {
+    colors: ['#fff'],
+  },
+  // 투명도
+  fill: {
+    opacity: 0.8,
+  },
+  // 라벨
   labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-  // color custom
+  // 컬러
   colors: [
     '#df3333',
     '#ff6600',
@@ -22,9 +31,36 @@ const options = {
     '#482000',
     '#505050',
   ],
-  // filling color opacity custom
-  fill: {
-    opacity: 0.8,
+  // 그래프 위 % 라벨
+  dataLabels: {
+    enabled: true,
+    // style: {
+    //   fontSize: '14px',
+    //   fontFamily: 'Helvetica, Arial, sans-serif',
+    //   fontWeight: 'bold',
+    //   colors: undefined,
+    // },
+    // background: {
+    //   enabled: true,
+    //   foreColor: '#fff',
+    //   padding: 4,
+    //   borderRadius: 2,
+    //   borderWidth: 1,
+    //   borderColor: '#fff',
+    //   opacity: 0.9,
+    //   dropShadow: {
+    //     enabled: false,
+    //     top: 1,
+    //     left: 1,
+    //     blur: 1,
+    //     color: '#000',
+    //     opacity: 0.45,
+    //   },
+    // },
+  },
+  // 라벨 위치
+  legend: {
+    position: 'right',
   },
   // responsive custom
   responsive: [
