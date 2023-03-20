@@ -47,4 +47,12 @@ public class VideoServiceImpl implements VideoService {
 				.collect(Collectors.toList())
 		);
 	}
+
+	@Override
+	public VideoDto.DetailResponse getDetail(Member member, String watchId) {
+		Video video = videoRepository.findByWatchId(watchId);
+		video.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, video).isPresent());
+		System.out.println(video);
+		return new VideoDto.DetailResponse(video);
+	}
 }
