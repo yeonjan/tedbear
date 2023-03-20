@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class VideoServiceImpl implements VideoService {
 		return new VideoDto.InfoListResponse(
 			recommendVideoList
 				.stream()
-				.sorted((a, b) -> Math.abs(a.getScore() - myScore) - Math.abs(b.getScore() - myScore))
+				.sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
 				.limit(resultMaxCnt)
 				.peek(x -> x.setBookmarked(
 					videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
