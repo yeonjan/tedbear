@@ -1,12 +1,10 @@
 package com.ssafy.tedbear.domain.video.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ssafy.tedbear.domain.video.entity.Video;
 
-import lombok.Builder;
 import lombok.Getter;
 
 public class VideoDto {
@@ -27,16 +25,8 @@ public class VideoDto {
 		Info data;
 
 		public InfoResponse(Video video) {
-			// Info data = Info.builder()
-			// 	.title(video.getTitle())
-			// 	.score(video.getScore())
-			// 	.watchId(video.getWatchId())
-			// 	.thumbnailUrl(video.getThumbnailUrl())
-			// 	.isBookMarked(video.isBookmarked())
-			// 	.build();
 			this.data = new Info(video);
 		}
-
 	}
 
 	@Getter

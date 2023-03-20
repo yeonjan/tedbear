@@ -21,7 +21,7 @@ public class VideoController {
 	final VideoService videoService;
 	final MemberRepository memberRepository;
 
-	// 추천 영상 12개
+	// 추천 영상 12개 뿌리기
 	@GetMapping("/recommend/list")
 	public ResponseEntity<VideoDto.InfoListResponse> getRecommendList() {
 		Member member = memberRepository.findById(1L).get();
