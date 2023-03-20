@@ -80,4 +80,5 @@ public class Member extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "member_no")
 	private MemberLevel memberLevel;
+
 }

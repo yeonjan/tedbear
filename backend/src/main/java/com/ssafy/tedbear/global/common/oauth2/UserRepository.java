@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 
 public interface UserRepository extends JpaRepository<Member, Long> {
-	Optional<Member> findByUid(String uid);
+	Optional<User> findByEmail(String email);
 }
