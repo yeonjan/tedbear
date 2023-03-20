@@ -31,11 +31,28 @@ const SeungPage = () => {
   // };
 
   return (
-    <div>
-      <img
-        src="https://img.youtube.com/vi/6Af6b_wyiwI/maxresdefault.jpg"
-        alt=""
-      />
+    <div
+      style={{
+        width: '50vw',
+        height: '50vh',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'black',
+        }}
+      >
+        <img
+          src="https://img.youtube.com/vi/6Af6b_wyiwI/maxresdefault.jpg"
+          alt=""
+          style={{ width: '50%', height: '50%' }}
+        />
+      </div>
     </div>
     // <YouTube
     //   videoId="6Af6b_wyiwI"

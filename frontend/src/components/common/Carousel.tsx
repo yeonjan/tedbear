@@ -15,9 +15,10 @@ const Wrapper = styled.div`
   width: 80vw;
 `;
 
-const ContentBox = styled.div`
+const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
-  /* transition: all 0.3s ease-out; */
+  transition: ${props => props.transition};
+  transform: translateX(-${props => props.transform}%);
   > * {
     width: 31%;
     margin-left: 2%;
@@ -58,9 +59,12 @@ const RightButton = styled.button`
 `;
 
 const Carousel = ({ data }: { data: Props[] }) => {
+  data = [data[4], data[5], data[6], ...data, data[0], data[1], data[2]];
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const transition = 'all 0.3s ease-out;';
+  const [currentIndex, setCurrentIndex] = useState(3);
   const [length, setLength] = useState(data.length);
+  const [transStyle, setTransStyle] = useState(transition);
 
   const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
     navigate('/learning', { state: e });
@@ -75,12 +79,26 @@ const Carousel = ({ data }: { data: Props[] }) => {
     if (currentIndex < length - 3) {
       setCurrentIndex(prevState => prevState + 1);
     }
+    if (currentIndex + 1 === length - 3) {
+      setTimeout(() => {
+        setCurrentIndex(3);
+        setTransStyle('');
+      }, 250);
+    }
+    setTransStyle(transition);
   };
 
   const prev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
+    if (currentIndex - 1 === 0) {
+      setTimeout(() => {
+        setCurrentIndex(7);
+        setTransStyle('');
+      }, 250);
+    }
+    setTransStyle(transition);
   };
 
   return (
@@ -96,7 +114,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
           </RightButton>
         </div>
       </TitleWithButton>
-      <ContentBox style={{ transform: `translateX(-${currentIndex * 33}%)` }}>
+      <ContentBox transition={transStyle} transform={currentIndex * 33}>
         {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}

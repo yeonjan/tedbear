@@ -13,18 +13,16 @@ const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
   width: 80vw;
-  height: 50vh;
 `;
 
 const ContentBox = styled.div`
   display: flex;
   transition: all 0.3s ease-out;
-  height: 100%;
+  height: 200px;
   > * {
     width: 18%;
     margin-left: 2%;
-    height: 80%;
-    object-fit: contain;
+    object-fit: cover;
     background-color: black;
     flex-shrink: 0;
     flex-grow: 1;

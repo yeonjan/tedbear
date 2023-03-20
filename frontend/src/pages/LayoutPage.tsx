@@ -19,10 +19,8 @@ const Wrapper = styled.div`
 const OutletWrapper = styled.div<OpenProps>`
   width: ${OpenProps =>
     !OpenProps.open ? 'calc(100% - 78px)' : 'calc(100% - 200px)'};
-  height: 100vh;
   position: relative;
   left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
-  height: 100vh;
   transition: all 0.5s ease;
   background-color: #eaeaea;
   ${props =>
