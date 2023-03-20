@@ -18,13 +18,20 @@ const Wrapper = styled.div`
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform}%);
+  transform: translateX(-${props => props.transform * 33}%);
+  @media (max-width: 768px) {
+    transform: translateX(-${props => props.transform * 50}%);
+  }
   > * {
     width: 31%;
     margin-left: 2%;
+    height: 27vh;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;
+    @media (max-width: 768px) {
+      width: 48%;
+    }
   }
 `;
 
@@ -114,7 +121,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
           </RightButton>
         </div>
       </TitleWithButton>
-      <ContentBox transition={transStyle} transform={currentIndex * 33}>
+      <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}

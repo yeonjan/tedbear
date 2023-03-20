@@ -18,7 +18,6 @@ const Wrapper = styled.div`
 const ContentBox = styled.div`
   display: flex;
   transition: all 0.3s ease-out;
-  height: 200px;
   > * {
     width: 18%;
     margin-left: 2%;
