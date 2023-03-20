@@ -2,41 +2,47 @@ import React from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 
 const SeungPage = () => {
-  const onPlayerReady: YouTubeProps['onReady'] = event => {
-    // access to player in all event handlers via event.target
-    event.target.playVideo();
-  };
+  // const onPlayerReady: YouTubeProps['onReady'] = event => {
+  //   // access to player in all event handlers via event.target
+  //   event.target.playVideo();
+  // };
 
-  const onPlayerStateChange: YouTubeProps['onStateChange'] = event => {
-    if (!event.data) {
-      const player = event.target;
-      player.seekTo(0);
-      player.playVideo();
-    }
-    // 1 재생 중, 2 일시중지, 0 종료 https://developers.google.com/youtube/iframe_api_reference?hl=ko#onPlaybackRateChange
-    // https://github.com/tjallingt/react-youtube/issues/187 재생시간 바꾸기
-  };
+  // const onPlayerStateChange: YouTubeProps['onStateChange'] = event => {
+  //   if (!event.data) {
+  //     const player = event.target;
+  //     player.seekTo(0);
+  //     player.playVideo();
+  //   }
+  //   // 1 재생 중, 2 일시중지, 0 종료 https://developers.google.com/youtube/iframe_api_reference?hl=ko#onPlaybackRateChange
+  //   // https://github.com/tjallingt/react-youtube/issues/187 재생시간 바꾸기
+  // };
 
-  const opts: YouTubeProps['opts'] = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      start: 5,
-      end: 10,
-      controls: 0,
-      autoplay: 1,
-      rel: 0, // 해당 채널의 관련 영상만 띄어줌
-    },
-  };
+  // const opts: YouTubeProps['opts'] = {
+  //   height: '390',
+  //   width: '640',
+  //   playerVars: {
+  //     // https://developers.google.com/youtube/player_parameters
+  //     start: 5,
+  //     end: 10,
+  //     controls: 0,
+  //     autoplay: 1,
+  //     rel: 0, // 해당 채널의 관련 영상만 띄어줌
+  //   },
+  // };
 
   return (
-    <YouTube
-      videoId="6Af6b_wyiwI"
-      opts={opts}
-      onReady={onPlayerReady}
-      onStateChange={onPlayerStateChange}
-    />
+    <div>
+      <img
+        src="https://img.youtube.com/vi/6Af6b_wyiwI/maxresdefault.jpg"
+        alt=""
+      />
+    </div>
+    // <YouTube
+    //   videoId="6Af6b_wyiwI"
+    //   opts={opts}
+    //   onReady={onPlayerReady}
+    //   onStateChange={onPlayerStateChange}
+    // />
   );
 };
 

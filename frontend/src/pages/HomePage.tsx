@@ -1,4 +1,6 @@
 import Carousel from 'components/common/Carousel';
+import ShortsCarousel from 'components/common/ShortsCarousel';
+import styled from 'styled-components';
 
 interface Props {
   url: string;
@@ -8,38 +10,39 @@ interface Props {
 const HomePage = () => {
   const data: Props[] = [
     {
-      url: 'https://img.youtube.com/vi/6Af6b_wyiwI/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/7tSP1M052Sg/maxresdefault.jpg',
       id: '6Af6b_wyiwI',
     },
     {
-      url: 'https://img.youtube.com/vi/RLESBHduKBs/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/tB5J9qgM2zI/maxresdefault.jpg',
       id: 'RLESBHduKBs',
     },
     {
-      url: 'https://img.youtube.com/vi/wL8X31XWZW8/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/oITW0XsZd3o/maxresdefault.jpg',
       id: 'wL8X31XWZW8',
     },
     {
-      url: 'https://img.youtube.com/vi/BEBKC7Hqfr0/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/YY6LCOJbve8/maxresdefault.jpg',
       id: 'BEBKC7Hqfr0',
     },
     {
-      url: 'https://img.youtube.com/vi/LDVyOnf0t9M/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/-k0p-DYYZKU/maxresdefault.jpg',
       id: 'LDVyOnf0t9M',
     },
     {
-      url: 'https://img.youtube.com/vi/JH_Pa1hOEVc/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/IStsehNAOL8/maxresdefault.jpg',
       id: 'JH_Pa1hOEVc',
     },
     {
-      url: 'https://img.youtube.com/vi/9XGm_uHit5g/maxresdefault.jpg',
+      url: 'https://i.ytimg.com/vi/UGdLvGbpehQ/maxresdefault.jpg',
       id: '9XGm_uHit5g',
     },
   ];
   return (
-    <>
+    <div>
       <Carousel data={data}></Carousel>
-    </>
+      <ShortsCarousel data={data}></ShortsCarousel>
+    </div>
   );
 };
 

@@ -13,14 +13,19 @@ const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
   width: 80vw;
+  height: 50vh;
 `;
 
 const ContentBox = styled.div`
   display: flex;
-  /* transition: all 0.3s ease-out; */
+  transition: all 0.3s ease-out;
+  height: 100%;
   > * {
-    width: 31%;
+    width: 18%;
     margin-left: 2%;
+    height: 80%;
+    object-fit: contain;
+    background-color: black;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;
@@ -40,24 +45,27 @@ const TitleWithButton = styled.div`
   }
 `;
 
-const LeftButton = styled.button`
+const LeftButton = styled.button<{ curIndex: number }>`
   /* position: absolute; */
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background-color: #7b7b7b;
   border: 1px solid black;
+  visibility: ${props => props.curIndex <= 0 && 'hidden'};
 `;
 
-const RightButton = styled.button`
+const RightButton = styled.button<{ curIndex: number; totalLength: number }>`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background-color: #7b7b7b;
+
   border: 1px solid black;
+  visibility: ${props => props.curIndex >= props.totalLength - 5 && 'hidden'};
 `;
 
-const Carousel = ({ data }: { data: Props[] }) => {
+const ShortsCarousel = ({ data }: { data: Props[] }) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(data.length);
@@ -72,7 +80,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
   // }, [data]); >> data가 바뀌지 않는다면 없어도 됨
 
   const next = () => {
-    if (currentIndex < length - 3) {
+    if (currentIndex < length - 5) {
       setCurrentIndex(prevState => prevState + 1);
     }
   };
@@ -88,15 +96,24 @@ const Carousel = ({ data }: { data: Props[] }) => {
       <TitleWithButton>
         <h1>Recommended Videos</h1>
         <div className="buttom-wrapper">
-          <LeftButton onClick={prev}>
+          <LeftButton
+            onClick={prev}
+            className="left-arrow"
+            curIndex={currentIndex}
+          >
             <ArrowBackIosNewIcon />
           </LeftButton>
-          <RightButton onClick={next} className="right-arrow">
+          <RightButton
+            onClick={next}
+            className="right-arrow"
+            curIndex={currentIndex}
+            totalLength={length}
+          >
             <ArrowForwardIosIcon />
           </RightButton>
         </div>
       </TitleWithButton>
-      <ContentBox style={{ transform: `translateX(-${currentIndex * 33}%)` }}>
+      <ContentBox style={{ transform: `translateX(-${currentIndex * 20}%)` }}>
         {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}
@@ -105,4 +122,4 @@ const Carousel = ({ data }: { data: Props[] }) => {
   );
 };
 
-export default Carousel;
+export default ShortsCarousel;
