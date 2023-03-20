@@ -98,7 +98,7 @@ const StartBtn = styled.button`
   box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
 `;
 
-// styled svg
+// styled svg ====================================================
 const BigWaveImg1 = styled.img<ToggleStyledProps>`
   width: 100%;
   z-index: -1;
@@ -225,12 +225,12 @@ const PinkBallImg = styled(GreenBallImg)`
   left: 70%;
 `;
 
-// 카드 영역
+// 카드 영역 ====================================================
 const Content1 = styled.div`
-  /* background-color: yellow; */
+  background-color: yellow;
   width: 100%;
-  min-height: 100vh;
-  max-height: 100vh;
+  /* min-height: 100vh; */
+  max-height: 800px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -239,7 +239,7 @@ const Content1 = styled.div`
 `;
 
 const Content2 = styled(Content1)`
-  /* background-color: purple; */
+  background-color: purple;
 `;
 
 const Content3 = styled(Content1)`
@@ -336,7 +336,7 @@ const TopImg = styled.img`
   width: 100%;
 `;
 
-// 토글 버튼!!!!!!!!!
+// 토글 버튼 ====================================================
 const ToggleBtnBox = styled.div`
   position: absolute;
   top: 20px;
