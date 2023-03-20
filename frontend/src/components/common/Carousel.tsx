@@ -66,7 +66,7 @@ const RightButton = styled.button`
 `;
 
 const Carousel = ({ data }: { data: Props[] }) => {
-  data = [data[4], data[5], data[6], ...data, data[0], data[1], data[2]];
+  data = [...data.slice(4, 7), ...data, ...data.slice(0, 3)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(3);
@@ -101,7 +101,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
     }
     if (currentIndex - 1 === 0) {
       setTimeout(() => {
-        setCurrentIndex(7);
+        setCurrentIndex(length - 6);
         setTransStyle('');
       }, 250);
     }

@@ -15,17 +15,25 @@ const Wrapper = styled.div`
   width: 80vw;
 `;
 
-const ContentBox = styled.div`
+const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
-  transition: all 0.3s ease-out;
+  transition: ${props => props.transition};
+  transform: translateX(-${props => props.transform * 20}%);
+  @media (max-width: 768px) {
+    transform: translateX(-${props => props.transform * 25}%);
+  }
   > * {
     width: 18%;
     margin-left: 2%;
+    height: 27vh;
     object-fit: cover;
     background-color: black;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;
+    @media (max-width: 768px) {
+      width: 23%;
+    }
   }
 `;
 
@@ -42,30 +50,30 @@ const TitleWithButton = styled.div`
   }
 `;
 
-const LeftButton = styled.button<{ curIndex: number }>`
+const LeftButton = styled.button`
   /* position: absolute; */
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background-color: #7b7b7b;
   border: 1px solid black;
-  visibility: ${props => props.curIndex <= 0 && 'hidden'};
 `;
 
-const RightButton = styled.button<{ curIndex: number; totalLength: number }>`
+const RightButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background-color: #7b7b7b;
-
   border: 1px solid black;
-  visibility: ${props => props.curIndex >= props.totalLength - 5 && 'hidden'};
 `;
 
 const ShortsCarousel = ({ data }: { data: Props[] }) => {
+  data = [...data.slice(2, 7), ...data, ...data.slice(0, 5)];
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const transition = 'all 0.3s ease-out;';
+  const [currentIndex, setCurrentIndex] = useState(5);
   const [length, setLength] = useState(data.length);
+  const [transStyle, setTransStyle] = useState(transition);
 
   const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
     navigate('/learning', { state: e });
@@ -80,12 +88,28 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
     if (currentIndex < length - 5) {
       setCurrentIndex(prevState => prevState + 1);
     }
+    if (currentIndex + 1 === length - 5) {
+      setTimeout(() => {
+        setCurrentIndex(5);
+        setTransStyle('');
+      }, 250);
+    }
+    setTransStyle(transition);
   };
 
   const prev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
+    if (currentIndex - 1 === 0) {
+      setTimeout(() => {
+        setCurrentIndex(length - 10);
+        // 맨 뒤 5개, 인덱스 1개, 5개 열에서 4개
+        console.log('도착!');
+        setTransStyle('');
+      }, 250);
+    }
+    setTransStyle(transition);
   };
 
   return (
@@ -93,24 +117,15 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
       <TitleWithButton>
         <h1>Recommended Videos</h1>
         <div className="buttom-wrapper">
-          <LeftButton
-            onClick={prev}
-            className="left-arrow"
-            curIndex={currentIndex}
-          >
+          <LeftButton onClick={prev}>
             <ArrowBackIosNewIcon />
           </LeftButton>
-          <RightButton
-            onClick={next}
-            className="right-arrow"
-            curIndex={currentIndex}
-            totalLength={length}
-          >
+          <RightButton onClick={next} className="right-arrow">
             <ArrowForwardIosIcon />
           </RightButton>
         </div>
       </TitleWithButton>
-      <ContentBox style={{ transform: `translateX(-${currentIndex * 20}%)` }}>
+      <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}
