@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ExpStyle = styled.div`
   .exp-paper {
-    width: 21vw;
+    width: 33.5vw;
     height: 15vh;
     background-color: white;
     border-radius: 20px;
@@ -111,7 +111,7 @@ export default function Exp() {
           series={series}
           type="bar"
           height={70}
-          width={300}
+          width={500}
         />
       </div>
     </ExpStyle>
