@@ -24,13 +24,12 @@ public class SentenceDetailDto {
 		this.content = sentence.getContent();
 	}
 
+	@Getter
 	public static class ListResponse {
-		List<SentenceDetailDto> data;
+		List<SentenceDetailDto> recommendList;
 
 		public ListResponse(List<Sentence> list) {
-			//List<VideoDto.Info> data = videoList.stream().map(VideoDto.Info::new).collect(Collectors.toList());
-
-			this.data = list.stream().map(((sentence) -> new SentenceDetailDto(sentence))).collect(Collectors.toList());
+			this.recommendList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 	}
 

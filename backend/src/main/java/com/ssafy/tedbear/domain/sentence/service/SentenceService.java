@@ -4,12 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.tedbear.domain.bookmark.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
@@ -27,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SentenceService {
 	private final SentenceRepository sentenceRepository;
 	private final SpeakingRecordRepository speakingRecordRepository;
+	private final SentenceBookmarkRepository sentenceBookmarkRepository;
 	final int resultMaxCnt = 12;
 
 	private Sentence getSentence(Long sentenceNo) {
@@ -47,34 +51,25 @@ public class SentenceService {
 
 	}
 
-	public Member getRecommendList(Member member) {
+	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
 		int memberScore = member.getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
 		int deltaScore = 1500;
 
 		List<Sentence> recommendList = new ArrayList<>();
 		do {
-			recommendList.addAll(sentenceRepository.findByScoreBetween(
-				Math.max(1, recommendScoreFlag - deltaScore),
+			recommendList.addAll(sentenceRepository.findByScoreBetween(Math.max(1, recommendScoreFlag - deltaScore),
 				recommendScoreFlag + deltaScore));
 			deltaScore += 1000;
 			System.out.println(recommendList.size());
 		} while (recommendList.size() < resultMaxCnt);
 
-		// new SentenceDetailDto.ListResponse(
-		// 	recommendList.stream()
-		// 		.limit(resultMaxCnt)
-		// 		.peek(a -> a.setBookmarked(sentenceBookmarkRepository)));
-		// return new VideoDto.InfoListResponse(
-		// 	recommendList
-		// 		.stream()
-		// 		.sorted((a, b) -> Math.abs(a.getScore() - memberScore) - Math.abs(b.getScore() - memberScore))
-		// 		.limit(resultMaxCnt)
-		// 		.peek(x -> x.setBookmarked(
-		// 			videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
-		// 		.collect(Collectors.toList())
-		// );
-		return member;
+		return new SentenceDetailDto.ListResponse(recommendList.stream()
+			.limit(resultMaxCnt)
+			.peek(sentence -> sentence.setBookmarked(
+				sentenceBookmarkRepository.findByMemberAndSentence(member, sentence).isPresent()))
+			.collect(Collectors.toList()));
+
 	}
 
 }

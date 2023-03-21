@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
 
@@ -40,12 +41,12 @@ public class SentenceController {
 	}
 
 	@GetMapping("/recommend/list")
-	public ResponseEntity<?> getRecommendList() {
+	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendList() {
 		Member member = memberRepository.findById(2L)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 
-		sentenceService.getRecommendList(member);
-		return null;
+		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member);
+		return new ResponseEntity<>(recommendList, HttpStatus.OK);
 	}
 
 }
