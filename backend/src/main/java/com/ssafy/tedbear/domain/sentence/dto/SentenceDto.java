@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
-import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.Getter;
 

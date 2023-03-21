@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,15 @@ public class SentenceController {
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 		sentenceService.saveSpeakingRecord(member, speakingDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/recommend/list")
+	public ResponseEntity<?> getRecommendList() {
+		Member member = memberRepository.findById(2L)
+			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+
+		sentenceService.getRecommendList(member);
+		return null;
 	}
 
 }

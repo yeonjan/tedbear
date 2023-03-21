@@ -1,0 +1,14 @@
+package com.ssafy.tedbear.domain.bookmark.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.ssafy.tedbear.domain.bookmark.entity.SentenceBookmark;
+import com.ssafy.tedbear.domain.member.entity.Member;
+
+@Repository
+public interface SentenceBookmarkRepository extends JpaRepository<SentenceBookmark, Long> {
+	Optional<SentenceBookmark> findByMemberAndSentence(Member member);
+}
