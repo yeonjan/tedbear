@@ -71,7 +71,7 @@ const CircularStreak = () => {
             <Tooltip
               key={data.index}
               placement="top"
-              content={`count: ${data.count || 0}`}
+              content={`${data.count || 0} on ${data.date}`}
             >
               <rect {...props} />
             </Tooltip>
