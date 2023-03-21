@@ -81,6 +81,7 @@ const options = {
 export default function PieChart() {
   return (
     <div>
+      <h2>Statistics</h2>
       <Chart options={options} series={series} type="polarArea" height={300} />
     </div>
   );

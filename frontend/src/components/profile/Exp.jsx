@@ -90,6 +90,7 @@ const options = {
 export default function Exp() {
   return (
     <div>
+      <h2>Exp</h2>
       <Chart
         options={options}
         series={series}

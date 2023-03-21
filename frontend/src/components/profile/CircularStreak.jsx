@@ -28,6 +28,7 @@ const CircularStreak = () => {
 
   return (
     <div>
+      <h2>Streak</h2>
       {/* 원 ~ 사각형  */}
       <input
         type="range"
