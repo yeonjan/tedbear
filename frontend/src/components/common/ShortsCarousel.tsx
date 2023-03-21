@@ -25,9 +25,10 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   > * {
     width: 18%;
     margin-left: 2%;
-    height: 27vh;
+    /* height: 27vh; */
+    height: 300px;
     object-fit: cover;
-    background-color: black;
+    /* background-color: black; */
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;

@@ -1,7 +1,9 @@
 import React from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
+import { getVideoRecomm } from 'utils/api/recommApi';
 
 const SeungPage = () => {
+  getVideoRecomm();
   // const onPlayerReady: YouTubeProps['onReady'] = event => {
   //   // access to player in all event handlers via event.target
   //   event.target.playVideo();

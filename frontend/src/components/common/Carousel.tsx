@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-interface Props {
-  url: string;
-  id: string;
+interface HomeRecomm {
+  thumbnailUrl: string;
+  title: string;
+  watchId: string;
+  score: number;
+  bookMarked: boolean;
 }
 
 const Wrapper = styled.div`
@@ -25,7 +28,8 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   > * {
     width: 31%;
     margin-left: 2%;
-    height: 27vh;
+    height: 200px;
+    /* height: 27vh; */
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;
@@ -65,8 +69,11 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const Carousel = ({ data }: { data: Props[] }) => {
-  data = [...data.slice(4, 7), ...data, ...data.slice(0, 3)];
+const Carousel = ({ data }: { data: HomeRecomm[] }) => {
+  if (data.length !== 0) {
+    // 빈배열에도 slice 적용되는지 확인
+    data = [...data.slice(4, 7), ...data, ...data.slice(0, 3)];
+  }
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(3);
@@ -123,7 +130,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.url} alt="" />;
+          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
         })}
       </ContentBox>
     </Wrapper>
