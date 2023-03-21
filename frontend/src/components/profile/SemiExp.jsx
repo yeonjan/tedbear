@@ -4,17 +4,20 @@ import styled from 'styled-components';
 const SemiStyle = styled.div`
   .exp-paper {
     width: 33vw;
-    height: 40vh;
+    height: 44vh;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
   .exp-name {
-    padding: 10px 0px 0px 230px;
+    text-align: center;
+    padding: 20px 0px 0px 0px;
+    font-size: 50px;
+    color: #6255a4;
   }
 `;
 
-const series = [76];
+const series = [76]; // 여기에 경험치 % 넣고
 const options = {
   colors: ['#8F84CE'],
   chart: {
@@ -56,7 +59,7 @@ const options = {
   },
   grid: {
     padding: {
-      top: -10,
+      top: -30,
     },
   },
   fill: {
@@ -70,14 +73,15 @@ const options = {
       stops: [0, 50, 53, 91],
     },
   },
-  labels: ['Average Results'],
+  labels: ['Experience'],
 };
 
 export default function SemiExp() {
   return (
     <SemiStyle>
       <div className="exp-paper">
-        <h1 className="exp-name">Exp</h1>
+        <p className="exp-name">LV.20</p>
+        {/* 여기에 레벨 넣기 */}
         <Chart
           options={options}
           series={series}
