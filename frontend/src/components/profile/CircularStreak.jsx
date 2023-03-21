@@ -31,8 +31,9 @@ const CircularStreak = () => {
       {/* 원 ~ 사각형  */}
       <input
         type="range"
+        // 굴곡
         min="0"
-        max="5"
+        max="10"
         step="0.1"
         value={range}
         onChange={e => setRange(e.target.value)}
@@ -49,9 +50,13 @@ const CircularStreak = () => {
         {size === 0 ? 'Gradation Hide' : 'Gradation Show'}
       </label>
       <HeatMap
-        width={600}
+        // 히트맵 크기
+        width={1200}
+        height={180}
+        // 조각 크기
+        rectSize={20}
         value={value}
-        legendCellSize={size}
+        legendCellSize={size} // legend 크기 ( show여부 )
         startDate={new Date('2023/01/01')}
         // legendRender={props => <rect {...props} rx={!enableCircle ? 0 : 5} />}
         rectProps={{
