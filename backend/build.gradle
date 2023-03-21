@@ -21,6 +21,8 @@ repositories {
 dependencies {
     // jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    // configuration
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
