@@ -69,7 +69,15 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const Carousel = ({ data }: { data: HomeRecomm[] }) => {
+const Carousel = ({
+  data,
+  setOpenModal,
+  setShortsId,
+}: {
+  data: HomeRecomm[];
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShortsId: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
@@ -127,7 +135,17 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
+          return (
+            <img
+              key={idx}
+              src={Thumnail.thumbnailUrl}
+              alt=""
+              onClick={() => {
+                setOpenModal(true);
+                setShortsId(Thumnail.watchId);
+              }}
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>

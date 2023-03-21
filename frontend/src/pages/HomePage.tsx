@@ -21,6 +21,7 @@ interface HomeRecomm {
 const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [shorts, setShorts] = useState<string>('6Af6b_wyiwI');
 
   // const data: Props[] = [
   //   {
@@ -63,8 +64,12 @@ const HomePage = () => {
 
   return (
     <div>
-      {modalOpen && <ShortsModal setOpenModal={setModalOpen} />}
-      <Carousel data={videoData}></Carousel>
+      {modalOpen && <ShortsModal setOpenModal={setModalOpen} shorts={shorts} />}
+      <Carousel
+        data={videoData}
+        setOpenModal={setModalOpen}
+        setShortsId={setShorts}
+      ></Carousel>
       {/* <ShortsCarousel data={data}></ShortsCarousel> */}
     </div>
   );

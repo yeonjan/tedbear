@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  shorts: string;
 }
 
 const DarkBackground = styled.div`
@@ -47,7 +48,7 @@ const YoutubeBox = styled.div`
   align-items: center;
 `;
 
-const ShortsModal = ({ setOpenModal }: Props) => {
+const ShortsModal = ({ setOpenModal, shorts }: Props) => {
   <DarkBackground onClick={() => setOpenModal(false)} />;
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
@@ -85,7 +86,7 @@ const ShortsModal = ({ setOpenModal }: Props) => {
       <YoutubeBox>
         <Wrapper>
           <CustomYoutube
-            videoId="6Af6b_wyiwI"
+            videoId={shorts}
             opts={opts}
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
