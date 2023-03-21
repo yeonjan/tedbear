@@ -3,10 +3,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # Mysql Settings
     # url: jdbc:mysql://3.36.50.141:3306/tedbearDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    url: jdbc:mysql://localhost:3306/tedbearDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     # password: ${MYSQL_ROOT_PASSWORD}
-    password: dkssud18
+    password: root
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -21,7 +21,7 @@ spring:
       hibernate:
 
   profiles:
-    include: connextion, oauth2, app
+    include: google, kakao, naver
   security:
     jwt:
       token:
@@ -40,9 +40,9 @@ spring:
               - email
           kakao:
             client-name: kakao
-            client-id: ${kakao-client-id}
-            client-secret: ${kakao-client-secret}
-            redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
+            client-id: c9575e3bbe92a73c899d6178ca3a0f91
+            #            client-secret: yPLwaOoT2mTSgRZnNMCUOPTz7cpcPBi3
+            redirect-uri: "http://localhost:8080/users"
             authorization-grant-type: authorization_code
             scope:
               - account_email
