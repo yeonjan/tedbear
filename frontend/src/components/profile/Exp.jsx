@@ -1,4 +1,18 @@
 import Chart from 'react-apexcharts';
+import styled from 'styled-components';
+
+const ExpStyle = styled.div`
+  .exp-paper {
+    width: 21vw;
+    height: 15vh;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .exp-name {
+    padding: 10px 0px 0px 10px;
+  }
+`;
 
 const series = [
   {
@@ -89,15 +103,17 @@ const options = {
 
 export default function Exp() {
   return (
-    <div>
-      <h2>Exp</h2>
-      <Chart
-        options={options}
-        series={series}
-        type="bar"
-        height={70}
-        width={300}
-      />
-    </div>
+    <ExpStyle>
+      <div className="exp-paper">
+        <h2 className="exp-name">Exp</h2>
+        <Chart
+          options={options}
+          series={series}
+          type="bar"
+          height={70}
+          width={300}
+        />
+      </div>
+    </ExpStyle>
   );
 }
