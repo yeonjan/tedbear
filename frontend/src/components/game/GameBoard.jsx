@@ -44,8 +44,9 @@ const Game = styled.div`
         background: ${props => props.theme.mainLightColor};
       }
       .back {
-        font-size: 35px;
-        line-height: 120px;
+        overflow: auto;
+        font-size: 20px;
+        /* line-height: 120px; */
         cursor: pointer;
         color: ${props => props.theme.whiteColor};
         display: flex;
@@ -53,9 +54,10 @@ const Game = styled.div`
         justify-content: center;
       }
       .front {
+        overflow: auto;
         transform: rotateY(180deg);
-        font-size: 40px;
-        line-height: 110px;
+        font-size: 20px;
+        /* line-height: 120px; */
         display: flex;
         cursor: pointer;
         align-items: center;
@@ -105,6 +107,7 @@ const GameBoard = () => {
   const navigate = useNavigate();
   const [Loaded, setLoaded] = useState(false);
   const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
+  const [cardList, setCardList] = useState([]);
 
   useEffect(() => {
     console.log('hi');
@@ -112,7 +115,7 @@ const GameBoard = () => {
       await authApi
         .get(`member/test/problem`)
         .then(response => {
-          const data = response.data.wordMeanList.map((item, index) => {
+          const data = response.data.sentenceMeanList.map((item, index) => {
             return { ...item, flipped: false, id: index };
           });
           console.log(data);
@@ -125,8 +128,6 @@ const GameBoard = () => {
     setLoaded(true);
     fetchData();
   }, []);
-
-  const [cardList, setCardList] = useState([]);
 
   const handleClick = index => {
     let updateCards = cardList.map(card => {
