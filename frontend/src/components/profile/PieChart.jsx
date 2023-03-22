@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const ChartStyle = styled.div`
   .chart-paper {
-    width: 30vw;
-    height: 60vh;
+    width: 34vw;
+    height: 63vh;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -74,7 +74,7 @@ const options = {
   },
   // 라벨 위치
   legend: {
-    position: 'bottom',
+    position: 'right',
   },
   // responsive custom
   responsive: [
@@ -83,7 +83,7 @@ const options = {
       options: {
         chart: {
           position: 'left',
-          width: 200,
+          width: 250,
         },
         legend: {
           position: 'bottom',
