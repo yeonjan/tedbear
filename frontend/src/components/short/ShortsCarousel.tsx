@@ -133,7 +133,7 @@ const ShortsCarousel = ({
           return (
             <img
               key={idx}
-              src="https://i.ytimg.com/vi/7tSP1M052Sg/hq1.jpg"
+              src={'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'}
               alt=""
               onClick={() => {
                 setOpenModal(true);
