@@ -17,7 +17,7 @@ const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [shorts, setShorts] = useState<string>('6Af6b_wyiwI');
+  const [shorts, setShorts] = useState<Shorts | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,16 +32,12 @@ const HomePage = () => {
   return (
     <div>
       {modalOpen && <ShortsModal setOpenModal={setModalOpen} shorts={shorts} />}
-      <Carousel
-        data={videoData}
+      <Carousel data={videoData}></Carousel>
+      <ShortsCarousel
+        data={shortsData}
         setOpenModal={setModalOpen}
         setShortsId={setShorts}
-      ></Carousel>
-      {/* <ShortsCarousel
-        data={data}
-        setOpenModal={setModalOpen}
-        setShortsId={setShorts}
-      ></ShortsCarousel> */}
+      ></ShortsCarousel>
     </div>
   );
 };

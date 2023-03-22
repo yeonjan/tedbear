@@ -71,7 +71,7 @@ const ShortsCarousel = ({
 }: {
   data: Shorts[];
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShortsId: React.Dispatch<React.SetStateAction<string>>;
+  setShortsId: React.Dispatch<React.SetStateAction<Shorts | null>>;
 }) => {
   data = [...data.slice(2, 7), ...data, ...data.slice(0, 5)];
   const navigate = useNavigate();
@@ -131,11 +131,19 @@ const ShortsCarousel = ({
         </div>
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
-        {/* {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.url} alt="" />;
-          setOpenModal(true);
-          setShortsId(Thumnail.watchId);
-        })} */}
+        {data.map((Thumnail, idx) => {
+          return (
+            <img
+              key={idx}
+              src="https://i.ytimg.com/vi/7tSP1M052Sg/hq1.jpg"
+              alt=""
+              onClick={() => {
+                setOpenModal(true);
+                setShortsId(Thumnail);
+              }}
+            />
+          );
+        })}
       </ContentBox>
     </Wrapper>
   );
