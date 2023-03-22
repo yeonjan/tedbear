@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,9 +82,17 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	@Transactional
 	public VideoInfoList getWatchingList(Member member, int page) {
-		PageRequest pageRequest = PageRequest.of(page, resultMaxCnt, Sort.by(Sort.Direction.DESC, "updatedAt"));
-		return null;
+		System.out.println("page : " + page);
+		PageRequest pageRequest = PageRequest.of(page, resultMaxCnt,
+			Sort.by(Sort.Direction.DESC, "updatedDate"));
+		Slice<WatchingVideo> watchingVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageRequest,
+			member, false);
+
+		watchingVideoSlice.get().forEach(System.out::println);
+		return new VideoInfoList(watchingVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
+			Collectors.toList()));
 	}
 
 	@Override
@@ -110,16 +119,22 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	@Transactional
 	public void saveCompleteRecord(Member member, WatchingVideoInfo request) {
-		// Only Insert
-		WatchingVideo watchingVideo = WatchingVideo.builder()
-			.video(Video.builder().no(request.getVideoNo()).build())
-			.member(member)
-			.updatedDate(LocalDateTime.now())
-			.videoProgressTime(request.getVideoProgressTime())
-			.videoStatus(true)
-			.build();
-
+		// Insert Or Update !!
+		Video video = Video.builder().no(request.getVideoNo()).build();
+		WatchingVideo watchingVideo = watchingVideoRepository.findByMemberAndVideo(member, video)
+			.map(WatchingVideo::setUpdatedDateNow)
+			.map(existWatchingVideo -> existWatchingVideo.setVideoProgressTime(request.getVideoProgressTime()))
+			.map(existWatchingVideo -> existWatchingVideo.setVideoStatus(true))
+			.orElse(WatchingVideo.builder()
+				.video(video)
+				.member(member)
+				.updatedDate(LocalDateTime.now())
+				.videoProgressTime(request.getVideoProgressTime())
+				.videoStatus(true)
+				.build());
 		watchingVideoRepository.save(watchingVideo);
+
 	}
 }

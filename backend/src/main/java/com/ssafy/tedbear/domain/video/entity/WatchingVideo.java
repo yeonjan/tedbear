@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,5 +60,20 @@ public class WatchingVideo {
 	public WatchingVideo setVideoProgressTime (int videoProgressTime) {
 		this.videoProgressTime = videoProgressTime;
 		return this;
+	}
+
+	public WatchingVideo setVideoStatus(boolean videoStatus) {
+		this.videoStatus = videoStatus;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "WatchingVideo{" +
+			"no=" + no +
+			", videoProgressTime=" + videoProgressTime +
+			", videoStatus=" + videoStatus +
+			", updatedDate=" + updatedDate +
+			'}';
 	}
 }
