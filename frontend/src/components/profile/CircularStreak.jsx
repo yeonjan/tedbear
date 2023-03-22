@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StreakStyle = styled.div`
   .streak-paper {
-    width: 80vw;
+    width: 82vw;
     height: 38vh;
     background-color: white;
     border-radius: 20px;
