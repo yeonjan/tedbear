@@ -28,10 +28,10 @@ public class SentenceDetailDto {
 
 	@Getter
 	public static class ListResponse {
-		List<SentenceDetailDto> recommendList;
+		List<SentenceDetailDto> sentenceList;
 
 		public ListResponse(List<Sentence> list) {
-			this.recommendList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
+			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 	}
 
