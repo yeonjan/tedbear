@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-interface Props {
-  url: string;
-  id: string;
+interface HomeRecomm {
+  thumbnailUrl: string;
+  title: string;
+  watchId: string;
+  score: number;
+  bookMarked: boolean;
 }
 
 const Wrapper = styled.div`
@@ -18,22 +21,20 @@ const Wrapper = styled.div`
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform * 20}%);
+  transform: translateX(-${props => props.transform * 33}%);
   @media (max-width: 768px) {
-    transform: translateX(-${props => props.transform * 25}%);
+    transform: translateX(-${props => props.transform * 50}%);
   }
   > * {
-    width: 18%;
+    width: 31%;
     margin-left: 2%;
+    height: 200px;
     /* height: 27vh; */
-    height: 300px;
-    object-fit: cover;
-    /* background-color: black; */
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 10%;
     @media (max-width: 768px) {
-      width: 23%;
+      width: 48%;
     }
   }
 `;
@@ -68,11 +69,19 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const ShortsCarousel = ({ data }: { data: Props[] }) => {
-  data = [...data.slice(2, 7), ...data, ...data.slice(0, 5)];
+const Carousel = ({
+  data,
+  setOpenModal,
+  setShortsId,
+}: {
+  data: HomeRecomm[];
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShortsId: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
-  const [currentIndex, setCurrentIndex] = useState(5);
+  const [currentIndex, setCurrentIndex] = useState(3);
   const [length, setLength] = useState(data.length);
   const [transStyle, setTransStyle] = useState(transition);
 
@@ -80,18 +89,17 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
     navigate('/learning', { state: e });
   };
 
-  // useEffect(() => {
-  //   console.log('렌더링');
-  //   setLength(data.length);
-  // }, [data]); >> data가 바뀌지 않는다면 없어도 됨
+  useEffect(() => {
+    setLength(data.length);
+  }, [data]);
 
   const next = () => {
-    if (currentIndex < length - 5) {
+    if (currentIndex < length - 3) {
       setCurrentIndex(prevState => prevState + 1);
     }
-    if (currentIndex + 1 === length - 5) {
+    if (currentIndex + 1 === length - 3) {
       setTimeout(() => {
-        setCurrentIndex(5);
+        setCurrentIndex(3);
         setTransStyle('');
       }, 250);
     }
@@ -104,9 +112,7 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
     }
     if (currentIndex - 1 === 0) {
       setTimeout(() => {
-        setCurrentIndex(length - 10);
-        // 맨 뒤 5개, 인덱스 1개, 5개 열에서 4개
-        console.log('도착!');
+        setCurrentIndex(length - 6);
         setTransStyle('');
       }, 250);
     }
@@ -128,11 +134,21 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.url} alt="" />;
+          return (
+            <img
+              key={idx}
+              src={Thumnail.thumbnailUrl}
+              alt=""
+              onClick={() => {
+                setOpenModal(true);
+                setShortsId(Thumnail.watchId);
+              }}
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>
   );
 };
 
-export default ShortsCarousel;
+export default Carousel;
