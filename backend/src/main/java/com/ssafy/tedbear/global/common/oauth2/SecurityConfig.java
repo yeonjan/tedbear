@@ -3,10 +3,15 @@ package com.ssafy.tedbear.global.common.oauth2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAccessDeniedHandler;
+import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationEntryPoint;
+import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationFilter;
+import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
+import com.ssafy.tedbear.global.common.oauth2.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,16 +30,6 @@ public class SecurityConfig {
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
 		return new OAuth2LoginSuccessHandler(userRepository, jwtProvider);
 	}
-
-	// @Bean
-	// public WebSecurityCustomizer webSecurityCustomizer() {
-	// 	return web -> {
-	// 		web.ignoring()
-	// 			.antMatchers(
-	// 				"users/redirect/"
-	// 			);
-	// 	};
-	// }
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -60,11 +55,11 @@ public class SecurityConfig {
 			.baseUri("/users")
 
 			.and()
-			// .successHandler(authenticationSuccessHandler())
+			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦
 			.userInfoEndpoint() // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정을 저장
 			.userService(customOAuth2UserService); // OAuth2 로그인 성공 시, 후작업을 진행할 UserService 인터페이스 구현체 등록
 		// jwt 사용을 위해 session 해제
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		// http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// jwt 필터 추가
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
