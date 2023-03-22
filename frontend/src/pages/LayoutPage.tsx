@@ -47,16 +47,17 @@ const DarkBackground = styled.div`
 const LayoutPage = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   // 네브바 open state
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <Wrapper>
-      {/* <DarkBackground></DarkBackground> */}
+      {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
       {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
       <OutletWrapper open={open} center={pathname}>
-        <Outlet />
+        <Outlet context={{ modalOpen, setModalOpen }} />
       </OutletWrapper>
     </Wrapper>
   );

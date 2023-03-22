@@ -83,7 +83,6 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
 
   return (
     <div>
-      <DarkBackground onClick={() => setOpenModal(false)} />
       <YoutubeBox>
         <Wrapper>
           <CustomYoutube
