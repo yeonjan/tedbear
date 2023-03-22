@@ -15,7 +15,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       use-new-id-generator-mappings: false
     properties:
       hibernate:
@@ -23,10 +23,6 @@ spring:
   profiles:
     include: google, kakao, naver
   security:
-    jwt:
-      token:
-        secret-key: ${secret-key}
-        expire-length: 3600000
     oauth2:
       client:
         registration:
@@ -40,14 +36,12 @@ spring:
               - email
           kakao:
             client-name: kakao
-            client-id: c9575e3bbe92a73c899d6178ca3a0f91
-            #            client-secret: yPLwaOoT2mTSgRZnNMCUOPTz7cpcPBi3
+            client-id: ${kakao-client-id}
             redirect-uri: "http://localhost:8080/users"
             authorization-grant-type: authorization_code
             scope:
               - account_email
               - profile_nickname
-              - profile_image
             client-authentication-method: POST
           naver:
             client-name: naver
@@ -58,7 +52,6 @@ spring:
             scope:
               - email
               - name
-              - profile_image
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
@@ -74,10 +67,6 @@ spring:
 app:
   auth:
     token-secret: ${secret-key}
-    token-expiration-time: 12096000
-  oauth2:
-    authorizedRedirectUris:
-      - http://localhost:3000/oauth/token
 
 
 logging:
