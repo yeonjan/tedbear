@@ -27,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
-	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
