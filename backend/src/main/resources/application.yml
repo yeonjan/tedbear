@@ -78,3 +78,6 @@ logging:
             sql:
               BasicBinder: off
     com.ssafy.tedbear: debug
+
+default-value:
+  score: 30000

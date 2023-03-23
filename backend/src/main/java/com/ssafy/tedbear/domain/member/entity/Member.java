@@ -88,6 +88,10 @@ public class Member extends BaseEntity {
 		return memberScore.getScore();
 	}
 
+	public void initScore(int defaultScore, int testResult) {
+		memberScore.initScore(defaultScore, testResult);
+	}
+
 	public Member update(String nickname) {
 		this.nickname = nickname;
 		return this;
