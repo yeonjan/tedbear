@@ -75,7 +75,7 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<WordBookmark> wordBookmarkList = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "score_no")
 	private MemberScore memberScore;
 
@@ -84,17 +84,13 @@ public class Member extends BaseEntity {
 	private MemberLevel memberLevel;
 
 	//--//
-	public int getScore() {
+	public Integer getScore() {
 		return memberScore.getScore();
 	}
 
-	public Member updateNickname(String nickname) {
-		this.nickname = nickname;
-		return this;
-	}
-
-	public Member updateRefreshToken(String refreshToken){
+	public Member updateNicknameAndRefreshToken(String nickname, String refreshToken){
 		this.refreshToken = refreshToken;
+		this.nickname = nickname;
 		return this;
 	}
 }
