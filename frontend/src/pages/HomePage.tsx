@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useOutletContext } from 'react-router-dom';
+import SearchBar from 'components/common/SearchBar';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -46,6 +47,7 @@ const HomePage = () => {
     <Wrapper>
       <div>
         {modalOpen && <ShortsModal shorts={shorts} />}
+        <SearchBar></SearchBar>
         <Carousel data={videoData}></Carousel>
         <ShortsCarousel
           data={shortsData}
