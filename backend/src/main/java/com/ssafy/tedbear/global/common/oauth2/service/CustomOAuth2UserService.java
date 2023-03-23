@@ -1,5 +1,6 @@
 package com.ssafy.tedbear.global.common.oauth2.service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,7 +48,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	}
 
 	private Member saveOrUpdate(CustomOAuth2User oAuth2User) {
-		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).build();
+		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
 		Member member = memberRepository.findByUid(oAuth2User.getUid())
 			.map(entity -> entity.updateNickname(oAuth2User.getNickname()))
 			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));

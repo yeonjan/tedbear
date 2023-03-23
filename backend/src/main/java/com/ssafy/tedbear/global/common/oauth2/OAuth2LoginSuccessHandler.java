@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	}
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
-		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).build();
+		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
 		Member member = memberRepository.findByUid(oAuth2User.getUid())
 			.map(entity -> entity.updateRefreshToken(refreshToken))
 			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));
