@@ -19,6 +19,13 @@ interface Props {
   modalOpen: boolean;
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+`;
+
 const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
@@ -36,15 +43,17 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      {modalOpen && <ShortsModal shorts={shorts} />}
-      <Carousel data={videoData}></Carousel>
-      <ShortsCarousel
-        data={shortsData}
-        setOpenModal={setModalOpen}
-        setShortsId={setShorts}
-      ></ShortsCarousel>
-    </div>
+    <Wrapper>
+      <div>
+        {modalOpen && <ShortsModal shorts={shorts} />}
+        <Carousel data={videoData}></Carousel>
+        <ShortsCarousel
+          data={shortsData}
+          setOpenModal={setModalOpen}
+          setShortsId={setShorts}
+        ></ShortsCarousel>
+      </div>
+    </Wrapper>
   );
 };
 
