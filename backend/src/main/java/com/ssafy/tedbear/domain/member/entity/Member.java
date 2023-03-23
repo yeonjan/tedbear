@@ -88,8 +88,13 @@ public class Member extends BaseEntity {
 		return memberScore.getScore();
 	}
 
-	public Member update(String nickname) {
+	public Member updateNickname(String nickname) {
 		this.nickname = nickname;
+		return this;
+	}
+
+	public Member updateRefreshToken(String refreshToken){
+		this.refreshToken = refreshToken;
 		return this;
 	}
 }
