@@ -33,7 +33,8 @@ const StyledLevel = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     perspective: 1000px;
-    margin-bottom: -15px;
+    margin-top: 5px;
+    margin-bottom: -20px;
     .card {
       width: 30%;
       user-select: none;
@@ -137,9 +138,11 @@ const LevelPage = () => {
           });
           setSenList(senData);
 
-          const wordList = response.data.wordMeanList.map((item, index) => {
-            return { ...item, flipped: false, id: index };
-          });
+          const wordList = response.data.wordMeanList
+            .slice(0, 6) // 단어도 6개만 주세요!
+            .map((item, index) => {
+              return { ...item, flipped: false, id: index };
+            });
           setWordList(wordList);
         })
         .catch(error => {
@@ -154,8 +157,9 @@ const LevelPage = () => {
   };
 
   const handleSubmit = () => {
+    console.log('Back에 Score보내요');
     console.log(senList, wordList);
-    // 여기서 숫자 세서 api 보내주기
+    // 여기서 flipped 값이 true인 애들의 score 합쳐서 api로 post 보내고 홈 화면으로 이동시키기
     // navigate('/home');
   };
 
@@ -186,7 +190,8 @@ const LevelPage = () => {
         onClick={handleSubmit}
         style={{
           position: 'absolute',
-          left: '96.5%',
+          left: '90%',
+          top: '5%',
         }}
       >
         <p className="submit-button-text">제출</p>
