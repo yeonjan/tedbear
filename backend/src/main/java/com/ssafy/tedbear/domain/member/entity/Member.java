@@ -74,7 +74,7 @@ public class Member extends BaseEntity {
 	private MemberScore memberScore;
 
 	@OneToOne
-	@JoinColumn(name = "member_no")
+	@JoinColumn(name = "level_no")
 	private MemberLevel memberLevel;
 
 	//--//

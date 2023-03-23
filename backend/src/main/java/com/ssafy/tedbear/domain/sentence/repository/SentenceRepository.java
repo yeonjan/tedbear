@@ -15,4 +15,7 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	@Query("select s from Sentence s join fetch s.video where s.score between :startScore and :endScore")
 	List<Sentence> findByScoreBetween(int startScore, int endScore);
 
+	// @Query(countQuery = "select count(s.video.watchId) from Sentence s inner join s.video where s.score between :startScore and :endScore")
+	// Long countDistinctByScoreBetween(int startScore, int endScore);
+
 }
