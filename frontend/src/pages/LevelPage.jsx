@@ -15,7 +15,7 @@ import LevelCardSen from 'components/level/LevelCardSen';
 const StyledLevel = styled.div`
   position: relative;
   .submit-button {
-    background-color: #6255a4;
+    background-color: #fead55;
     border-radius: 15px;
     .submit-button-text {
       color: white;
@@ -25,7 +25,7 @@ const StyledLevel = styled.div`
     background-color: #8f84ce;
     border-radius: 15px;
     .toggle-button-inside {
-      color: ${props => (props.change ? '#8f84ce' : '#FEAD55')};
+      color: ${props => (props.change ? '#FEAD55' : '#8f84ce')};
     }
   }
   .game-board {
@@ -190,9 +190,10 @@ const LevelPage = () => {
         onClick={handleSubmit}
         style={{
           position: 'absolute',
-          left: '90%',
-          top: '5%',
+          left: '91%',
+          top: '86%',
         }}
+        sx={{ width: 60, padding: 1, margin: 2 }}
       >
         <p className="submit-button-text">제출</p>
       </Button>
