@@ -1,4 +1,4 @@
-import GameCard from 'components/game/GameCard';
+import LevelCard from 'components/level/LevelCard';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { authApi } from 'utils/api/customAxios';
 
 // style
-const Game = styled.div`
+const Level = styled.div`
   .game-board {
     display: flex;
     flex-wrap: wrap;
@@ -103,7 +103,7 @@ const Game = styled.div`
 `;
 
 // Function
-const GameBoardRe = () => {
+const LevelPage = () => {
   const navigate = useNavigate();
   const [Loaded, setLoaded] = useState(false);
   const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
@@ -146,7 +146,7 @@ const GameBoardRe = () => {
   };
 
   return (
-    <Game>
+    <Level>
       <Question
         style={{
           padding: 50,
@@ -166,7 +166,7 @@ const GameBoardRe = () => {
       >
         <div className="game-board">
           {cardList.map((card, index) => (
-            <GameCard
+            <LevelCard
               key={index}
               id={index}
               content={card.content}
@@ -205,8 +205,8 @@ const GameBoardRe = () => {
       >
         <ArrowForwardIosIcon></ArrowForwardIosIcon>
       </IconButton>
-    </Game>
+    </Level>
   );
 };
 
-export default GameBoardRe;
+export default LevelPage;
