@@ -2,9 +2,11 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # Mysql Settings
-    url: jdbc:mysql://3.36.50.141:3306/tedbearDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    url: jdbc:mysql://3.36.50.141:3306/tedbearDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: ${MYSQL_ROOT_PASSWORD}
+#    password: ${MYSQL_ROOT_PASSWORD}
+    password:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
