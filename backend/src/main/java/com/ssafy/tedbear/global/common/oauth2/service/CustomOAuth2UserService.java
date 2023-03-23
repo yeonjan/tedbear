@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
+import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
 import com.ssafy.tedbear.global.common.oauth2.KakaoOAuth2User;
@@ -41,17 +42,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			String.valueOf(oAuth2User.getAttributes().get("id"))
 		);
 
-		Member user = saveOrUpdate(customOAuth2User);
-		log.info("oauth login success - user : {}", user);
+		// Member user = saveOrUpdate(customOAuth2User);
+		// log.info("oauth login success - user : {}", user);
 
 		return customOAuth2User;
 	}
 
 	private Member saveOrUpdate(CustomOAuth2User oAuth2User) {
 		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
+		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
 		Member member = memberRepository.findByUid(oAuth2User.getUid())
 			.map(entity -> entity.updateNickname(oAuth2User.getNickname()))
-			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));
+			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, memberScore, null));
 
 		memberLevelRepository.save(memberLevel);
 		return memberRepository.save(member);

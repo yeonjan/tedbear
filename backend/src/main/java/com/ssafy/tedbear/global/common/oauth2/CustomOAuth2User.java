@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
+import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.model.SnsType;
 
 public class CustomOAuth2User implements OAuth2User {
@@ -57,12 +58,13 @@ public class CustomOAuth2User implements OAuth2User {
 		return getUid();
 	}
 
-	public Member toEntity(String nickname, MemberLevel memberLevel, String refreshToken) {
+	public Member toEntity(String nickname, MemberLevel memberLevel, MemberScore memberScore, String refreshToken) {
 		return Member.builder()
 			.uid(uid)
 			.nickname(nickname)
 			.snsType(SnsType.KAKAO)
 			.memberLevel(memberLevel)
+			.memberScore(memberScore)
 			.refreshToken(refreshToken)
 			.createdDate(LocalDateTime.now())
 			.build();

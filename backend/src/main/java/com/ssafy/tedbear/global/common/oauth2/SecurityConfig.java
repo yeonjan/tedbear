@@ -34,10 +34,11 @@ public class SecurityConfig {
 	private final CorsFilterConfig corsFilterConfig;
 	private final MemberRepository memberRepository;
 	private final MemberLevelRepository memberLevelRepository;
+	private final MemberScoreRepository memberScoreRepository;
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new OAuth2LoginSuccessHandler(memberRepository, memberLevelRepository, jwtProvider);
+		return new OAuth2LoginSuccessHandler(memberRepository, memberLevelRepository, memberScoreRepository, jwtProvider);
 	}
 
 	@Bean

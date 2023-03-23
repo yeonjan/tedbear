@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
+import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
@@ -25,6 +26,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 	private final MemberRepository memberRepository;
 	private final MemberLevelRepository memberLevelRepository;
+	private final MemberScoreRepository memberScoreRepository;
 	private final JwtProvider jwtProvider;
 
 	@Override
@@ -52,10 +54,12 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
 		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
+		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
 		Member member = memberRepository.findByUid(oAuth2User.getUid())
 			.map(entity -> entity.updateRefreshToken(refreshToken))
-			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));
+			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, memberScore, null));
 
+		memberScoreRepository.save(memberScore);
 		memberLevelRepository.save(memberLevel);
 		memberRepository.save(member);
 	}
