@@ -82,9 +82,8 @@ public class Member extends BaseEntity {
 	@JoinColumn(name = "level_no")
 	private MemberLevel memberLevel;
 
-	public Member update(String nickname) {
-		this.nickname = nickname;
-		return this;
+	//--//
+	public int getScore() {
+		return memberScore.getScore();
 	}
-
 }

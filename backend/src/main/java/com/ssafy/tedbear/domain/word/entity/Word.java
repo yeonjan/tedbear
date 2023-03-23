@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,12 +23,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "word_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Word {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
 	@NotNull
+	@Column(unique = true)
 	private String content;
 
 	@Column(columnDefinition = "TEXT")
@@ -38,4 +41,13 @@ public class Word {
 	@OneToMany(mappedBy = "word")
 	private List<WordSentence> wordSentenceList = new ArrayList<>();
 
+	@Override
+	public String toString() {
+		return "Word{" +
+			"no=" + no +
+			", content='" + content + '\'' +
+			", mean='" + mean + '\'' +
+			", score=" + score +
+			'}';
+	}
 }
