@@ -63,7 +63,7 @@ const StillLearningPage = () => {
             alignItems={'center'}
             style={{
               padding: '0px',
-              marginTop: '2vh',
+              marginTop: '2%',
               paddingLeft: '1%',
               paddingRight: '1%',
             }}
@@ -72,11 +72,6 @@ const StillLearningPage = () => {
             sm={6}
             xs={12}
             key={idx}
-            // xs, extra-small: 0px
-            // sm, small: 600px
-            // md, medium: 900px
-            // lg, large: 1200px
-            // xl, extra-large: 1536px
           >
             <Card card={card} key={idx}></Card>
           </Grid>
