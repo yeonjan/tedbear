@@ -51,8 +51,6 @@ public class SecurityConfig {
 			.cors().configurationSource(corsConfigurationSource())
 			.and()
 			.csrf().disable()
-			.cors()
-			.and()
 			.formLogin().disable();
 		http.authorizeHttpRequests()
 			// 그외 모든 요청은 허용
