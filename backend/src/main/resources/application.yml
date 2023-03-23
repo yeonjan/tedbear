@@ -35,7 +35,7 @@ spring:
               - email
           kakao:
             client-name: kakao
-            client-id: ${kakao-client-id}
+            client-id: ${KAKAO_CLIENT_ID}
             redirect-uri: "http://localhost:8080/users"
             authorization-grant-type: authorization_code
             scope:
@@ -65,7 +65,7 @@ spring:
 
 app:
   auth:
-    token-secret: ${secret-key}
+    token-secret: ${SECRET_KEY}
 
 
 logging:
