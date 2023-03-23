@@ -1,37 +1,12 @@
 import Card from 'components/video/Card';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Grid from '@mui/material/Grid';
 
 interface card {
   title: string;
   id: string;
 }
-
-const Wrapper = styled.div`
-  width: 90%;
-  max-width: 1200px;
-  min-width: 370px;
-  background-color: ${props => props.theme.bgColor};
-  @media (min-width: 1280px) {
-    width: 1040px;
-    height: 580px;
-  }
-
-  @media (max-width: 1279px) {
-    width: 780px;
-    height: 870px;
-  }
-
-  @media (max-width: 900px) {
-    width: 520px;
-    height: 1160px;
-  }
-
-  @media (max-width: 600px) {
-    width: 300px;
-    height: 2320px;
-  }
-`;
 
 const StillLearningPage = () => {
   const [video, setVideo] = useState<card[]>([]);
@@ -74,11 +49,35 @@ const StillLearningPage = () => {
   }, []);
 
   return (
-    <Wrapper>
+    <Grid
+      container
+      justifyContent={'start'}
+      style={{ height: '1vh', marginTop: '1vh' }}
+    >
       {video.map((card, idx) => {
-        return <Card card={card} key={idx}></Card>;
+        return (
+          <Grid
+            item
+            display="flex"
+            justifyContent={'center'}
+            alignItems={'center'}
+            style={{ padding: '0px' }}
+            lg={3}
+            md={4}
+            sm={6}
+            xs={12}
+            key={idx}
+            // xs, extra-small: 0px
+            // sm, small: 600px
+            // md, medium: 900px
+            // lg, large: 1200px
+            // xl, extra-large: 1536px
+          >
+            <Card card={card} key={idx}></Card>
+          </Grid>
+        );
       })}
-    </Wrapper>
+    </Grid>
   );
 };
 
