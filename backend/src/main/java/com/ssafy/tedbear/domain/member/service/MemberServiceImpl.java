@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -88,6 +89,12 @@ public class MemberServiceImpl implements MemberService {
 
 		return new ProblemList(problemSentenceList, problemWordList);
 
+	}
+
+	@Override
+	public Member getMember(long memberNo) {
+		return memberRepository.findById(memberNo)
+			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 	}
 
 }
