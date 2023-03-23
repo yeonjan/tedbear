@@ -1,4 +1,4 @@
-import Card from 'components/video/Card';
+import Card from 'components/video/VideoCard';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@mui/material/Grid';
