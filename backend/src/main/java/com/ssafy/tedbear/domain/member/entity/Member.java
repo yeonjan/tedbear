@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,9 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.ssafy.tedbear.domain.bookmark.entity.SentenceBookmark;
-import com.ssafy.tedbear.domain.bookmark.entity.VideoBookmark;
-import com.ssafy.tedbear.domain.bookmark.entity.WordBookmark;
+import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
+import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
+import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.game.entity.GameRecord;
 import com.ssafy.tedbear.domain.model.BaseEntity;
 import com.ssafy.tedbear.domain.model.SnsType;
@@ -27,6 +28,7 @@ import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +37,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "member_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Member extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +48,9 @@ public class Member extends BaseEntity {
 
 	@NotNull
 	private String nickname;
+
+	@Column(name = "refresh_token", nullable = true)
+	private String refreshToken;
 
 	@NotNull
 	@Column(name = "sns_type")
@@ -69,7 +75,7 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<WordBookmark> wordBookmarkList = new ArrayList<>();
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "score_no")
 	private MemberScore memberScore;
 
@@ -80,5 +86,14 @@ public class Member extends BaseEntity {
 	//--//
 	public int getScore() {
 		return memberScore.getScore();
+	}
+
+	public void initScore(int defaultScore, int testResult) {
+		memberScore.initScore(defaultScore, testResult);
+	}
+
+	public Member update(String nickname) {
+		this.nickname = nickname;
+		return this;
 	}
 }

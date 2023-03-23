@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.tedbear.domain.bookmark.repository.SentenceBookmarkRepository;
+import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
@@ -21,6 +23,7 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
+import com.ssafy.tedbear.global.common.SearchDto;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -91,6 +94,11 @@ public class SentenceService {
 	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
 		Map<Object, Boolean> map = new ConcurrentHashMap<>();
 		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+	}
+
+	public SentenceDetailDto.ListResponse searchSentence(SearchDto.Request condition, Pageable pageable) {
+		Slice<Sentence> sliceByContent = sentenceRepository.findSliceByContent(condition.getQuery(), pageable);
+		return new SentenceDetailDto.ListResponse(sliceByContent);
 	}
 
 }

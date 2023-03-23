@@ -1,19 +1,19 @@
 package com.ssafy.tedbear.domain.member.service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.Streak;
@@ -38,9 +38,13 @@ public class MemberServiceImpl implements MemberService {
 	final SentenceRepository sentenceRepository;
 	final WordRepository wordRepository;
 
+	@Value("${default-value.score}")
+	int defaultScore;
+
 	@Override
-	public StreakList getStreak(Member member) {
+	public StreakList getStreak(long memberNo) {
 		LocalDateTime firstDay = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).atStartOfDay();
+		Member member = getMember(memberNo);
 		List<SpeakingRecord> speakingRecordList = speakingRecordRepository.findSpeakingRecordsByCreatedDateAfterAndMember(
 			firstDay, member);
 		Map<String, Streak> streakMap = new HashMap<>();
@@ -70,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 					.skip(random.nextInt(x.size() - 3))
 					.limit(3)
 					.collect(Collectors.toList()))
-				.flatMap(innerStream -> innerStream.stream())
+				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
 
 		// 문장은 랜덤인덱스부터 만개 가져와서 문장 2,3,4,5,6,7만번대 각 1개씩 총 6개
@@ -92,4 +96,18 @@ public class MemberServiceImpl implements MemberService {
 		return new ProblemList(problemSentenceList, problemWordList);
 
 	}
+
+	@Override
+	@Transactional
+	public void saveProblemResult(long memberNo, int testResult) {
+		Member member = getMember(memberNo);
+		member.initScore(defaultScore, testResult);
+	}
+
+	@Override
+	public Member getMember(long memberNo) {
+		return memberRepository.findById(memberNo)
+			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+	}
+
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Slice;
+
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Getter;
 @Getter
 public class SentenceDetailDto {
 	Long no;
+	int score;
 	int startTime;
 	int endTime;
 	String content;
@@ -34,6 +37,10 @@ public class SentenceDetailDto {
 		List<SentenceDetailDto> sentenceList;
 
 		public ListResponse(Set<Sentence> list) {
+			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
+		}
+
+		public ListResponse(Slice<Sentence> list) {
 			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 	}

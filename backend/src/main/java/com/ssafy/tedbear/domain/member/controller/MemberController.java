@@ -8,13 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.tedbear.domain.member.dto.Problem;
 import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.StreakList;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.member.service.MemberService;
+import com.ssafy.tedbear.domain.video.dto.VideoInfo;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +34,7 @@ public class MemberController {
 
 	@GetMapping("/streak")
 	public ResponseEntity<StreakList> getStreak() {
-		Member member = memberRepository.findById(2L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(memberService.getStreak(member));
+		return ResponseEntity.ok(memberService.getStreak(2L));
 	}
 
 	@GetMapping("/test/problem")
@@ -40,4 +42,9 @@ public class MemberController {
 		return ResponseEntity.ok(memberService.getProblemList());
 	}
 
+	@PostMapping("/test/result")
+	public ResponseEntity saveProblemResult(@RequestBody Problem.Request request) {
+		memberService.saveProblemResult(1L, request.getTestResult());
+		return new ResponseEntity(HttpStatus.CREATED);
+	}
 }

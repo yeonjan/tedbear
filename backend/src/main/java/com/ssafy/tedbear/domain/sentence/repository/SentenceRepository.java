@@ -2,6 +2,8 @@ package com.ssafy.tedbear.domain.sentence.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,5 +19,9 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 
 	// @Query(countQuery = "select count(s.video.watchId) from Sentence s inner join s.video where s.score between :startScore and :endScore")
 	// Long countDistinctByScoreBetween(int startScore, int endScore);
+
+	@Query("select s from Sentence s join fetch s.video where s.content like %:query%")
+	Slice<Sentence> findSliceByContent(String query, Pageable pageable);
+
 
 }

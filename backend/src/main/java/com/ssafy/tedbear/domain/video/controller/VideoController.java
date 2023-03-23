@@ -2,17 +2,25 @@ package com.ssafy.tedbear.domain.video.controller;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.video.dto.VideoDetail;
+import com.ssafy.tedbear.domain.video.dto.VideoInfo;
 import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
+import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfo;
 import com.ssafy.tedbear.domain.video.service.VideoService;
+import com.ssafy.tedbear.global.common.SearchDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,15 +34,45 @@ public class VideoController {
 	// 추천 영상 12개 뿌리기
 	@GetMapping("/recommend/list")
 	public ResponseEntity<VideoInfoList> getRecommendList() {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getRecommendList(member));
+		return ResponseEntity.ok(videoService.getRecommendList(1L));
 	}
 
 	@GetMapping("/detail/{watchId}")
 	public ResponseEntity<VideoDetail> getDetail(@PathVariable("watchId") String watchId) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getDetail(member, watchId));
+		return ResponseEntity.ok(videoService.getDetail(1L, watchId));
 	}
+
+	@GetMapping("/watching/recent")
+	public ResponseEntity<VideoInfo> getWatchingRecent() {
+		return ResponseEntity.ok(videoService.getWatchingRecent(1L));
+	}
+
+	@GetMapping("/watching/list")
+	public ResponseEntity<VideoInfoList> getWatchingList(Pageable pageable) {
+		return ResponseEntity.ok(videoService.getWatchingList(1L, pageable));
+	}
+
+	@GetMapping("/complete/list")
+	public ResponseEntity<VideoInfoList> getCompleteList(Pageable pageable) {
+		return ResponseEntity.ok(videoService.getCompleteList(1L, pageable));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<VideoInfoList> searchVideo(SearchDto.Request searchCondition, Pageable pageable) {
+		return ResponseEntity.ok(videoService.searchVideo(searchCondition.getQuery(), pageable));
+
+	}
+
+	@PostMapping("/watching")
+	public ResponseEntity saveWatchingRecord(@RequestBody WatchingVideoInfo request) {
+		videoService.saveWatchingRecord(1L, request);
+		return new ResponseEntity(HttpStatus.CREATED);
+	}
+
+	@PostMapping("/complete")
+	public ResponseEntity saveCompleteRecord(@RequestBody WatchingVideoInfo request) {
+		videoService.saveCompleteRecord(1L, request);
+		return new ResponseEntity(HttpStatus.CREATED);
+	}
+
 }
