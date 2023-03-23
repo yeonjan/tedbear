@@ -75,7 +75,7 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<WordBookmark> wordBookmarkList = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "score_no")
 	private MemberScore memberScore;
 
