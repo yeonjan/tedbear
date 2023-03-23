@@ -2,7 +2,9 @@ package com.ssafy.tedbear.global.common.oauth2.service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Optional;
 
+import com.ssafy.tedbear.global.common.oauth2.MemberScoreRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -27,8 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private final MemberRepository memberRepository;
 
-	private final MemberLevelRepository memberLevelRepository;
-
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -42,20 +42,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			String.valueOf(oAuth2User.getAttributes().get("id"))
 		);
 
-		// Member user = saveOrUpdate(customOAuth2User);
 		// log.info("oauth login success - user : {}", user);
 
 		return customOAuth2User;
 	}
 
-	private Member saveOrUpdate(CustomOAuth2User oAuth2User) {
-		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
-		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
-		Member member = memberRepository.findByUid(oAuth2User.getUid())
-			.map(entity -> entity.updateNickname(oAuth2User.getNickname()))
-			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, memberScore, null));
-
-		memberLevelRepository.save(memberLevel);
-		return memberRepository.save(member);
-	}
 }

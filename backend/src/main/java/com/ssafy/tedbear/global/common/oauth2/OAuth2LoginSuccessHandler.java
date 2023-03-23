@@ -2,11 +2,13 @@ package com.ssafy.tedbear.global.common.oauth2;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.minidev.json.JSONUtil;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -55,12 +57,20 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
 		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
 		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
-		Member member = memberRepository.findByUid(oAuth2User.getUid())
-			.map(entity -> entity.updateRefreshToken(refreshToken))
-			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, memberScore, null));
 
-		memberScoreRepository.save(memberScore);
-		memberLevelRepository.save(memberLevel);
+		Optional<Member> oMember = memberRepository.findByUid(oAuth2User.getUid());
+		if(oMember.isEmpty()){
+			System.out.println("비었거덩");
+			memberLevelRepository.save(memberLevel);
+			memberScoreRepository.save(memberScore);
+		}
+		Member member = oMember.map(entity -> entity.updateNicknameAndRefreshToken(oAuth2User.getNickname(), refreshToken))
+				.orElse(oAuth2User.toEntity(
+						oAuth2User.getNickname(),
+						memberLevel,
+						memberScore,
+						null));
+
 		memberRepository.save(member);
 	}
 

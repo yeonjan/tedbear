@@ -1,5 +1,6 @@
 package com.ssafy.tedbear.global.common.oauth2.service;
 
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Component
 public class AuthService {
 
 	private final MemberRepository memberRepository;
 	private final JwtProvider jwtProvider;
+
 
 	public String reissueAccessToken(String oldAccessToken, String refreshToken) {
 		if (!jwtProvider.validateToken(refreshToken)) {
@@ -39,4 +42,5 @@ public class AuthService {
 
 		return jwtProvider.createAccessToken(authentication);
 	}
+
 }
