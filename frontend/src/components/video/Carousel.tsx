@@ -21,18 +21,25 @@ const Wrapper = styled.div`
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform * 33}%);
+  transform: translateX(-${props => props.transform * 33.3}%);
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
   > * {
-    width: 31%;
-    margin-left: 2%;
+    width: 31.3%;
     height: 200px;
-    /* height: 27vh; */
+    cursor: pointer;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
     flex-shrink: 0;
     flex-grow: 1;
-    border-radius: 10%;
+    border-radius: 16px;
+    &:hover {
+      scale: 1.04;
+      transition: 0.4s;
+    }
     @media (max-width: 768px) {
       width: 48%;
     }
@@ -42,29 +49,24 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
 const TitleWithButton = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid black;
   h1 {
     font-size: 4vh;
   }
   .buttom-wrapper {
-    width: 100px;
     display: flex;
   }
 `;
 
 const LeftButton = styled.button`
-  /* position: absolute; */
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  border-radius: 16px;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
 
 const RightButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  border-radius: 16px;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
@@ -76,10 +78,6 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   const [currentIndex, setCurrentIndex] = useState(3);
   const [length, setLength] = useState(data.length);
   const [transStyle, setTransStyle] = useState(transition);
-
-  const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
-    navigate('/learning', { state: e });
-  };
 
   useEffect(() => {
     setLength(data.length);
@@ -111,6 +109,9 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
     setTransStyle(transition);
   };
 
+  const handleClick = (watchId: string): void => {
+    navigate('/learning', { state: watchId });
+  };
   return (
     <Wrapper>
       <TitleWithButton>
@@ -126,7 +127,14 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
+          return (
+            <img
+              key={idx}
+              src={Thumnail.thumbnailUrl}
+              onClick={() => handleClick(Thumnail.watchId)}
+              alt=""
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>

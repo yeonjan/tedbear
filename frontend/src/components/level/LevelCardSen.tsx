@@ -1,21 +1,22 @@
 interface CardType {
   id?: number;
-  name?: string;
+  content?: string;
+  score?: number;
   flipped?: boolean;
   clicked?: any;
   mean: string;
 }
 
-const GameCard = ({ id, name, flipped, clicked, mean }: CardType) => {
+const LevelCardSen = ({ id, content, flipped, clicked, mean }: CardType) => {
   return (
     <div
-      onClick={() => (flipped ? undefined : clicked(name, id))}
+      onClick={() => clicked(id)}
       className={'card' + (flipped ? ' flipped' : '')}
     >
-      <div className="back">{name}</div>
+      <div className="back">{content}</div>
       <div className="front">{mean}</div>
     </div>
   );
 };
 
-export default GameCard;
+export default LevelCardSen;
