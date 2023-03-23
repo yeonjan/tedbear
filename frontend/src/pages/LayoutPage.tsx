@@ -30,8 +30,6 @@ const OutletWrapper = styled.div<OpenProps>`
       justify-content: center;
       align-items: center;
     `}
-  display: flex;
-  justify-content: center;
 `;
 
 const DarkBackground = styled.div`
