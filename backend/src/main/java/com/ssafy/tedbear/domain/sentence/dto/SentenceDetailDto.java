@@ -39,7 +39,7 @@ public class SentenceDetailDto {
 		}
 
 		public ListResponse(Slice<Sentence> list) {
-			// this.recommendList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
+			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 	}
 
