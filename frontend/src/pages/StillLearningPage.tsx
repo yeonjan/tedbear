@@ -8,11 +8,29 @@ interface card {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: 3px solid red;
-  gap: 2%;
+  width: 90%;
+  max-width: 1200px;
+  min-width: 370px;
   background-color: ${props => props.theme.bgColor};
+  @media (min-width: 1280px) {
+    width: 1040px;
+    height: 580px;
+  }
+
+  @media (max-width: 1279px) {
+    width: 780px;
+    height: 870px;
+  }
+
+  @media (max-width: 900px) {
+    width: 520px;
+    height: 1160px;
+  }
+
+  @media (max-width: 600px) {
+    width: 300px;
+    height: 2320px;
+  }
 `;
 
 const StillLearningPage = () => {

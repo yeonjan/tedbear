@@ -7,11 +7,20 @@ interface card {
 }
 
 const Wrapper = styled.div`
-  border: 3px black solid;
-  display: flex;
-  /* width: 24%; */
+  width: 250px;
+  height: 280px;
+  background-color: white;
+  margin: 5px;
+  float: left;
+  @media (max-width: 615px) {
+    width: 300px;
+  }
   > img {
-    width: 20vw;
+    width: 250px;
+    height: 200px;
+    @media (max-width: 615px) {
+      width: 400px;
+    }
     /* margin-left: 2%;
     margin-right: 2%;
     margin-top: 2%;
@@ -34,7 +43,10 @@ const Wrapper = styled.div`
 const Card = ({ card }: { card: card }) => {
   return (
     <Wrapper>
-      <img src={'https://i.ytimg.com/vi/' + card.id + '/hq1.jpg'} alt="" />
+      <img
+        src={'https://i.ytimg.com/vi/' + card.id + '/maxresdefault.jpg'}
+        alt=""
+      />
     </Wrapper>
   );
 };
