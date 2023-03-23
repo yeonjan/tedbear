@@ -1,5 +1,6 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -63,6 +64,7 @@ public class CustomOAuth2User implements OAuth2User {
 			.snsType(SnsType.KAKAO)
 			.memberLevel(memberLevel)
 			.refreshToken(refreshToken)
+			.createdDate(LocalDateTime.now())
 			.build();
 	}
 }
