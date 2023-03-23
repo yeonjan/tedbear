@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.tedbear.domain.bookmark.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.bookmark.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.video.dto.VideoDetail;
@@ -36,6 +38,7 @@ public class VideoServiceImpl implements VideoService {
 	final int resultMaxCnt = 12;
 
 	@Override
+	@Transactional
 	public VideoInfoList getRecommendList(Member member) {
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore);
@@ -50,13 +53,19 @@ public class VideoServiceImpl implements VideoService {
 			System.out.println(recommendVideoList.size());
 		} while (recommendVideoList.size() < resultMaxCnt);
 
+		Set<Long> bookmarkedVideoNoSet =
+			videoBookmarkRepository
+				.findVideoBookmarksByMemberAndVideoIn(member, recommendVideoList)
+				.stream()
+				.map(x -> x.getVideo().getNo())
+				.collect(Collectors.toSet());
+		System.out.println(bookmarkedVideoNoSet);
 		return new VideoInfoList(
 			recommendVideoList
 				.stream()
 				.sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
 				.limit(resultMaxCnt)
-				.peek(x -> x.setBookmarked(
-					videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
+				.peek(x -> x.setBookmarked(bookmarkedVideoNoSet.contains(x.getNo())))
 				.collect(Collectors.toList())
 		);
 	}
