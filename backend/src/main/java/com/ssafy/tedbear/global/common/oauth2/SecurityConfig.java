@@ -25,6 +25,7 @@ public class SecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+	private final CorsFilterConfig corsFilterConfig;
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
@@ -38,6 +39,7 @@ public class SecurityConfig {
 		// 	.userInfoEndpoint() // 로그인된 유저 정보 가져오기
 		// 	.userService(customOAuth2UserService); // 가져온 유저 정보를 해당 객체가 처리
 		http.csrf().disable()
+			.addFilter(corsFilterConfig.corsFilter())
 			.formLogin().disable();
 		http.authorizeHttpRequests()
 			// 그외 모든 요청은 허용
