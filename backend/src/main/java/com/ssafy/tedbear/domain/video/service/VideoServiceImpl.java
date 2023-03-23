@@ -3,19 +3,16 @@ package com.ssafy.tedbear.domain.video.service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.tedbear.domain.bookmark.repository.VideoBookmarkRepository;
+import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.service.MemberService;
 import com.ssafy.tedbear.domain.video.dto.VideoDetail;
