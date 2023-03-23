@@ -19,7 +19,6 @@ public class SentenceDetailDto {
 	String content;
 	boolean bookmarked;
 	String watchId;
-	int score;
 
 	//원본 비디오 영상 링크
 
