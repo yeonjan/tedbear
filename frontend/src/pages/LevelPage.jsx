@@ -1,15 +1,18 @@
-import LevelCard from 'components/level/LevelCard';
 import styled from 'styled-components';
-import IconButton from '@mui/material/IconButton';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Paper } from '@mui/material';
 import { ReactComponent as Question } from 'assets/img/question.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authApi } from 'utils/api/customAxios';
+import LevelWord from 'components/level/LevelWord';
+import LevelSentence from 'components/level/LevelSentence';
 
 // style
 const Level = styled.div`
+  .submit-button {
+    background-color: pink;
+  }
+  .toggle-button {
+    background-color: orange;
+  }
   .game-board {
     display: flex;
     flex-wrap: wrap;
@@ -105,48 +108,22 @@ const Level = styled.div`
 // Function
 const LevelPage = () => {
   const navigate = useNavigate();
-  const [Loaded, setLoaded] = useState(false);
-  const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
-  const [cardList, setCardList] = useState([]);
+  const [flippedCards, setFlippedCards] = useState([]); // 스코어 POST 부모에서 ... 원래는 12개까지만 뒤집을 수 있게 하기 위함
+  const [showSentence, setShowSentence] = useState(false);
 
-  useEffect(() => {
-    console.log('hi');
-    async function fetchData() {
-      await authApi
-        .get(`member/test/problem`)
-        .then(response => {
-          const data = response.data.sentenceMeanList.map((item, index) => {
-            return { ...item, flipped: false, id: index };
-          });
-          console.log(data);
-          setCardList(data);
-        })
-        .catch(error => {
-          console.log(error.data);
-        });
-    }
-    setLoaded(true);
-    fetchData();
-  }, []);
-
-  const handleClick = index => {
-    let updateCards = cardList.map(card => {
-      if (card.id === index) {
-        card.flipped = !card.flipped;
-      }
-      return card;
-    });
-
-    setCardList(updateCards);
+  const toggleShowSentence = () => {
+    setShowSentence(prev => !prev);
   };
-
-  const handleNext = () => {
+  const handleSubmit = () => {
     console.log(flippedCards);
     navigate('/home');
   };
 
   return (
     <Level>
+      <button className="submit-button" onClick={handleSubmit}>
+        제출
+      </button>
       <Question
         style={{
           padding: 50,
@@ -157,54 +134,12 @@ const LevelPage = () => {
           transform: 'translate(-50%, -50%)',
         }}
       ></Question>
-      <Paper
-        elevation={3}
-        style={{
-          padding: 100,
-          margin: '75px 30px 30px 30px',
-        }}
-      >
-        <div className="game-board">
-          {cardList.map((card, index) => (
-            <LevelCard
-              key={index}
-              id={index}
-              content={card.content}
-              mean={card.mean}
-              score={card.score}
-              flipped={card.flipped}
-              clicked={handleClick}
-            />
-          ))}
-        </div>
-      </Paper>
-
-      {/* 동그란 화살표 버튼 */}
-      <IconButton
-        sx={{
-          boxShadow: 3,
-          width: '3rem',
-          height: '3rem',
-          bgcolor: theme =>
-            theme.palette.mode === 'dark' ? '#101010' : '#fff',
-          color: theme =>
-            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-        }}
-        style={{
-          padding: 20,
-          margin: '25px 0px 0px 20px',
-          position: 'absolute',
-          left: '96.5%',
-          top: '51%',
-          transform: 'translate(-50%, -50%)',
-          border: '1px solid #FFFFFF',
-          background: '#FFFFFF',
-        }}
-        variant="outlined"
-        onClick={handleNext}
-      >
-        <ArrowForwardIosIcon></ArrowForwardIosIcon>
-      </IconButton>
+      <div>
+        <button className="toggle-button" onClick={toggleShowSentence}>
+          {showSentence ? '단어 테스트 하기 버튼' : '문장 테스트 하기 버튼'}
+        </button>
+        {showSentence ? <LevelSentence /> : <LevelWord />}
+      </div>
     </Level>
   );
 };
