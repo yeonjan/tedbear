@@ -11,6 +11,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 // style
 const StyledLevel = styled.div`
+  position: relative;
   .submit-button {
     background-color: #6255a4;
     border-radius: 15px;
@@ -32,7 +33,7 @@ const StyledLevel = styled.div`
     perspective: 1000px;
     margin-bottom: -15px;
     .card {
-      width: 15%;
+      width: 30%;
       user-select: none;
       height: 200px;
       padding: 5px;
@@ -134,7 +135,14 @@ const LevelPage = () => {
 
   return (
     <StyledLevel change={showSwitch}>
-      <Button className="submit-button" onClick={handleSubmit}>
+      <Button
+        className="submit-button"
+        onClick={handleSubmit}
+        style={{
+          position: 'absolute',
+          left: '96.5%',
+        }}
+      >
         <p className="submit-button-text">제출</p>
       </Button>
       <Question
@@ -143,7 +151,7 @@ const LevelPage = () => {
           margin: '35px 30px 30px 30px',
           position: 'absolute',
           left: '50%',
-          top: '7%',
+          top: '-4%',
           transform: 'translate(-50%, -50%)',
         }}
       ></Question>
@@ -164,8 +172,8 @@ const LevelPage = () => {
             padding: 20,
             margin: '25px 0px 0px 20px',
             position: 'absolute',
-            left: '96.5%',
-            top: '51%',
+            left: `${showSwitch ? '96%' : '1%'}`,
+            top: '48%',
             transform: 'translate(-50%, -50%)',
             border: '1px solid #FFFFFF',
             background: '#FFFFFF',

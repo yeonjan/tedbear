@@ -14,9 +14,11 @@ const LevelWord = () => {
       await authApi
         .get(`member/test/problem`)
         .then(response => {
-          const data = response.data.wordMeanList.map((item, index) => {
-            return { ...item, flipped: false, id: index }; // flipped 초기값은 false => 뒤집으면 true 됨
-          });
+          const data = response.data.wordMeanList
+            .slice(0, 6)
+            .map((item, index) => {
+              return { ...item, flipped: false, id: index }; // flipped 초기값은 false => 뒤집으면 true 됨
+            });
           console.log(data);
           setCardList(data);
         })
@@ -47,7 +49,6 @@ const LevelWord = () => {
           margin: '75px 30px 30px 30px',
         }}
       >
-        단어
         <div className="game-board">
           {cardList.map((card, index) => (
             <LevelCard
