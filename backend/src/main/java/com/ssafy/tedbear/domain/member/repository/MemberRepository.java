@@ -9,6 +9,5 @@ import com.ssafy.tedbear.domain.member.entity.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-
 	Optional<Member> findByUid(String uid);
 }
