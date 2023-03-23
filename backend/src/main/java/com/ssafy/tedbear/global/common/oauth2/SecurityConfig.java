@@ -1,5 +1,8 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,6 +13,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAccessDeniedHandler;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationEntryPoint;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationFilter;
@@ -29,10 +33,12 @@ public class SecurityConfig {
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 	private final CorsFilterConfig corsFilterConfig;
+	private final MemberRepository memberRepository;
+	private final MemberLevelRepository memberLevelRepository;
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new OAuth2LoginSuccessHandler(userRepository, jwtProvider);
+		return new OAuth2LoginSuccessHandler(memberRepository, memberLevelRepository, jwtProvider);
 	}
 
 	@Bean
@@ -41,7 +47,10 @@ public class SecurityConfig {
 		// 	.oauth2Login() // oauth 로그인
 		// 	.userInfoEndpoint() // 로그인된 유저 정보 가져오기
 		// 	.userService(customOAuth2UserService); // 가져온 유저 정보를 해당 객체가 처리
-		http.csrf().disable()
+		http.httpBasic().disable()
+			.cors().configurationSource(corsConfigurationSource())
+			.and()
+			.csrf().disable()
 			.cors()
 			.and()
 			.formLogin().disable();
@@ -69,8 +78,8 @@ public class SecurityConfig {
 
 		// jwt 필터 추가
 		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-		http.addFilterBefore(corsFilterConfig.corsFilter(), UsernamePasswordAuthenticationFilter.class);
+		// http.addFilter(corsFilterConfig.corsFilter());
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		// jwt 인증 실패 시 exception handler 등록
 		http.exceptionHandling()
 			.accessDeniedHandler(jwtAccessDeniedHandler)
@@ -79,17 +88,17 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	// @Bean
-	// public CorsConfigurationSource corsConfigurationSource() {
-	// 	CorsConfiguration configuration = new CorsConfiguration();
-	//
-	// 	configuration.addAllowedOrigin("*");
-	// 	configuration.addAllowedHeader("*");
-	// 	configuration.addAllowedMethod("*");
-	// 	configuration.setAllowCredentials(true);
-	//
-	// 	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	// 	source.registerCorsConfiguration("/**", configuration);
-	// 	return source;
-	// }
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://j8b103.p.ssafy.io"));
+		configuration.setAllowedHeaders(List.of("*"));
+		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
+		configuration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 }

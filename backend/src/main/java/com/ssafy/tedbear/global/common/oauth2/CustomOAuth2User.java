@@ -56,12 +56,13 @@ public class CustomOAuth2User implements OAuth2User {
 		return getUid();
 	}
 
-	public Member toEntity(String nickname, MemberLevel memberLevel) {
+	public Member toEntity(String nickname, MemberLevel memberLevel, String refreshToken) {
 		return Member.builder()
 			.uid(uid)
 			.nickname(nickname)
 			.snsType(SnsType.KAKAO)
 			.memberLevel(memberLevel)
+			.refreshToken(refreshToken)
 			.build();
 	}
 }

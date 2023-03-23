@@ -1,7 +1,6 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,9 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.member.entity.MemberLevel;
+import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
+	private final MemberLevelRepository memberLevelRepository;
 	private final JwtProvider jwtProvider;
 
 	@Override
@@ -47,21 +50,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	}
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
-		Optional<User> opt = userRepository.findByEmail(oAuth2User.getEmail());
-		User user;
+		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).build();
+		Member member = memberRepository.findByUid(oAuth2User.getUid())
+			.map(entity -> entity.updateRefreshToken(refreshToken))
+			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));
 
-		if (opt.isEmpty()) {
-			user = User.builder()
-				.email(oAuth2User.getEmail())
-				.nickname(oAuth2User.getNickname())
-				.refreshToken(refreshToken)
-				.build();
-		} else {
-			user = opt.get();
-			user.updateRefreshToken(refreshToken);
-		}
-
-		userRepository.save(user);
+		memberLevelRepository.save(memberLevel);
+		memberRepository.save(member);
 	}
 
 	protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {

@@ -1,22 +1,22 @@
 package com.ssafy.tedbear.global.common.oauth2.service;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
-import com.ssafy.tedbear.global.common.oauth2.User;
-import com.ssafy.tedbear.global.common.oauth2.UserRepository;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class AuthService {
 
-	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
 	private final JwtProvider jwtProvider;
 
 	public String reissueAccessToken(String oldAccessToken, String refreshToken) {
@@ -25,14 +25,15 @@ public class AuthService {
 		}
 
 		Authentication authentication = jwtProvider.getAuthentication(oldAccessToken);
-		String email = ((CustomOAuth2User)authentication.getPrincipal()).getEmail();
+		String uid = ((CustomOAuth2User)authentication.getPrincipal()).getUid();
 
-		log.info("access token reissue 대상: {}", email);
+		log.info("access token reissue 대상: {}", uid);
 
-		User findUser = userRepository.findByEmail(email)
+		Member member = memberRepository.findByUid(uid)
 			.orElseThrow(() -> new RuntimeException("Not found user"));
 
-		if (!refreshToken.equals(findUser.getRefreshToken())) {
+		// refresh토큰이 같지 않으면
+		if (!refreshToken.equals(member.getRefreshToken())) {
 			throw new RuntimeException("invalid refresh token");
 		}
 

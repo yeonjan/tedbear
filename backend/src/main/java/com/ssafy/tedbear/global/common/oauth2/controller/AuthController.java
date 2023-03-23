@@ -21,6 +21,12 @@ public class AuthController {
 
 	private final AuthService authService;
 
+	/***
+	 * refresh 토큰 확인해서 access 토큰 재발급
+	 * @param request
+	 * @param oldAccessToken
+	 * @return
+	 */
 	@GetMapping
 	public String reissueAccessToken(HttpServletRequest request,
 		@RequestHeader("Authorization") String oldAccessToken) {

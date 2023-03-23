@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private final MemberRepository memberRepository;
 
-	private final UserRepository userRepository;
 	private final MemberLevelRepository memberLevelRepository;
 
 	@Override
@@ -51,8 +50,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private Member saveOrUpdate(CustomOAuth2User oAuth2User) {
 		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).build();
 		Member member = memberRepository.findByUid(oAuth2User.getUid())
-			.map(entity -> entity.update(oAuth2User.getNickname()))
-			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel));
+			.map(entity -> entity.updateNickname(oAuth2User.getNickname()))
+			.orElse(oAuth2User.toEntity(oAuth2User.getNickname(), memberLevel, null));
 
 		memberLevelRepository.save(memberLevel);
 		return memberRepository.save(member);
