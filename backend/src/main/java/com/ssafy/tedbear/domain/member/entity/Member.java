@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,11 +70,11 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<WordBookmark> wordBookmarkList = new ArrayList<>();
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "score_no")
 	private MemberScore memberScore;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_no")
 	private MemberLevel memberLevel;
 

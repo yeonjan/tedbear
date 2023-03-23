@@ -14,7 +14,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-      use-new-id-generator-mappings: false
+      use-new-id-generator-mappings: true
     properties:
       hibernate:
         format_sql: true
@@ -24,7 +24,7 @@ logging:
   level:
     org:
       hibernate:
-        SQL: trace
+        SQL: info
         type:
           descriptor:
             sql:
