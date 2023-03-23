@@ -52,7 +52,7 @@ const StillLearningPage = () => {
     <Grid
       container
       justifyContent={'start'}
-      style={{ height: '1vh', marginTop: '1vh' }}
+      style={{ height: '1%', marginTop: '1%', width: '90%' }}
     >
       {video.map((card, idx) => {
         return (
@@ -61,7 +61,12 @@ const StillLearningPage = () => {
             display="flex"
             justifyContent={'center'}
             alignItems={'center'}
-            style={{ padding: '0px' }}
+            style={{
+              padding: '0px',
+              marginTop: '2vh',
+              paddingLeft: '1%',
+              paddingRight: '1%',
+            }}
             lg={3}
             md={4}
             sm={6}
