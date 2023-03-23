@@ -15,14 +15,14 @@ import LevelCardSen from 'components/level/LevelCardSen';
 const StyledLevel = styled.div`
   position: relative;
   .submit-button {
-    background-color: #fead55;
+    background-color: #ff8d5b;
     border-radius: 15px;
     .submit-button-text {
       color: white;
     }
   }
   .toggle-button {
-    background-color: #8f84ce;
+    background-color: #6255a4;
     border-radius: 15px;
     .toggle-button-inside {
       color: ${props => (props.change ? '#FEAD55' : '#8f84ce')};
@@ -124,7 +124,7 @@ const StyledLevel = styled.div`
 // Function
 const LevelPage = () => {
   const navigate = useNavigate();
-  const [showSwitch, setShowSwitch] = useState(false);
+  const [showSwitch, setShowSwitch] = useState(true);
   const [senList, setSenList] = useState([]);
   const [wordList, setWordList] = useState([]);
 
@@ -193,7 +193,7 @@ const LevelPage = () => {
           left: '91%',
           top: '86%',
         }}
-        sx={{ width: 60, padding: 1, margin: 2 }}
+        sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
       >
         <p className="submit-button-text">제출</p>
       </Button>
