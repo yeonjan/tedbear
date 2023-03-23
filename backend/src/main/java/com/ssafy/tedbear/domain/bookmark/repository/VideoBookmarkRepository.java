@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.ssafy.tedbear.domain.bookmark.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.video.entity.Video;
-import com.ssafy.tedbear.domain.video.entity.VideoCategory;
 
 @Repository
 public interface VideoBookmarkRepository extends JpaRepository<VideoBookmark, Long> {

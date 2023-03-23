@@ -32,52 +32,39 @@ public class VideoController {
 	// 추천 영상 12개 뿌리기
 	@GetMapping("/recommend/list")
 	public ResponseEntity<VideoInfoList> getRecommendList() {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getRecommendList(member));
+
+		return ResponseEntity.ok(videoService.getRecommendList(1L));
 	}
 
 	@GetMapping("/detail/{watchId}")
 	public ResponseEntity<VideoDetail> getDetail(@PathVariable("watchId") String watchId) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getDetail(member, watchId));
+		return ResponseEntity.ok(videoService.getDetail(1L, watchId));
 	}
 
 	@GetMapping("/watching/recent")
 	public ResponseEntity<VideoInfo> getWatchingRecent() {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getWatchingRecent(member));
+		return ResponseEntity.ok(videoService.getWatchingRecent(1L));
 	}
 
 	@GetMapping("/watching/list")
 	public ResponseEntity<VideoInfoList> getWatchingList(@RequestParam int page) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getWatchingList(member, page));
+		return ResponseEntity.ok(videoService.getWatchingList(1L, page));
 	}
 
 	@GetMapping("/complete/list")
 	public ResponseEntity<VideoInfoList> getCompleteList(@RequestParam int page) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		return ResponseEntity.ok(videoService.getCompleteList(member, page));
+		return ResponseEntity.ok(videoService.getCompleteList(1L, page));
 	}
 
 	@PostMapping("/watching")
 	public ResponseEntity saveWatchingRecord(@RequestBody WatchingVideoInfo request) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		videoService.saveWatchingRecord(member, request);
+		videoService.saveWatchingRecord(1L, request);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 
 	@PostMapping("/complete")
 	public ResponseEntity saveCompleteRecord(@RequestBody WatchingVideoInfo request) {
-		Member member = memberRepository.findById(1L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		videoService.saveCompleteRecord(member, request);
+		videoService.saveCompleteRecord(1L, request);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 

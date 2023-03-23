@@ -9,4 +9,6 @@ public interface MemberService {
 
 	ProblemList getProblemList();
 
+	Member getMember(long memberNo);
+
 }
