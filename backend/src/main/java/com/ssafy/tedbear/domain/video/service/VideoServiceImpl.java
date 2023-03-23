@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -99,12 +100,9 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoList getWatchingList(long memberNo, int page) {
+	public VideoInfoList getWatchingList(long memberNo, Pageable pageable) {
 		Member member = memberService.getMember(memberNo);
-
-		PageRequest pageRequest = PageRequest.of(page, resultMaxCnt,
-			Sort.by(Sort.Direction.DESC, "updatedDate"));
-		Slice<WatchingVideo> watchingVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageRequest,
+		Slice<WatchingVideo> watchingVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
 			member, false);
 		List<Video> videoList = watchingVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
 			Collectors.toList());
@@ -114,18 +112,23 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoList getCompleteList(long memberNo, int page) {
+	public VideoInfoList getCompleteList(long memberNo, Pageable pageable) {
 		Member member = memberService.getMember(memberNo);
 
-		PageRequest pageRequest = PageRequest.of(page, resultMaxCnt,
-			Sort.by(Sort.Direction.DESC, "updatedDate"));
-		Slice<WatchingVideo> completeVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageRequest,
+		Slice<WatchingVideo> completeVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
 			member, true);
 
 		List<Video> videoList = completeVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
 			Collectors.toList());
 		updateBookmarkVideo(member, videoList);
 		return new VideoInfoList(videoList);
+	}
+
+	@Override
+	public VideoInfoList searchVideo(String query, Pageable pageable) {
+		return new VideoInfoList(videoRepository.findSliceByTitle(query, pageable)
+			.get()
+			.collect(Collectors.toList()));
 	}
 
 	@Override
@@ -169,7 +172,6 @@ public class VideoServiceImpl implements VideoService {
 		watchingVideoRepository.save(watchingVideo);
 
 	}
-
 
 	public void updateBookmarkVideo(Member member, List<Video> videoList) {
 
