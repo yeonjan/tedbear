@@ -58,7 +58,7 @@ public class SentenceController {
 		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 
 		memberShortsLogService.saveMemberShortsLog(member, shorLogRequest.getSentenceNo());
-		return null;
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
