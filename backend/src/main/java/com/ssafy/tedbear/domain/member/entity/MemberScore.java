@@ -30,9 +30,4 @@ public class MemberScore extends BaseEntity {
 	public void initScore(int defaultScore, int testResult) {
 		this.score = defaultScore + testResult;
 	}
-
-	public void initScore(int defaultScore, int testResult) {
-		this.score = defaultScore + testResult;
-	}
-
 }
