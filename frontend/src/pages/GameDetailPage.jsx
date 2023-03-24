@@ -65,7 +65,7 @@ const StyledLevel = styled.div`
     overflow: auto;
     font-size: 23px;
     display: flex;
-    align-items: center;
+    align-items: top; // 맨 윗줄 안 잘리게
     justify-content: center;
     color: white;
   }
@@ -117,7 +117,7 @@ const GameDetailPage = () => {
           }}
         ></Album>
       </div>
-      <div display="flex">
+      <div>
         <Paper
           elevation={3}
           style={{
@@ -126,7 +126,7 @@ const GameDetailPage = () => {
             width: '40vw',
             height: '80vh',
             padding: 100,
-            margin: 30,
+            margin: 20,
             position: 'relative',
             left: '50%',
             transform: 'translate(0%, 7%)',
@@ -140,28 +140,34 @@ const GameDetailPage = () => {
             style={{
               width: '35vw',
               height: '40vh',
-              padding: 30,
-              margin: 30,
+              paddingTop: 30,
+              paddingBottom: 30,
+              paddingLeft: 30,
+              paddingRight: 30,
+              margin: 20,
               borderRadius: 20,
               backgroundColor: '#FEAD55',
               position: 'absolute',
               justifyContent: 'center',
               alignItems: 'center',
               top: '40%' /* vertically center the button */,
-              right: '0%' /* position the button to the right */,
+              right: '2%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
             }}
           >
             <Typography className="problem-text">
-              Need to show the problems using map function and axios get method!
-              There will be a blank in a sentencce. ex. _____ like you! Need to
-              show the problems using map function and axios get method! There
-              will be a blank in a sentencce. ex. _____ like you! Need to show
-              the problems using map function and axios get method! There will
-              be a blank in a sentencce. ex. _____ like you! Need to show the
+              The First: Need to show the problems using map function and axios
+              get method! There will be a blank in a sentencce. ex. _____ like
+              you! Need to show the problems using map function and axios get
+              method! There will be a blank in a sentencce. Need to show the
               problems using map function and axios get method! There will be a
-              blank in a sentencce. ex. _____ like you!
+              blank in a sentencce. ex. _____ like you! Need to show the
+              problems using map function and axios get method! There will be a
+              blank in a sentencce.Need to show the problems using map function
+              and axios get method! There will be a blank in a sentencce. ex.
+              _____ like you! Need to show the problems using map function and
+              axios get method! There will be a blank in a sentencce.
             </Typography>
           </Paper>
           <Paper
@@ -177,56 +183,56 @@ const GameDetailPage = () => {
               justifyContent: 'center',
               alignItems: 'center',
               top: '80%' /* vertically center the button */,
-              right: '6%' /* position the button to the right */,
+              right: '9%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
             }}
           >
             <input className="input" placeholder="Enter your Answer"></input>
           </Paper>
+          <Button
+            className="hint-button"
+            onClick={handleHint}
+            style={{
+              position: 'absolute',
+              top: '8%' /* vertically center the button */,
+              right: '8%' /* position the button to the right */,
+              transform:
+                'translateY(-50%)' /* adjust vertical position after centering */,
+            }}
+            sx={{ width: '6vw', height: '6vh', padding: 1, margin: 2 }}
+          >
+            <p className="hint-button-text">Hint!</p>
+          </Button>
+          <IconButton
+            className="next-button"
+            onClick={handleNext}
+            sx={{
+              boxShadow: 3,
+              width: '3rem',
+              height: '3rem',
+              bgcolor: theme =>
+                theme.palette.mode === 'dark' ? '#101010' : '#fff',
+              color: theme =>
+                theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+            }}
+            style={{
+              position: 'absolute',
+              margin: '20px 0px 0px 20px',
+              top: '40%' /* vertically center the button */,
+              right: '-3%' /* position the button to the right */,
+              transform:
+                'translateY(-50%)' /* adjust vertical position after centering */,
+              border: '1px solid #FFFFFF',
+              background: '#FFFFFF',
+            }}
+            variant="outlined"
+          >
+            <p className="next-button-inside">
+              <ArrowForwardIosIcon />
+            </p>
+          </IconButton>
         </Paper>
-        <Button
-          className="hint-button"
-          onClick={handleHint}
-          style={{
-            position: 'absolute',
-            top: '11%' /* vertically center the button */,
-            right: '6%' /* position the button to the right */,
-            transform:
-              'translateY(-50%)' /* adjust vertical position after centering */,
-          }}
-          sx={{ width: '6vw', height: '6vh', padding: 1, margin: 2 }}
-        >
-          <p className="hint-button-text">Hint!</p>
-        </Button>
-        <IconButton
-          className="next-button"
-          onClick={handleNext}
-          sx={{
-            boxShadow: 3,
-            width: '3rem',
-            height: '3rem',
-            bgcolor: theme =>
-              theme.palette.mode === 'dark' ? '#101010' : '#fff',
-            color: theme =>
-              theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-          }}
-          style={{
-            position: 'absolute',
-            margin: '25px 0px 0px 20px',
-            top: '45%' /* vertically center the button */,
-            right: '4%' /* position the button to the right */,
-            transform:
-              'translateY(-50%)' /* adjust vertical position after centering */,
-            border: '1px solid #FFFFFF',
-            background: '#FFFFFF',
-          }}
-          variant="outlined"
-        >
-          <p className="next-button-inside">
-            <ArrowForwardIosIcon />
-          </p>
-        </IconButton>
       </div>
     </StyledLevel>
   );
