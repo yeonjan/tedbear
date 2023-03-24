@@ -58,10 +58,10 @@ const StyledLevel = styled.div`
       border-radius: 20px;
     }
     position: absolute;
-    width: 30vw;
-    height: 30vh;
-    top: 30%;
-    left: 58%;
+    /* width: 30vw; */
+    /* height: 30vh; */
+    /* top: 30%; */
+    /* left: 58%; */
     overflow: auto;
     font-size: 23px;
     display: flex;
@@ -117,7 +117,7 @@ const GameDetailPage = () => {
           }}
         ></Album>
       </div>
-      <div>
+      <div display="flex">
         <Paper
           elevation={3}
           style={{
@@ -132,45 +132,58 @@ const GameDetailPage = () => {
             transform: 'translate(0%, 7%)',
             borderRadius: 20,
           }}
-        ></Paper>
-        <Paper
-          className="problem-paper"
-          elevation={3}
-          style={{
-            width: '35vw',
-            height: '40vh',
-            padding: 100,
-            margin: 30,
-            borderRadius: 20,
-            backgroundColor: '#FEAD55',
-            position: 'absolute',
-            top: '43%' /* vertically center the button */,
-            right: '6.5%' /* position the button to the right */,
-            transform:
-              'translateY(-50%)' /* adjust vertical position after centering */,
-          }}
-        ></Paper>
-        <Typography className="problem-text">
-          Need to show the problems using map function and axios get method!
-          There will be a blank in a sentencce. ex. _____ like you!
-        </Typography>
-        <Paper
-          elevation={3}
-          style={{
-            width: '30vw',
-            height: '1vh',
-            padding: 30,
-            margin: 30,
-            borderRadius: 20,
-            backgroundColor: '#8F84CE',
-            position: 'absolute',
-            top: '80%' /* vertically center the button */,
-            right: '9%' /* position the button to the right */,
-            transform:
-              'translateY(-50%)' /* adjust vertical position after centering */,
-          }}
         >
-          <input className="input" placeholder="Enter your Answer"></input>
+          {' '}
+          <Paper
+            className="problem-paper"
+            elevation={3}
+            style={{
+              width: '35vw',
+              height: '40vh',
+              padding: 30,
+              margin: 30,
+              borderRadius: 20,
+              backgroundColor: '#FEAD55',
+              position: 'absolute',
+              justifyContent: 'center',
+              alignItems: 'center',
+              top: '40%' /* vertically center the button */,
+              right: '0%' /* position the button to the right */,
+              transform:
+                'translateY(-50%)' /* adjust vertical position after centering */,
+            }}
+          >
+            <Typography className="problem-text">
+              Need to show the problems using map function and axios get method!
+              There will be a blank in a sentencce. ex. _____ like you! Need to
+              show the problems using map function and axios get method! There
+              will be a blank in a sentencce. ex. _____ like you! Need to show
+              the problems using map function and axios get method! There will
+              be a blank in a sentencce. ex. _____ like you! Need to show the
+              problems using map function and axios get method! There will be a
+              blank in a sentencce. ex. _____ like you!
+            </Typography>
+          </Paper>
+          <Paper
+            elevation={3}
+            style={{
+              width: '30vw',
+              height: '1vh',
+              padding: 30,
+              margin: 30,
+              borderRadius: 20,
+              backgroundColor: '#8F84CE',
+              position: 'absolute',
+              justifyContent: 'center',
+              alignItems: 'center',
+              top: '80%' /* vertically center the button */,
+              right: '6%' /* position the button to the right */,
+              transform:
+                'translateY(-50%)' /* adjust vertical position after centering */,
+            }}
+          >
+            <input className="input" placeholder="Enter your Answer"></input>
+          </Paper>
         </Paper>
         <Button
           className="hint-button"
