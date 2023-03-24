@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDto;
+import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 
@@ -26,12 +27,9 @@ public class SentenceBookmarkService {
 	}
 
 	public void deleteSentenceBookmark(Long memberId, SentenceBookmarkDto sentenceBookmarkDto) {
-		// Member member = Member.builder().no(memberId).build();
-		// Sentence sentence = sentenceBookmarkDto.toSentenceEntity();
-		// SentenceBookmark sentenceBookmark = SentenceBookmark.builder().sentence(sentence).member(member).build();
-		//
-		//
-		// sentenceBookmarkRepository.delete(sentenceBookmark);
-
+		Member member = Member.builder().no(memberId).build();
+		Sentence sentence = sentenceBookmarkDto.toSentenceEntity();
+		sentenceBookmarkRepository.deleteByMemberAndSentence(member, sentence);
 	}
+
 }
