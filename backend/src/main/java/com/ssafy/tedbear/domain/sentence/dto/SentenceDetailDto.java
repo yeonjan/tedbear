@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.dto;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Slice;
@@ -34,7 +35,7 @@ public class SentenceDetailDto {
 	public static class ListResponse {
 		List<SentenceDetailDto> sentenceList;
 
-		public ListResponse(List<Sentence> list) {
+		public ListResponse(Set<Sentence> list) {
 			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 
