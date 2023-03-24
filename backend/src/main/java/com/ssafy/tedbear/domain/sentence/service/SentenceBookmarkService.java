@@ -24,4 +24,14 @@ public class SentenceBookmarkService {
 		SentenceBookmark sentenceBookmark = sentenceBookmarkDto.toEntity(member);
 		sentenceBookmarkRepository.save(sentenceBookmark);
 	}
+
+	public void deleteSentenceBookmark(Long memberId, SentenceBookmarkDto sentenceBookmarkDto) {
+		// Member member = Member.builder().no(memberId).build();
+		// Sentence sentence = sentenceBookmarkDto.toSentenceEntity();
+		// SentenceBookmark sentenceBookmark = SentenceBookmark.builder().sentence(sentence).member(member).build();
+		//
+		//
+		// sentenceBookmarkRepository.delete(sentenceBookmark);
+
+	}
 }

@@ -16,4 +16,8 @@ public class SentenceBookmarkDto {
 		Sentence sentence = Sentence.builder().no(this.sentenceNo).build();
 		return SentenceBookmark.builder().member(member).sentence(sentence).createdDate(LocalDateTime.now()).build();
 	}
+
+	public Sentence toSentenceEntity() {
+		return Sentence.builder().no(this.sentenceNo).build();
+	}
 }
