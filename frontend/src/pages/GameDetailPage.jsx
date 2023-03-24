@@ -195,7 +195,7 @@ const GameDetailPage = () => {
             transform:
               'translateY(-50%)' /* adjust vertical position after centering */,
           }}
-          sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
+          sx={{ width: '6vw', height: '6vh', padding: 1, margin: 2 }}
         >
           <p className="hint-button-text">Hint!</p>
         </Button>
