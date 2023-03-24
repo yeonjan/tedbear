@@ -25,7 +25,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
-  > * {
+  > img {
     width: 31.3%;
     height: 200px;
     cursor: pointer;
