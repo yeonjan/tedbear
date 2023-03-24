@@ -85,6 +85,8 @@ const ShortsModal = ({ shorts }: Props) => {
 
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
+    player.unloadModule('captions'); //Works for html5 ignored by AS3
+    player.unloadModule('cc'); //Works for AS3 ignored by html5
     // playRef.current = player;
     player.playVideo();
   };
@@ -108,7 +110,6 @@ const ShortsModal = ({ shorts }: Props) => {
       end: shorts?.endTime,
       controls: 0,
       disablekb: 1,
-
       // autoplay: 1,
       // mute: 1,
       rel: 0, // 해당 채널의 관련 영상만 띄어줌
