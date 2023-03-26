@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
-// import LandingPage from 'pages/LandingPage';
 import LandingPage from 'pages/LandingPageTest';
 import GamePage from 'pages/GamePage';
 import LevelPage from 'pages/LevelPage';
@@ -11,6 +10,8 @@ import SeungPage from 'pages/SeungPage';
 import YuhaPage from 'pages/YuhaPage';
 import JuPage from 'pages/JuPage';
 import LearningPage from 'pages/LearningPage';
+import GameDetailPage from 'pages/GameDetailPage';
+import GameCompletePage from 'pages/GameCompletePage';
 import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'theme';
@@ -33,6 +34,8 @@ function App() {
             <Route element={<LayoutPage />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/game" element={<GamePage />} />
+              <Route path="/game/detail" element={<GameDetailPage />} />
+              <Route path="/game/complete" element={<GameCompletePage />} />
               <Route path="/level" element={<LevelPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/learning" element={<LearningPage />} />

@@ -52,6 +52,19 @@ const StyledLevel = styled.div`
         transition: 0.4s;
       }
       div {
+        /* 스크롤 */
+        /* border: 1px solid black; */
+        overflow-y: scroll;
+        height: 80%;
+        &::-webkit-scrollbar {
+          width: 8px;
+          cursor: pointer;
+        }
+        &::-webkit-scrollbar-thumb {
+          height: 15%;
+          background-color: ${props => props.theme.mainColor};
+          border-radius: 20px;
+        }
         backface-visibility: hidden;
         position: absolute;
         top: 0;
@@ -63,6 +76,7 @@ const StyledLevel = styled.div`
         background: ${props => props.theme.mainLightColor};
       }
       .back {
+        padding: 20px;
         overflow: auto;
         font-size: 20px;
         /* line-height: 120px; */
@@ -73,6 +87,7 @@ const StyledLevel = styled.div`
         justify-content: center;
       }
       .front {
+        padding: 20px;
         overflow: auto;
         transform: rotateY(180deg);
         font-size: 20px;
@@ -160,7 +175,7 @@ const LevelPage = () => {
     console.log('Back에 Score보내요');
     console.log(senList, wordList);
     // 여기서 flipped 값이 true인 애들의 score 합쳐서 api로 post 보내고 홈 화면으로 이동시키기
-    // navigate('/home');
+    navigate('/home');
   };
 
   const handleClick = index => {
