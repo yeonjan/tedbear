@@ -18,6 +18,7 @@ import com.ssafy.tedbear.domain.log.service.MemberShortsLogService;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkStatusDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
@@ -77,8 +78,8 @@ public class SentenceController {
 	//==북마크==//
 	@GetMapping("/bookmark/list")
 	public ResponseEntity<?> getBookmarkedSentenceList() {
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId);
+		return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 
 	@PostMapping("/bookmark")
