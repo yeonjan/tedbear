@@ -56,6 +56,7 @@ const HomePage = () => {
             학습 중인 영상
           </button>
         </div>
+        <h1>Recommended for you</h1>
         <Carousel data={videoData}></Carousel>
         <ShortsCarousel
           data={shortsData}
