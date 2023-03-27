@@ -153,11 +153,9 @@ const LevelPage = () => {
           });
           setSenList(senData);
 
-          const wordList = response.data.wordMeanList
-            .slice(0, 6) // 단어도 6개만 주세요!
-            .map((item, index) => {
-              return { ...item, flipped: false, id: index };
-            });
+          const wordList = response.data.wordMeanList.map((item, index) => {
+            return { ...item, flipped: false, id: index };
+          });
           setWordList(wordList);
         })
         .catch(error => {
