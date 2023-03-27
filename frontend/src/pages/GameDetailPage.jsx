@@ -197,7 +197,7 @@ const GameDetailPage = () => {
             style={{
               position: 'absolute',
               top: '8%' /* vertically center the button */,
-              right: '8%' /* position the button to the right */,
+              right: '3%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
             }}
