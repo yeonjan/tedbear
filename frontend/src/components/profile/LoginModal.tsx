@@ -142,9 +142,9 @@ interface Props {
 const LoginModal = ({ setOpenModal }: Props) => {
   const navigate = useNavigate();
   const KakaoLogin = () => {
-    navigate('/level');
-    // window.location.href =
-    //   'https://kauth.kakao.com/oauth/authorize?client_id=e7c1204fb5b00edcc9f6a3cf3e92e736&redirect_uri=http:localhost:3000&response_type=code';
+    window.location.href =
+      'https:kauth.kakao.com/oauth/authorize?client_id=8479739cb2eb523d03215db2f6b5fe23&redirect_uri=http://j8b103.p.ssafy.io:8080/oauth/kakao&response_type=code';
+    // 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
   };
 
   return (
@@ -166,10 +166,10 @@ const LoginModal = ({ setOpenModal }: Props) => {
             <StyledNaverIcon></StyledNaverIcon>
             네이버로 시작하기
           </KakaoButton>
-          <KakaoButton BgColor={'white'}>
+          {/* <KakaoButton BgColor={'white'}>
             <StyledGoogleIcon></StyledGoogleIcon>
             Google로 시작하기
-          </KakaoButton>
+          </KakaoButton> */}
         </div>
       </Modal>
     </div>

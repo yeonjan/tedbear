@@ -23,19 +23,15 @@ const Wrapper = styled.div`
 
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
+  height: 30vh;
   transition: ${props => props.transition};
   transform: translateX(-${props => props.transform * 33.3}%);
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
-<<<<<<< HEAD
-  > img {
-=======
   .wrapper {
->>>>>>> be3987588a1ccaa058e36bffe0e2b57944c47419
     width: 31.3%;
     position: relative;
-    height: 300px;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 16px;
@@ -43,6 +39,10 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
+    &:hover {
+      scale: 1.04;
+      transition: 0.4s;
+    }
     @media (max-width: 768px) {
       width: 48%;
     }
@@ -51,10 +51,6 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       width: 100%;
       height: 100%;
       cursor: pointer;
-      &:hover {
-        scale: 1.04;
-        transition: 0.4s;
-      }
     }
     .video-level {
       height: 12%;
@@ -66,6 +62,19 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       height: 15%;
       position: absolute;
       left: 90%;
+    }
+    .title {
+      text-align: center;
+      width: 80%;
+      position: absolute;
+      bottom: 10%;
+      left: 10%;
+      font-size: 13px;
+      color: white;
+      background: black;
+      opacity: 50%;
+      border-radius: 16px;
+      padding: 5px;
     }
   }
 `;
@@ -163,7 +172,11 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
                 alt=""
               />
               <img src={VideoLevel} className="video-level"></img>
-              <img src={BookmarkFull} className="book-mark"></img>
+              <img
+                src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                className="book-mark"
+              ></img>
+              <div className="title">{Thumnail.title}</div>
             </div>
           );
         })}
