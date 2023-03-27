@@ -58,15 +58,25 @@ const RootWrapper = styled.div`
   .right-btn {
     position: absolute;
     right: 5%;
-    top: -15%;
+    top: -12%;
     height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
   .left-btn {
     position: absolute;
     right: 1%;
 
-    top: -15%;
+    top: -12%;
     height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
 `;
 
