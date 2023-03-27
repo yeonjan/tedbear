@@ -6,6 +6,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
+import carouselButton from 'assets/img/carouselButton.svg';
+
+import { device } from 'utils/mediaQuery';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -39,6 +42,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
+    overflow-y: hidden;
     &:hover {
       scale: 1.04;
       transition: 0.4s;
@@ -53,13 +57,13 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       cursor: pointer;
     }
     .video-level {
-      height: 12%;
+      height: 15%;
       position: absolute;
       top: 4%;
       left: 4%;
     }
     .book-mark {
-      height: 15%;
+      height: 20%;
       position: absolute;
       left: 90%;
     }
@@ -69,12 +73,24 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       position: absolute;
       bottom: 10%;
       left: 10%;
-      font-size: 13px;
       color: white;
-      background: black;
-      opacity: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
       border-radius: 16px;
       padding: 5px;
+      @media ${device.mobile} {
+        font-size: 6px;
+      }
+      @media ${device.tablet} {
+        font-size: 8px;
+      }
+
+      @media ${device.laptop} {
+        font-size: 13px;
+      }
+
+      @media ${device.desktop} {
+        font-size: 13px;
+      }
     }
   }
 `;
@@ -92,11 +108,7 @@ const TitleWithButton = styled.div`
 `;
 
 const LeftButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #7b7b7b;
-  border: 1px solid black;
+  width: 50%;
 `;
 
 const RightButton = styled.button`
@@ -154,7 +166,7 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
         <h1>Recommended Videos</h1>
         <div className="buttom-wrapper">
           <LeftButton onClick={prev}>
-            <ArrowBackIosNewIcon />
+            <img src={carouselButton} alt="" />
           </LeftButton>
           <RightButton onClick={next} className="right-arrow">
             <ArrowForwardIosIcon />
@@ -171,7 +183,14 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
                 onClick={() => handleClick(Thumnail.watchId)}
                 alt=""
               />
-              <img src={VideoLevel} className="video-level"></img>
+              <img
+                src={VideoLevel}
+                className="video-level"
+                style={{
+                  filter:
+                    'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
+                }}
+              ></img>
               <img
                 src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
                 className="book-mark"

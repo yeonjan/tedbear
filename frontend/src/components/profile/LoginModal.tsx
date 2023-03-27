@@ -39,25 +39,25 @@ const DarkBackground = styled.div`
 //   z-index: 9999;
 //   border-radius: 16px;
 //   overflow: hidden;
-//   @media ${device.mobile} {
-//     height: 500px;
-//     width: 300px;
-//   }
+// @media ${device.mobile} {
+//   height: 500px;
+//   width: 300px;
+// }
 
-//   @media ${device.tablet} {
-//     height: 50%;
-//     width: 30%;
-//   }
+// @media ${device.tablet} {
+//   height: 50%;
+//   width: 30%;
+// }
 
-//   @media ${device.laptop} {
-//     height: 50%;
-//     width: 30%;
-//   }
+// @media ${device.laptop} {
+//   height: 50%;
+//   width: 30%;
+// }
 
-//   @media ${device.desktop} {
-//     height: 75%;
-//     width: 30%;
-//   }
+// @media ${device.desktop} {
+//   height: 75%;
+//   width: 30%;
+// }
 
 //   /* box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04); */
 // `;
