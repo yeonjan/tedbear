@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,7 @@ public interface SentenceBookmarkRepository extends JpaRepository<SentenceBookma
 	List<SentenceBookmark> findByMemberAndSentenceIn(Member member, List<Sentence> sentenceList);
 
 	void deleteByMemberAndSentence(Member member, Sentence sentence);
+
+	Optional<SentenceBookmark> findByMemberAndSentence(Member member, Sentence sentence);
+
 }
