@@ -33,7 +33,8 @@ if __name__ == '__main__':
     try:
         no_start, no_end = sys.argv[1:]
     except:
-        no_start, no_end = 500, 5100
+        print('인자를 꼭 입력해주세용~!')
+        exit(0)
     sql = f'SELECT * FROM sentence_tb where translation is null and no between {no_start} and {no_end}'
     cursor.execute(sql)
     rows = cursor.fetchall()
