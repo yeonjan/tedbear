@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "video_category_tb")
 @AllArgsConstructor
-@NoArgsConstructor(access = Ac qcessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class VideoCategory {
 	@Id
