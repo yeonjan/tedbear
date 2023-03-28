@@ -21,7 +21,7 @@ public class SentenceBookmarkDetailDto {
 		this.no = sentence.getNo();
 		this.content = sentence.getContent();
 		this.translation = sentence.getTranslation();
-		this.bookmarked = sentence.isBookmarked();
+		this.bookmarked = true;
 		this.score = sentence.getScore();
 		this.watchId = sentence.getVideo().getWatchId();
 		this.startTime = sentence.getStartTime();
