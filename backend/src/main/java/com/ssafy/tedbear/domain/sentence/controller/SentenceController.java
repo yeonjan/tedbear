@@ -80,8 +80,8 @@ public class SentenceController {
 
 	//==북마크==//
 	@GetMapping("/bookmark/list")
-	public ResponseEntity<?> getBookmarkedSentenceList() {
-		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId);
+	public ResponseEntity<?> getBookmarkedSentenceList(Pageable pageable) {
+		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId, pageable);
 		return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 
