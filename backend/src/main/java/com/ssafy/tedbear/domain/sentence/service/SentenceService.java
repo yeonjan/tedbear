@@ -59,8 +59,8 @@ public class SentenceService {
 
 	//추천 문장 리스트 불러오기
 	@Transactional
-	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
-		int memberScore = member.getScore();
+	public SentenceDetailDto.ListResponse getRecommendList(Member member, int delta) {
+		int memberScore = member.getScore() + delta;
 		List<Sentence> sentenceList = getRecommendSentence(memberScore);
 
 		List<Sentence> checkedList = checkDuplicateVideo(sentenceList);

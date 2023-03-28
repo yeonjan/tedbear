@@ -39,10 +39,10 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoListDto getRecommendList(long memberNo) {
+	public VideoInfoListDto getRecommendList(long memberNo, int delta) {
 		Member member = memberService.getMember(memberNo);
 		int myScore = member.getMemberScore().getScore();
-		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore);
+		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
 
 		List<Video> recommendVideoList = null;

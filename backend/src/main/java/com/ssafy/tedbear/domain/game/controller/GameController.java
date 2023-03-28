@@ -26,4 +26,10 @@ public class GameController {
 		WordGameDto question = gameService.getQuestion(2L);
 		return new ResponseEntity<>(question, HttpStatus.OK);
 	}
+
+	@GetMapping("/crossword")
+	public ResponseEntity<WordGameDto> getCrossWordGame() {
+		WordGameDto question = gameService.getQuestion(2L);
+		return new ResponseEntity<>(question, HttpStatus.OK);
+	}
 }
