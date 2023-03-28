@@ -19,7 +19,7 @@ def init_driver():
 
 
 # no_start, no_end = map(int, input().split())
-no_start, no_end = 30000,40000
+no_start, no_end = 1,100000
 while True:
     conn = pymysql.connect(host='3.36.50.141', user='root', password='824b2937-79c0-4595-8ea2-e8930ed750ae',
                            database='tedbearDB',
