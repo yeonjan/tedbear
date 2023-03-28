@@ -9,8 +9,7 @@ public interface GameService {
 	WordGameDto getQuestion(Long memberId);
 
 	void completeWordGame(long memberId, WordGameResultDto wordGameResultDto);
-
-	public WordGameDto getQuestion(Long memberId);
+	
 	CrossWordDto getCrossWord();
 
 }

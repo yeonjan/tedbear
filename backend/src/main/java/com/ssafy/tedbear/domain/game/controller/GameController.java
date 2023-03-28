@@ -35,6 +35,7 @@ public class GameController {
 	public ResponseEntity<WordGameDto> postWordGame(@RequestBody WordGameResultDto wordGameResultDto) {
 		gameService.completeWordGame(2L, wordGameResultDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
 
 	@GetMapping("/crossword")
 	public ResponseEntity<CrossWordDto> getCrossWordGame() {
