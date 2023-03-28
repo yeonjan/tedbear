@@ -25,12 +25,13 @@ interface IBookmarkSentence {
   sentenceList: [
     {
       no: number;
+      content: string;
+      translation: string;
+      bookMarked: boolean;
       score: number;
+      watchId: string;
       startTime: number;
       endTime: number;
-      content: string;
-      bookMarked: boolean;
-      watchId: string;
     },
   ];
 }
