@@ -12,4 +12,20 @@ public class RecommendUtil {
 		int recommendScore = myScore + rand;
 		return Math.min(Math.max(recommendScore, 1), 99999);
 	}
+
+	public static int getDelta(String difficulty) {
+		int delta;
+		switch (difficulty) {
+			case "easy":
+				delta = -15000;
+				break;
+			case "hard":
+				delta = 15000;
+				break;
+			case "normal":
+			default:
+				delta = 0;
+		}
+		return delta;
+	}
 }

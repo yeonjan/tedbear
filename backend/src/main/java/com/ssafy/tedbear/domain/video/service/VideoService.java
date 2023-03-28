@@ -9,7 +9,7 @@ import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 
 public interface VideoService {
 
-	VideoInfoListDto getRecommendList(long memberNo);
+	VideoInfoListDto getRecommendList(long memberNo, int delta);
 
 	VideoDetailDto getDetail(long memberNo, String watchId);
 

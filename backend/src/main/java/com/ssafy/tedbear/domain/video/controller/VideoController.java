@@ -18,6 +18,7 @@ import com.ssafy.tedbear.domain.video.dto.VideoInfoListDto;
 import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 import com.ssafy.tedbear.domain.video.service.VideoService;
 import com.ssafy.tedbear.global.common.SearchDto;
+import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,9 +30,10 @@ public class VideoController {
 	final MemberRepository memberRepository;
 
 	// 추천 영상 12개 뿌리기
-	@GetMapping("/recommend/list")
-	public ResponseEntity<VideoInfoListDto> getRecommendList() {
-		return ResponseEntity.ok(videoService.getRecommendList(1L));
+	@GetMapping("/recommend/list/{difficulty}")
+	public ResponseEntity<VideoInfoListDto> getRecommendList(@PathVariable("difficulty") String difficulty) {
+		int delta = RecommendUtil.getDelta(difficulty);
+		return ResponseEntity.ok(videoService.getRecommendList(1L, delta));
 	}
 
 	@GetMapping("/detail/{watchId}")

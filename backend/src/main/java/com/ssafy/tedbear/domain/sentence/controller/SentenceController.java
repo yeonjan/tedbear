@@ -25,7 +25,9 @@ import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkService;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
+import com.ssafy.tedbear.domain.video.controller.VideoController;
 import com.ssafy.tedbear.global.common.SearchDto;
+import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,11 +54,12 @@ public class SentenceController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/recommend/list")
-	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendSentence() {
+	@GetMapping("/recommend/list/{difficulty}")
+	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendSentence(
+		@PathVariable("difficulty") String difficulty) {
 		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-
-		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member);
+		int delta = RecommendUtil.getDelta(difficulty);
+		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member, delta);
 		return new ResponseEntity<>(recommendList, HttpStatus.OK);
 	}
 
