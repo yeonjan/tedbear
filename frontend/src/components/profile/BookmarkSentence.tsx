@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { authApi } from 'utils/api/customAxios';
+import { getSentenceBookmark } from 'utils/api/bookmarkApi';
+
+interface IBookmarkSentence {
+  no: number;
+  score: number;
+  startTime: number;
+  endTime: number;
+  content: string;
+  bookMarked: boolean;
+  watchId: string;
+}
 
 const BookIn = styled.div`
   position: absolute;
@@ -9,51 +19,25 @@ const BookIn = styled.div`
   margin: 20px;
 `;
 
-// const [words, setWords] = useState([]);
-// { id: 1, text: 'Word 1', isBookmarked: false },
-// { id: 2, text: 'Word 2', isBookmarked: true },
-
 const BookmarkSentence = () => {
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     await authApi
-  //       .get('your_api_endpoint') // api
-  //       .then(response => {
-  //         setWords(response.data.words);
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
-  //   fetchData();
-  // }, []);
+  const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
+    [],
+  );
 
-  // const toggleBookmark = id => {
-  //   const updatedWords = words.map(word => {
-  //     if (word.id === id) {
-  //       return { ...word, isBookmarked: !word.isBookmarked };
-  //     }
-  //     return word;
-  //   });
-  //   setWords(updatedWords);
-  // };
+  useEffect(() => {
+    const fetchData = async () => {
+      const data: IBookmarkSentence[] = await getSentenceBookmark();
+      setSentenceBookmark(data);
+      console.log(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <BookIn>
       <div>
-        <h2>BookmarkSentence</h2>
-        {/* <ul>
-          {words.map(word => (
-            <li key={word.id}>
-              <img
-                src={word.isBookmarked ? bookmarkOn : bookmarkOff}
-                alt="Bookmark"
-                onClick={() => toggleBookmark(word.id)}
-              />
-              {word.text}
-            </li>
-          ))}
-        </ul> */}
+        <h2>Bookmarked Sentence</h2>
+        {/* {sentenceBookmark} */}
       </div>
     </BookIn>
   );
