@@ -1,7 +1,10 @@
 package com.ssafy.tedbear.domain.game.service;
 
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
+import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 
 public interface GameService {
-	public WordGameDto getQuestion(Long memberId);
+	WordGameDto getQuestion(Long memberId);
+
+	void completeWordGame(long memberId, WordGameResultDto wordGameResultDto);
 }

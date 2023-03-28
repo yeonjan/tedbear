@@ -5,9 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
+import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,5 +28,11 @@ public class GameController {
 	public ResponseEntity<WordGameDto> getWordGame() {
 		WordGameDto question = gameService.getQuestion(2L);
 		return new ResponseEntity<>(question, HttpStatus.OK);
+	}
+
+	@PostMapping("/word")
+	public ResponseEntity<WordGameDto> postWordGame(@RequestBody WordGameResultDto wordGameResultDto) {
+		gameService.completeWordGame(2L, wordGameResultDto);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
