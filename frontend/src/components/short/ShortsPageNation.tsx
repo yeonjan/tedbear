@@ -9,7 +9,6 @@ const Containter = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  transition: all 0.3s ease-out;
   .wrapper {
     width: 17%;
     position: relative;
@@ -71,7 +70,6 @@ const ShortsPageNation = ({
   setShortsId,
 }: Props) => {
   const [page, setPage] = useState<number>(0);
-  console.log(upStreamPage, 'upstream!');
 
   const handleNext = (next: number) => {
     setPage(next);

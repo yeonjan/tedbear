@@ -3,9 +3,10 @@ import { authApi } from './customAxios';
 export interface SearchedVideo {
   score: number;
   thumbnailUrl: string;
-  bookmarked: boolean;
+  bookMarked: boolean;
   title: string;
   watchId: string;
+  no: number;
 }
 
 interface VideoSet {

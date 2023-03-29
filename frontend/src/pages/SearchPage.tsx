@@ -16,6 +16,7 @@ import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
+import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 
 const VideoWrapper = styled.div`
   display: flex;
@@ -162,7 +163,6 @@ const SearchPage = () => {
     const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content, 0);
     const shortData2 = await searchSenData(content, 1);
-
     if (shortData2.length) {
       setShortPage(1);
       setNext(true);
@@ -220,15 +220,18 @@ const SearchPage = () => {
   };
 
   const handleVideoBm = (video: SearchedVideo, idx: number) => {
-    // const status = video.bookmarked
-    // const copy = videos
-    // copy[idx].bookmarked = !copy[idx].bookmarked
-    // setVideo(copy);
-    // if (status) {
-    //   deleteVideoBookmark({ videoNo: video.no });
-    // } else {
-    //   postVideoBookmark({ videoNo: video.no });
-    // }
+    const status = video.bookMarked;
+    const copy = [...videos];
+    console.log(copy[idx].bookMarked);
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    setVideo(copy);
+    console.log(copy[idx].bookMarked);
+
+    if (status) {
+      deleteVideoBookmark({ videoNo: video.no });
+    } else {
+      postVideoBookmark({ videoNo: video.no });
+    }
   };
 
   return (
@@ -247,13 +250,15 @@ const SearchPage = () => {
       <VideoTitle>Related Videos</VideoTitle>
       {videos.map((video, idx) => {
         return (
-          <VideoWrapper
-            key={idx}
-            onClick={() => {
-              handleClick(video.watchId);
-            }}
-          >
-            <img src={video.thumbnailUrl} alt="" className="thumbnail" />
+          <VideoWrapper key={idx}>
+            <img
+              src={video.thumbnailUrl}
+              alt=""
+              className="thumbnail"
+              onClick={() => {
+                handleClick(video.watchId);
+              }}
+            />
             <img
               src={VideoLevel}
               className="video-level"
@@ -263,7 +268,7 @@ const SearchPage = () => {
               }}
             ></img>
             <img
-              src={video.bookmarked ? BookmarkFull : BookmarkEmpty}
+              src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
               className="book-mark"
               onClick={() => {
                 handleVideoBm(video, idx);
