@@ -7,30 +7,22 @@ import { CardActionArea } from '@mui/material';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
-import { styled } from '@mui/system';
+import { SearchedVideo } from 'utils/api/searchApi';
+import { useNavigate } from 'react-router-dom';
 
-interface card {
-  title: string;
-  id: string;
-}
+const VideoCard = ({ card }: { card: SearchedVideo }) => {
+  const navigate = useNavigate();
+  const handleClick = (watchId: string) => {
+    navigate(`/learning/${watchId}`);
+  };
 
-// const StyledCard = styled.div`
-//   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-//   transition: 0.4s;
-//   &:hover {
-//     scale: 1.04;
-//     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
-//     transition: 0.4s;
-//   }
-//   > img {
-//     width: 100%;
-//     border-radius: 16px;
-//   }
-// `;
-
-const VideoCard = ({ card }: { card: card }) => {
   return (
-    <Card sx={{ height: '100%', position: 'relative' }}>
+    <Card
+      sx={{ height: '100%', position: 'relative' }}
+      onClick={() => {
+        handleClick(card.watchId);
+      }}
+    >
       <CardActionArea>
         <img
           src={VideoLevel}
@@ -40,11 +32,7 @@ const VideoCard = ({ card }: { card: card }) => {
           src={BookmarkFull}
           style={{ height: '15%', position: 'absolute', left: '90%' }}
         ></img>
-        <CardMedia
-          component="img"
-          image={'https://i.ytimg.com/vi/' + card.id + '/maxresdefault.jpg'}
-          alt=""
-        />
+        <CardMedia component="img" image={card.thumbnailUrl} alt="" />
         <CardContent>
           <Typography
             gutterBottom

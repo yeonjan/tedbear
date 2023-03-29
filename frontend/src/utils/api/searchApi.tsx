@@ -12,14 +12,12 @@ interface VideoSet {
   videoInfoList: SearchedVideo[];
 }
 
-// http://localhost:8080/video/search?query=and&size=10&sort=publishedDate,desc&page=0
-
-export const searchVideoData = async (query: string) => {
+export const searchVideoData = async (query: string, page: number) => {
   const params = {
     query,
     size: 8,
     sort: 'publishedDate,desc',
-    page: 0,
+    page,
   };
   const { data } = await authApi<VideoSet>({
     method: 'get',
@@ -41,4 +39,18 @@ export const searchSenData = async (query: string) => {
   });
 
   return data.sentenceList;
+};
+
+export const learningVideo = async (page: number) => {
+  const params = {
+    page,
+    size: 8,
+  };
+  const { data } = await authApi<VideoSet>({
+    method: 'get',
+    url: 'video/watching/list',
+    params: params,
+  });
+
+  return data.videoInfoList;
 };

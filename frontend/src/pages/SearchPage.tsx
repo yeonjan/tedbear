@@ -1,6 +1,6 @@
 import SearchBar from 'components/common/SearchBar';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   searchVideoData,
@@ -19,7 +19,7 @@ import { device } from 'utils/mediaQuery';
 const Wrapper = styled.div`
   margin-left: 3%;
   .short-wrapper {
-    width: 90%;
+    width: 88%;
   }
 `;
 
@@ -29,10 +29,13 @@ const VideoWrapper = styled.div`
   width: 100%;
   .thumbnail {
     width: 25%;
-    height: 100%;
+    height: 25vh;
     display: block;
     border-radius: 16px;
     margin-top: 2%;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .video-level {
     height: 15%;
@@ -44,10 +47,19 @@ const VideoWrapper = styled.div`
     height: 20%;
     position: absolute;
     left: 22%;
-    top: 12.5%;
+    top: 12.8%;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .content {
     padding: 2%;
+    &:hover {
+      cursor: pointer;
+      color: #7e7d7d;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
     @media ${device.mobile} {
       font-size: 10px;
     }
@@ -61,9 +73,62 @@ const VideoWrapper = styled.div`
     }
 
     @media ${device.desktop} {
-      font-size: 30px;
+      font-size: 25px;
     }
   }
+`;
+
+const VideoTitle = styled.span`
+  display: block;
+  margin-top: 2%;
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 15px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 35px;
+  }
+`;
+
+const LoadingTitle = styled.div`
+  color: #7e7d7d;
+  cursor: pointer;
+  padding: 1%;
+  border-radius: 16px;
+  &:hover {
+    background-color: rgba(116, 116, 116, 0.5);
+    transition: all 0.3s;
+    transform: translateY(3px);
+  }
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 20px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 30px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 40px;
+  }
+`;
+
+const StickySearchBar = styled.div`
+  position: sticky;
+  top: 1%;
+  z-index: 2;
 `;
 
 interface Props {
@@ -73,19 +138,39 @@ interface Props {
 
 const SearchPage = () => {
   const { content } = useParams();
-  const searchWord = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [loading, setLoading] = useState<string>('+ 8 more');
   const [videos, setVideo] = useState<SearchedVideo[]>([]);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
+  const [page, setPage] = useState<number>(0);
+  const navigate = useNavigate();
 
   const fetchData = async (content: string) => {
-    const videoData = await searchVideoData(content);
+    const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content);
-    console.log(shortData, videoData);
     setVideo(videoData);
+    setPage(0);
     setShortsData(shortData);
+    setSearchWord(content);
+    setLoading('+ 8 more');
+  };
+
+  const requestVideo = async () => {
+    if (loading === '+ 8 more') {
+      setLoading('Loading...');
+      const videoData = await searchVideoData(searchWord, page + 1);
+      if (videoData.length) {
+        setVideo(prev => prev.concat(videoData));
+        setLoading('+ 8 more');
+        console.log('비디오 갯수', videoData.length, page);
+        setPage(prev => prev + 1);
+      } else {
+        console.log('data가 없습니다.');
+        setLoading('영상이 없습니다.');
+      }
+    }
   };
 
   useEffect(() => {
@@ -94,13 +179,32 @@ const SearchPage = () => {
     }
   }, [content]);
 
+  const handleClick = (watchId: string) => {
+    navigate(`/learning/${watchId}`);
+  };
+
   return (
     <Wrapper>
-      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      <SearchBar fetchData={fetchData}></SearchBar>
+      {modalOpen && (
+        <ShortsModal
+          setShortsData={setShortsData}
+          shorts={shorts}
+          setOpenModal={setModalOpen}
+        />
+      )}
+      <StickySearchBar>
+        <SearchBar fetchData={fetchData}></SearchBar>
+      </StickySearchBar>
+
+      <VideoTitle>Related Videos</VideoTitle>
       {videos.map((video, idx) => {
         return (
-          <VideoWrapper key={idx}>
+          <VideoWrapper
+            key={idx}
+            onClick={() => {
+              handleClick(video.watchId);
+            }}
+          >
             <img src={video.thumbnailUrl} alt="" className="thumbnail" />
             <img
               src={VideoLevel}
@@ -114,10 +218,21 @@ const SearchPage = () => {
               src={video.bookmarked ? BookmarkFull : BookmarkEmpty}
               className="book-mark"
             ></img>
-            <div className="content">{video.title}</div>
+            <div
+              className="content"
+              onClick={() => {
+                handleClick(video.watchId);
+              }}
+            >
+              {video.title}
+            </div>
           </VideoWrapper>
         );
       })}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
+      </div>
+      <VideoTitle>Related Shorts</VideoTitle>
       <div className="short-wrapper">
         <ShortsCarousel
           data={shortsData}
