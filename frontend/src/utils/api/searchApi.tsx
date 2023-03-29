@@ -24,7 +24,7 @@ export const searchVideoData = async (query: string, page: number) => {
     url: 'video/search',
     params: params,
   });
-
+  console.log(data, 'data입니다!');
   return data.videoInfoList;
 };
 
@@ -37,6 +37,7 @@ export const searchSenData = async (query: string) => {
     url: 'sentence/search',
     params: params,
   });
+  console.log(data, 'data입니다!');
 
   return data.sentenceList;
 };

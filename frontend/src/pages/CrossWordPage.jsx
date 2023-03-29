@@ -1,7 +1,14 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import './CrossWord.css';
 import cx from 'classnames';
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
 const CrossWordPage = () => {
   const [wordList, setWordList] = useState([
     {
@@ -477,7 +484,7 @@ const CrossWordPage = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <div className="main" style={{ marginLeft: '5%' }}>
         {wordList.map((word, idx) => {
           if (word.clue) {
@@ -536,7 +543,7 @@ const CrossWordPage = () => {
           4. A line in the grid (3)
         </li>
       </ul>
-    </div>
+    </Wrapper>
   );
 };
 

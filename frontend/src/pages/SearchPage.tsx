@@ -183,6 +183,18 @@ const SearchPage = () => {
     navigate(`/learning/${watchId}`);
   };
 
+  const handleVideoBm = (video: SearchedVideo, idx: number) => {
+    // const status = video.bookmarked
+    // const copy = videos
+    // copy[idx].bookmarked = !copy[idx].bookmarked
+    // setVideo(copy);
+    // if (status) {
+    //   deleteVideoBookmark({ videoNo: video.no });
+    // } else {
+    //   postVideoBookmark({ videoNo: video.no });
+    // }
+  };
+
   return (
     <Wrapper>
       {modalOpen && (
@@ -217,6 +229,9 @@ const SearchPage = () => {
             <img
               src={video.bookmarked ? BookmarkFull : BookmarkEmpty}
               className="book-mark"
+              onClick={() => {
+                handleVideoBm(video, idx);
+              }}
             ></img>
             <div
               className="content"
