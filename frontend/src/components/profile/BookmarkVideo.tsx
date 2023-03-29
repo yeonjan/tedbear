@@ -24,13 +24,13 @@ interface IBookmarkVideo {
 const BookIn = styled.div`
   position: absolute;
   max-height: 800px;
-  margin: 20px;
+  margin: 10px;
+  padding: 10px;
   overflow-y: auto;
 
   /* 스크롤 */
   /* border: 1px solid black; */
-
-  height: 80%;
+  height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -85,8 +85,8 @@ const BookmarkVideo = () => {
         >
           <Grid
             container
-            justifyContent={'start'}
-            style={{ height: '1%', marginTop: '1%', width: '90%' }}
+            justifyContent={'center'}
+            style={{ height: '1%', width: '90%' }}
           >
             {videoBookmark.map((Thumnail, idx) => {
               return (
@@ -157,7 +157,7 @@ const BookmarkVideo = () => {
                         sx={{
                           width: '100vw',
                           height: '30vh',
-                          position: 'relative',
+                          position: 'absolute',
                           justifyContent: 'center',
                           alignItems: 'center',
                           overflow: 'auto',
