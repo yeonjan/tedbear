@@ -15,6 +15,7 @@ import ShortsCarousel from 'components/short/ShortsCarousel';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
+import ShortsPageNation from 'components/short/ShortsPageNation';
 
 const Wrapper = styled.div`
   margin-left: 3%;
@@ -140,19 +141,33 @@ const SearchPage = () => {
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8 more');
+  const [shortsLoading, setShortsLoading] = useState<boolean>(false);
   const [videos, setVideo] = useState<SearchedVideo[]>([]);
-  const { modalOpen, setModalOpen } = useOutletContext<Props>();
-  const [shortsData, setShortsData] = useState<Shorts[]>([]);
-  const [shorts, setShorts] = useState<Shorts | null>(null);
   const [page, setPage] = useState<number>(0);
+  const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const navigate = useNavigate();
+
+  const [shorts, setShorts] = useState<Shorts | null>(null);
+  // 유튜브 모달용
+  const [shortsData, setShortsData] = useState<Shorts[]>([]);
+  const [shortPage, setShortPage] = useState<number>(0);
+  const [next, setNext] = useState<boolean>(true);
+  // const [props, setProps] = useState<Shorts[]>([]);
 
   const fetchData = async (content: string) => {
     const videoData = await searchVideoData(content, 0);
-    const shortData = await searchSenData(content);
+    const shortData = await searchSenData(content, 0);
+    const shortData2 = await searchSenData(content, 1);
+    if (shortData2.length) {
+      setShortPage(1);
+    } else {
+      setShortPage(0);
+    }
+    const combinedData = shortData.concat(shortData2);
     setVideo(videoData);
+    setShortsData(combinedData);
     setPage(0);
-    setShortsData(shortData);
+    // shorts만 두 개씩
     setSearchWord(content);
     setLoading('+ 8 more');
   };
@@ -169,6 +184,21 @@ const SearchPage = () => {
       } else {
         console.log('data가 없습니다.');
         setLoading('영상이 없습니다.');
+      }
+    }
+  };
+
+  const requestShorts = async (nextPage: number) => {
+    // if (next >= nextPage)
+    if (!shortsLoading && next) {
+      setShortsLoading(true);
+      const shortData = await searchSenData(searchWord, shortPage + 1);
+      if (shortData.length) {
+        setShortsData(prev => prev.concat(shortData));
+        setShortsLoading(false);
+        setShortPage(prev => prev + 1);
+      } else {
+        setNext(false);
       }
     }
   };
@@ -249,11 +279,16 @@ const SearchPage = () => {
       </div>
       <VideoTitle>Related Shorts</VideoTitle>
       <div className="short-wrapper">
-        <ShortsCarousel
+        <ShortsPageNation
+          data={shortsData}
+          nextPage={shortPage}
+          requestShorts={requestShorts}
+        ></ShortsPageNation>
+        {/* <ShortsCarousel
           data={shortsData}
           setOpenModal={setModalOpen}
           setShortsId={setShorts}
-        ></ShortsCarousel>
+        ></ShortsCarousel> */}
       </div>
     </Wrapper>
   );

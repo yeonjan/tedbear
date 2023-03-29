@@ -28,9 +28,11 @@ export const searchVideoData = async (query: string, page: number) => {
   return data.videoInfoList;
 };
 
-export const searchSenData = async (query: string) => {
+export const searchSenData = async (query: string, page: number) => {
   const params = {
     query,
+    page,
+    size: 5,
   };
   const { data } = await authApi({
     method: 'get',
