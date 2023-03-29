@@ -45,7 +45,8 @@ public class SentenceBookmarkService {
 	}
 
 	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Long memberId, Pageable pageable) {
-		List<SentenceBookmarkDetailDto> bookmarkedList = sentenceBookmarkRepository.findSentenceByMember(memberId).getContent();
+		List<SentenceBookmarkDetailDto> bookmarkedList = sentenceBookmarkRepository.findSentenceByMember(memberId,
+			pageable).getContent();
 		return new SentenceBookmarkDetailDto.ListResponse(bookmarkedList);
 	}
 
