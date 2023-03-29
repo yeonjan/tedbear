@@ -17,13 +17,6 @@ import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
 
-const Wrapper = styled.div`
-  margin-left: 3%;
-  .short-wrapper {
-    width: 88%;
-  }
-`;
-
 const VideoWrapper = styled.div`
   display: flex;
   position: relative;
@@ -132,6 +125,15 @@ const StickySearchBar = styled.div`
   z-index: 2;
 `;
 
+const Wrapper = styled.div`
+  margin-left: 2%;
+  .short-wrapper {
+    padding-bottom: 5%;
+    padding-top: 2%;
+    margin-left: 2%;
+  }
+`;
+
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   modalOpen: boolean;
@@ -151,23 +153,28 @@ const SearchPage = () => {
   // 유튜브 모달용
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shortPage, setShortPage] = useState<number>(0);
-  const [next, setNext] = useState<boolean>(true);
-  // const [props, setProps] = useState<Shorts[]>([]);
+  const [props, setProps] = useState<Shorts[]>([]);
+  const [next, setNext] = useState<boolean>(false);
+
+  // List, 지금까지 page, 자식한테 내려줄 props
 
   const fetchData = async (content: string) => {
     const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content, 0);
     const shortData2 = await searchSenData(content, 1);
+
     if (shortData2.length) {
       setShortPage(1);
+      setNext(true);
     } else {
       setShortPage(0);
     }
+    setProps(shortData);
     const combinedData = shortData.concat(shortData2);
-    setVideo(videoData);
     setShortsData(combinedData);
+
+    setVideo(videoData);
     setPage(0);
-    // shorts만 두 개씩
     setSearchWord(content);
     setLoading('+ 8 more');
   };
@@ -189,18 +196,17 @@ const SearchPage = () => {
   };
 
   const requestShorts = async (nextPage: number) => {
-    // if (next >= nextPage)
-    if (!shortsLoading && next) {
-      setShortsLoading(true);
+    if (shortPage === nextPage) {
       const shortData = await searchSenData(searchWord, shortPage + 1);
       if (shortData.length) {
         setShortsData(prev => prev.concat(shortData));
-        setShortsLoading(false);
         setShortPage(prev => prev + 1);
       } else {
         setNext(false);
       }
     }
+    const copy = shortsData.slice(nextPage * 5, nextPage * 5 + 5);
+    setProps(copy);
   };
 
   useEffect(() => {
@@ -280,15 +286,12 @@ const SearchPage = () => {
       <VideoTitle>Related Shorts</VideoTitle>
       <div className="short-wrapper">
         <ShortsPageNation
-          data={shortsData}
-          nextPage={shortPage}
+          data={props}
+          upStreamPage={next}
           requestShorts={requestShorts}
-        ></ShortsPageNation>
-        {/* <ShortsCarousel
-          data={shortsData}
           setOpenModal={setModalOpen}
           setShortsId={setShorts}
-        ></ShortsCarousel> */}
+        ></ShortsPageNation>
       </div>
     </Wrapper>
   );
