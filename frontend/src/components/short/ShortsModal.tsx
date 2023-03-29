@@ -50,7 +50,7 @@ const Wrapper = styled.div`
 const YoutubeBox = styled.div`
   min-width: 60%;
   min-height: 60%;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

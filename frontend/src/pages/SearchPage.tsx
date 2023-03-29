@@ -11,12 +11,16 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
 import { useOutletContext } from 'react-router-dom';
-import ShortsCarousel from 'components/short/ShortsCarousel';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import buttonLeft from 'assets/img/buttonLeft.svg';
+import buttonRight from 'assets/img/buttonRight.svg';
 
 const VideoWrapper = styled.div`
   display: flex;
@@ -141,6 +145,29 @@ interface Props {
 }
 
 const SearchPage = () => {
+  const SlickArrowLeft = ({ ...props }) => (
+    <img src={buttonLeft} alt="prevArrow" {...props} />
+  );
+
+  const SlickArrowRight = () => (
+    <img
+      src={buttonRight}
+      alt="nextArrow"
+      onClick={() => {
+        requestShorts(1);
+      }}
+    />
+  );
+
+  const settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    prevArrow: <SlickArrowLeft />,
+    nextArrow: <SlickArrowRight />,
+  };
+
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8 more');
@@ -202,9 +229,11 @@ const SearchPage = () => {
         setShortsData(prev => prev.concat(shortData));
         setShortPage(prev => prev + 1);
       } else {
+        console.log('더이상 없어!');
         setNext(false);
       }
     }
+    console.log('성공!');
     const copy = shortsData.slice(nextPage * 5, nextPage * 5 + 5);
     setProps(copy);
   };
@@ -298,6 +327,24 @@ const SearchPage = () => {
           setShortsId={setShorts}
         ></ShortsPageNation>
       </div>
+      <Slider {...settings}>
+        {shortsData.map((item, idx) => {
+          return (
+            <img
+              key={idx}
+              className="main-img"
+              src={`https://i.ytimg.com/vi/${item.watchId}/hq${
+                (idx % 3) + 1
+              }.jpg`}
+              alt=""
+              // onClick={() => {
+              //   setOpenModal(true);
+              //   setShortsId(Thumnail);
+              // }}
+            ></img>
+          );
+        })}
+      </Slider>
     </Wrapper>
   );
 };
