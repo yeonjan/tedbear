@@ -11,6 +11,7 @@ import Paw4 from 'assets/img/paw4.svg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
@@ -105,6 +106,22 @@ const GameDetailPage = () => {
   const [showPaw6, setShowPaw6] = useState(false);
   const [showPaw7, setShowPaw7] = useState(false);
   const [showPaw8, setShowPaw8] = useState(false);
+  const [retry, setRetry] = useState(false);
+
+  const handleRetry = () => {
+    setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
+    setSelectedAlbum(1); // 앨범 퍼즐 초기화
+    setShowPaw1(false);
+    setShowPaw2(false);
+    setShowPaw3(false);
+    setShowPaw4(false);
+    setShowPaw5(false);
+    setShowPaw6(false);
+    setShowPaw7(false);
+    setShowPaw8(false);
+    setRetry(false);
+  };
+
   // 첫 문제
   useEffect(() => {
     async function fetchData() {
@@ -237,6 +254,9 @@ const GameDetailPage = () => {
       setTimeout(() => {
         setShowPaw8(true);
       }, 4000);
+      setTimeout(() => {
+        setRetry(true);
+      }, 4500);
     }
   }, [correctAnswerCount]);
 
@@ -433,6 +453,27 @@ const GameDetailPage = () => {
               zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
             }}
           />
+        )}
+      </div>
+      <div>
+        {retry && (
+          <IconButton
+            onClick={handleRetry}
+            style={{
+              boxShadow: 3,
+              width: '20rem',
+              height: '20rem',
+              left: '38%',
+              top: '30%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          >
+            <RefreshIcon
+              style={{ width: '20rem', height: '20rem', left: '50%' }}
+            ></RefreshIcon>
+          </IconButton>
         )}
       </div>
       <div>
