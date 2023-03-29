@@ -20,13 +20,15 @@ interface IBookmarkSentence {
 const BookIn = styled.div`
   position: absolute;
   max-height: 800px;
-  margin: 20px;
-  padding: 20px;
+  margin: 30px 30px 30px 80px;
+  padding: 30px 30px 30px 30px;
   overflow-y: auto;
 
   /* 스크롤 */
   /* border: 1px solid black; */
-  height: 80%;
+
+  right: 5%;
+  height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -103,7 +105,7 @@ const BookmarkSentence = () => {
                   style={{
                     height: '10%',
                     position: 'absolute',
-                    top: '4%',
+                    top: '10%',
                     left: '10%',
                   }}
                 ></img>
