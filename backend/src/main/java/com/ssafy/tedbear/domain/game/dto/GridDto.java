@@ -9,12 +9,12 @@ public class GridDto {
 	int clueIdx;
 	boolean box;
 
-	GridDto(int clueIdx, boolean box) {
+	public GridDto(int clueIdx, boolean box) {
 		this.clueIdx = clueIdx;
 		this.box = box;
 	}
 
-	GridDto() {
+	public GridDto() {
 		this(0, false);
 	}
 }

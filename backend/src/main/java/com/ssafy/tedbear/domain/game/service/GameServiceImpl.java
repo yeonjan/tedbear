@@ -71,7 +71,7 @@ public class GameServiceImpl implements GameService {
 			.collect(Collectors.toList());
 
 		// 게임판의 크기
-		int SIZE = 30;
+		int SIZE = 10;
 		// (matrix가) 비어있음을 나타내는 상수
 		char EMPTY_MATRIX = '.';
 		// (힌트판이) 비어있음을 나타내는 상수
@@ -92,6 +92,7 @@ public class GameServiceImpl implements GameService {
 				board[i][j] = EMPTY;
 			}
 		}
+
 		List<GridDto> gridList = new ArrayList<>();
 		List<ClueDto> clueList = new ArrayList<>();
 
@@ -136,7 +137,17 @@ public class GameServiceImpl implements GameService {
 			}
 		}
 		printState(matrix, board);
-		return new CrossWordDto(gridList, clueList, 4);
+
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (board[i][j] == EMPTY) {
+					gridList.add(new GridDto());
+				} else {
+					gridList.add(new GridDto(board[i][j], true));
+				}
+			}
+		}
+		return new CrossWordDto(gridList, clueList, matrix, SIZE);
 	}
 
 	private ClueDto getClueDto(Word word, int clueIdx, Direction direction, int y, int x, int size) {
