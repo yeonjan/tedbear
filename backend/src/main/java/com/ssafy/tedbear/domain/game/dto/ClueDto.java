@@ -21,6 +21,7 @@ public class ClueDto {
 	public ClueDto(Word word, Sentence sentence, int clueIdx, int boardIdx, String direction) {
 		this.answer = word.getContent();
 		this.mean = word.getMean();
+		this.length = this.answer.length();
 		this.shorts = new WordGameDto.Hint(sentence);
 		this.boardIdx = boardIdx;
 		this.clueIdx = clueIdx;

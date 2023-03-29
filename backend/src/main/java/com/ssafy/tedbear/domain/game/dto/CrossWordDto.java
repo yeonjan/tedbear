@@ -25,7 +25,4 @@ public class CrossWordDto {
 		}
 		this.boardSize = boardSize;
 	}
-
-
-
 }
