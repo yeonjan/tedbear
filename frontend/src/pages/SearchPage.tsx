@@ -11,18 +11,16 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
 import { useOutletContext } from 'react-router-dom';
-import ShortsCarousel from 'components/short/ShortsCarousel';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
-
-const Wrapper = styled.div`
-  margin-left: 3%;
-  .short-wrapper {
-    width: 88%;
-  }
-`;
+import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import buttonLeft from 'assets/img/buttonLeft.svg';
+import buttonRight from 'assets/img/buttonRight.svg';
 
 const VideoWrapper = styled.div`
   display: flex;
@@ -132,12 +130,44 @@ const StickySearchBar = styled.div`
   z-index: 2;
 `;
 
+const Wrapper = styled.div`
+  margin-left: 2%;
+  .short-wrapper {
+    padding-bottom: 5%;
+    padding-top: 2%;
+    margin-left: 2%;
+  }
+`;
+
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   modalOpen: boolean;
 }
 
 const SearchPage = () => {
+  // const SlickArrowLeft = ({ ...props }) => (
+  //   <img src={buttonLeft} alt="prevArrow" {...props} />
+  // );
+
+  // const SlickArrowRight = () => (
+  //   <img
+  //     src={buttonRight}
+  //     alt="nextArrow"
+  //     onClick={() => {
+  //       requestShorts(1);
+  //     }}
+  //   />
+  // );
+
+  // const settings = {
+  //   infinite: false,
+  //   speed: 500,
+  //   slidesToShow: 4,
+  //   slidesToScroll: 4,
+  //   prevArrow: <SlickArrowLeft />,
+  //   nextArrow: <SlickArrowRight />,
+  // };
+
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8 more');
@@ -151,8 +181,10 @@ const SearchPage = () => {
   // 유튜브 모달용
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shortPage, setShortPage] = useState<number>(0);
-  const [next, setNext] = useState<boolean>(true);
-  // const [props, setProps] = useState<Shorts[]>([]);
+  const [props, setProps] = useState<Shorts[]>([]);
+  const [next, setNext] = useState<boolean>(false);
+
+  // List, 지금까지 page, 자식한테 내려줄 props
 
   const fetchData = async (content: string) => {
     const videoData = await searchVideoData(content, 0);
@@ -160,14 +192,16 @@ const SearchPage = () => {
     const shortData2 = await searchSenData(content, 1);
     if (shortData2.length) {
       setShortPage(1);
+      setNext(true);
     } else {
       setShortPage(0);
     }
+    setProps(shortData);
     const combinedData = shortData.concat(shortData2);
-    setVideo(videoData);
     setShortsData(combinedData);
+
+    setVideo(videoData);
     setPage(0);
-    // shorts만 두 개씩
     setSearchWord(content);
     setLoading('+ 8 more');
   };
@@ -189,18 +223,19 @@ const SearchPage = () => {
   };
 
   const requestShorts = async (nextPage: number) => {
-    // if (next >= nextPage)
-    if (!shortsLoading && next) {
-      setShortsLoading(true);
+    if (shortPage === nextPage) {
       const shortData = await searchSenData(searchWord, shortPage + 1);
       if (shortData.length) {
         setShortsData(prev => prev.concat(shortData));
-        setShortsLoading(false);
         setShortPage(prev => prev + 1);
       } else {
+        console.log('더이상 없어!');
         setNext(false);
       }
     }
+    console.log('성공!');
+    const copy = shortsData.slice(nextPage * 5, nextPage * 5 + 5);
+    setProps(copy);
   };
 
   useEffect(() => {
@@ -214,15 +249,18 @@ const SearchPage = () => {
   };
 
   const handleVideoBm = (video: SearchedVideo, idx: number) => {
-    // const status = video.bookmarked
-    // const copy = videos
-    // copy[idx].bookmarked = !copy[idx].bookmarked
-    // setVideo(copy);
-    // if (status) {
-    //   deleteVideoBookmark({ videoNo: video.no });
-    // } else {
-    //   postVideoBookmark({ videoNo: video.no });
-    // }
+    const status = video.bookMarked;
+    const copy = [...videos];
+    console.log(copy[idx].bookMarked);
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    setVideo(copy);
+    console.log(copy[idx].bookMarked);
+
+    if (status) {
+      deleteVideoBookmark({ videoNo: video.no });
+    } else {
+      postVideoBookmark({ videoNo: video.no });
+    }
   };
 
   return (
@@ -241,13 +279,15 @@ const SearchPage = () => {
       <VideoTitle>Related Videos</VideoTitle>
       {videos.map((video, idx) => {
         return (
-          <VideoWrapper
-            key={idx}
-            onClick={() => {
-              handleClick(video.watchId);
-            }}
-          >
-            <img src={video.thumbnailUrl} alt="" className="thumbnail" />
+          <VideoWrapper key={idx}>
+            <img
+              src={video.thumbnailUrl}
+              alt=""
+              className="thumbnail"
+              onClick={() => {
+                handleClick(video.watchId);
+              }}
+            />
             <img
               src={VideoLevel}
               className="video-level"
@@ -257,7 +297,7 @@ const SearchPage = () => {
               }}
             ></img>
             <img
-              src={video.bookmarked ? BookmarkFull : BookmarkEmpty}
+              src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
               className="book-mark"
               onClick={() => {
                 handleVideoBm(video, idx);
@@ -280,16 +320,31 @@ const SearchPage = () => {
       <VideoTitle>Related Shorts</VideoTitle>
       <div className="short-wrapper">
         <ShortsPageNation
-          data={shortsData}
-          nextPage={shortPage}
+          data={props}
+          upStreamPage={next}
           requestShorts={requestShorts}
-        ></ShortsPageNation>
-        {/* <ShortsCarousel
-          data={shortsData}
           setOpenModal={setModalOpen}
           setShortsId={setShorts}
-        ></ShortsCarousel> */}
+        ></ShortsPageNation>
       </div>
+      {/* <Slider {...settings}>
+        {shortsData.map((item, idx) => {
+          return (
+            <img
+              key={idx}
+              className="main-img"
+              src={`https://i.ytimg.com/vi/${item.watchId}/hq${
+                (idx % 3) + 1
+              }.jpg`}
+              alt=""
+              // onClick={() => {
+              //   setOpenModal(true);
+              //   setShortsId(Thumnail);
+              // }}
+            ></img>
+          );
+        })}
+      </Slider> */}
     </Wrapper>
   );
 };
