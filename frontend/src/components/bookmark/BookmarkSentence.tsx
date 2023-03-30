@@ -20,14 +20,14 @@ interface IBookmarkSentence {
 const BookIn = styled.div`
   position: absolute;
   max-height: 800px;
-  margin: 30px 30px 30px 80px;
+  margin: 30px 30px 30px 30px;
   padding: 30px 30px 30px 30px;
   overflow-y: auto;
 
   /* 스크롤 */
   /* border: 1px solid black; */
 
-  right: 5%;
+  right: 0%;
   height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
@@ -38,13 +38,56 @@ const BookIn = styled.div`
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
   }
-  .image-hover:hover {
+  .play-shorts:hover {
     opacity: 0.5; /* change opacity when hovered */
     cursor: pointer; /* change cursor to pointer when hovered */
   }
   .book-mark:hover {
     opacity: 0.5; /* change opacity when hovered */
     cursor: pointer; /* change cursor to pointer when hovered */
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bookmark-container {
+    height: 40px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .play-shorts-container {
+    height: 40px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .content-container {
+    max-width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .translation-container {
+    max-width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 10px;
   }
 `;
 
@@ -84,33 +127,30 @@ const BookmarkSentence = () => {
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
         >
-          <div className="context">
-            {/* {sentenceBookmark} */}
-
+          <div className="sentence">
             {sentenceBookmark.map(sen => (
-              <div key={sen.no}>
-                <img
-                  className="book-mark"
-                  src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
-                  style={{
-                    height: '10%',
-                    position: 'absolute',
-                    left: '3%',
-                  }}
-                ></img>
-                <img
-                  className="image-hover"
-                  onClick={handlePlay}
-                  src={sen.no ? Play : Play}
-                  style={{
-                    height: '10%',
-                    position: 'absolute',
-                    top: '10%',
-                    left: '10%',
-                  }}
-                ></img>
-                <h2>{sen.content}</h2>
-                <p>{sen.translation}</p>
+              <div className="row" key={sen.no}>
+                <div className="bookmark-container">
+                  <img
+                    className="book-mark"
+                    src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
+                  ></img>
+                </div>
+                <div className="play-shorts-container">
+                  <img
+                    className="play-shorts"
+                    onClick={handlePlay}
+                    src={sen.no ? Play : Play}
+                  ></img>
+                </div>
+                <div className="cotent-container">
+                  <p>{sen.content}</p>
+                  <br></br>
+                </div>
+                <div className="translation-container">
+                  <p>{sen.translation}</p>
+                  <br></br>
+                </div>
               </div>
             ))}
           </div>
