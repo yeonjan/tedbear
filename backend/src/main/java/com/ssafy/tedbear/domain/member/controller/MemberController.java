@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Transactional
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberController {
 	private final MemberRepository memberRepository;
 	private final MemberService memberService;

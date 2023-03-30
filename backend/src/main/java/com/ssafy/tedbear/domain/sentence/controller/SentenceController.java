@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Transactional
-@RequestMapping("/sentence")
+@RequestMapping("/api/sentence")
 public class SentenceController {
 	private final MemberRepository memberRepository;
 	private final MemberShortsLogService memberShortsLogService;

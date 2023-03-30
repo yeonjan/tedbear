@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Transactional
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 public class GameController {
 	private final GameService gameService;
 
