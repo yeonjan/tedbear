@@ -416,6 +416,7 @@ const CrossWordPage = () => {
         })}
       </div>
       <Content>
+        <h3>Tab / Tab + Shift / 방향키 조작 / 힌트 클릭 가능합니다!</h3>
         {clueList.map((clue, idx) => {
           return (
             <div
