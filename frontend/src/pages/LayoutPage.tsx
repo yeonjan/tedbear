@@ -50,7 +50,7 @@ const LayoutPage = () => {
 
   if (!isLogin && (pathname === '/profile' || pathname === '/bookmark')) {
     alert('로그인이 필요한 서비스입니다.');
-    // window.location.href = '/home';
+    window.location.href = '/home';
   }
 
   return !isLogin && (pathname === '/profile' || pathname === '/bookmark') ? (

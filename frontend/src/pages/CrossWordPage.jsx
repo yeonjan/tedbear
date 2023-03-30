@@ -8,8 +8,38 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
+  .main {
+    grid-row: 2;
+    grid-column: 1/3;
+    display: grid;
+    grid-template-rows: repeat(8, 7vmin);
+    grid-template-columns: repeat(8, 7vmin);
+    grid-gap: 2px;
+    @media screen and (min-width: 900px) {
+      grid-row: 2/4;
+      grid-column: 1;
+      display: grid;
+      grid-template-rows: repeat(8, 5vw);
+      grid-template-columns: repeat(8, 5vw);
+      grid-gap: 2px;
+    }
+  }
 `;
+
+const Content = styled.div`
+  .dic-box {
+    height: 5%;
+    margin-top: 2%;
+    padding: 2%;
+    backgroud: yellow;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+`;
+
 const CrossWordPage = () => {
   const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
@@ -25,7 +55,6 @@ const CrossWordPage = () => {
 
   const findClue = useCallback(
     (clueNum, tab) => {
-      console.log('tab에 들어왔습니다요', tab);
       if (tab) {
         return tab;
       }
@@ -45,6 +74,7 @@ const CrossWordPage = () => {
 
   const editClue = useCallback(
     (item, idx, tab) => {
+      // console.log(tab, 'tab입니다!');
       let copy = [...wordList];
 
       if (state.current.clue) {
@@ -66,6 +96,7 @@ const CrossWordPage = () => {
 
       const { clue } = item;
       const { length, dir } = findClue(clue, tab);
+      console.log('clue', clue, 'length', length, 'dir', dir, 'item', item);
 
       // 수직으로 갈지 수평으로 갈지 불러오기
 
@@ -166,6 +197,7 @@ const CrossWordPage = () => {
           break;
         case 'Tab': {
           let nextIndex;
+          console.log(state.current.clue, 'clue입니다!');
           if (!state.current.clue) {
             nextIndex = -1;
           } else {
@@ -315,7 +347,6 @@ const CrossWordPage = () => {
   );
 
   useEffect(() => {
-    console.log('useEffect!');
     document.addEventListener('keydown', keyPressHandler);
     return () => {
       document.removeEventListener('keydown', keyPressHandler);
@@ -340,6 +371,11 @@ const CrossWordPage = () => {
     }
 
     setWordList(copy);
+  };
+
+  const clickClue = clue => {
+    const { index } = clue;
+    editClue(wordList[index], index);
   };
 
   return (
@@ -379,21 +415,23 @@ const CrossWordPage = () => {
           }
         })}
       </div>
-      <ul>
+      <Content>
+      <h1>Tab / Tab + Shift / 방향키 조작 가능</h1>
         {clueList.map((clue, idx) => {
           return (
-            <li
+            <div
+              className="dic-box"
               key={idx}
-              data-clue={clue.clue}
+              onClick={() => clickClue(clue)}
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
             >
-              {idx + '.  ' + clue.dic}
-            </li>
+              {clue.dic}
+            </div>
           );
         })}
-      </ul>
-      <h1>Tab / Tab + Shift / 방향키 조작 가능</h1>
+      </Content>
+      {/* <h1>Tab / Tab + Shift / 방향키 조작 가능</h1> */}
       {/* <ul className="list">
         <li className="heading">Across</li>
         <li data-clue="1" data-dir="across" data-length="2">
