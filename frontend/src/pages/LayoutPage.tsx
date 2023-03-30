@@ -46,26 +46,16 @@ const LayoutPage = () => {
   // 네브바 open state
   const [open, setOpen] = useState<boolean>(false);
   // 비로그인 시 마이페이지, 북마크 접근금지
-  // const { isLogin } = useSelector((state: any) => state.auth);
+  const { isLogin } = useSelector((state: any) => state.auth);
 
-  // if (!isLogin && (pathname === '/profile' || pathname === '/bookmark')) {
-  //   alert('로그인이 필요한 서비스입니다.');
-  //   // window.location.href = '/home';
-  // }
+  if (!isLogin && (pathname === '/profile' || pathname === '/bookmark')) {
+    alert('로그인이 필요한 서비스입니다.');
+    // window.location.href = '/home';
+  }
 
-  // return !isLogin && (pathname === '/profile' || pathname === '/bookmark') ? (
-  //   <Navigate to="/home" />
-  // ) : (
-  //   <Wrapper>
-  //     {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
-  //     {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
-  //     <OutletWrapper open={open} center={pathname}>
-  //       <Outlet context={{ modalOpen, setModalOpen }} />
-  //     </OutletWrapper>
-  //   </Wrapper>
-  // );
-
-  return (
+  return !isLogin && (pathname === '/profile' || pathname === '/bookmark') ? (
+    <Navigate to="/home" />
+  ) : (
     <Wrapper>
       {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
       {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
@@ -74,6 +64,16 @@ const LayoutPage = () => {
       </OutletWrapper>
     </Wrapper>
   );
+
+  // return (
+  //   <Wrapper>
+  //     {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
+  //     {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
+  //     <OutletWrapper open={open} center={pathname}>
+  //       <Outlet context={{ modalOpen, setModalOpen }} />
+  //     </OutletWrapper>
+  //   </Wrapper>
+  // );
 };
 
 export default LayoutPage;

@@ -43,12 +43,3 @@ export const getShortsRecomm = async (difficulty: string) => {
   });
   return data.sentenceList;
 };
-
-export const getCrossWord = async () => {
-  const { data } = await authApi({
-    method: 'get',
-    url: 'game/crossword',
-  });
-
-  return data;
-};
