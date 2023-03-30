@@ -1,13 +1,24 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,6 +33,12 @@ import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 import com.ssafy.tedbear.global.common.oauth2.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -49,7 +66,9 @@ public class SecurityConfig {
 			.and()
 			.csrf().disable()
 			.formLogin().disable();
+		http.anonymous().authenticationFilter(customAnonymousFilter());
 		http.authorizeHttpRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // options 메서드 열어두기! Authorization 헤더를 사용하기 때문에 Preflight 넣어줌
 			// 그외 모든 요청은 허용
 			.anyRequest().permitAll()
 			.and()
@@ -88,10 +107,47 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://j8b103.p.ssafy.io"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
-		configuration.setAllowCredentials(true);
+		configuration.setAllowCredentials(true); // 클라이언트 요청이 쿠키를 통해 자격 증명을 하는 경우 true
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
+	}
+
+	protected CustomAnonymousFilter customAnonymousFilter() throws Exception{
+		return new CustomAnonymousFilter();
+	}
+
+
+	public class CustomAnonymousFilter extends AnonymousAuthenticationFilter{
+		private final Logger log = LoggerFactory.getLogger(getClass());
+
+		public CustomAnonymousFilter() {
+			super("ANONYMOUS_FILTER");
+		}
+
+		@Override
+		public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+				throws IOException, ServletException {
+
+			if(SecurityContextHolder.getContext().getAuthentication() == null) {
+				Authentication authentication = createAuthentication((HttpServletRequest) req);
+
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				if (log.isDebugEnabled()) {
+					log.debug("Anonymous user:{}", SecurityContextHolder.getContext().getAuthentication());
+				}
+			}
+
+			chain.doFilter(req, res);
+		}
+
+		@Override
+		protected Authentication createAuthentication(HttpServletRequest request) {
+			List<? extends GrantedAuthority> authorities = Collections
+					.unmodifiableList(Arrays.asList(new SimpleGrantedAuthority("ANONYMOUS_USER")));
+			CustomOAuth2User principal = new CustomOAuth2User("253243", authorities);
+			return new AnonymousAuthenticationToken("ANONYMOUS", principal, authorities);
+		}
 	}
 }
