@@ -1,7 +1,6 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,9 +27,11 @@ import com.ssafy.tedbear.global.common.FindMemberService;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VideoServiceImpl implements VideoService {
 	final VideoRepository videoRepository;
 	final VideoBookmarkRepository videoBookmarkRepository;
@@ -46,7 +47,7 @@ public class VideoServiceImpl implements VideoService {
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
-
+		log.info("[VideoRecommendList] : {}",recommendScoreFlag);
 		List<Video> recommendVideoList = null;
 		do {
 			recommendVideoList = (videoRepository.findByScoreBetween(
@@ -65,7 +66,7 @@ public class VideoServiceImpl implements VideoService {
 		return new VideoInfoListDto(
 			recommendVideoList
 				.stream()
-				.sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
+				// .sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
 				.limit(resultMaxCnt)
 				.peek(x -> x.setBookmarked(bookmarkedVideoNoSet.contains(x.getNo())))
 				.collect(Collectors.toList())

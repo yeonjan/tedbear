@@ -21,7 +21,7 @@ public class MatterMostProperties {
 	private String pretext;
 	private String color = "#ff5d52";
 	private String authorName;
-	private String authorIcon;
+	private String authorIcon = ":no_entry_sign:";
 	private String title;
 	private String text = "";
 	private String footer = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
