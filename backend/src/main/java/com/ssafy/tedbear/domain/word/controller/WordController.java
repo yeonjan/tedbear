@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Transactional
-@RequestMapping("/word")
+@RequestMapping("/api/word")
 public class WordController {
 
 	private final WordServiceImpl wordService;

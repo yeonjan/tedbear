@@ -11,7 +11,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
       use-new-id-generator-mappings: false
@@ -78,6 +78,18 @@ logging:
             sql:
               BasicBinder: off
     com.ssafy.tedbear: debug
+
+notification:
+  mattermost:
+    enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
+    webhook-url: "https://meeting.ssafy.com/hooks/ucu18675zbncmm6nn1sj95if9c"
+    color: "#000000"
+    author-icon: "mattermost alert"
+#    pretext: "에러에러"
+
+#    author-name: "박일규"
+#    channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
+#    footer: # attachment에 하단에 나올 부분. default=현재 시간
 
 default-value:
   score: 30000

@@ -39,32 +39,18 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
-		// ResponseCookie refreshCookie = ResponseCookie.from("refresh-token", refreshToken)
-		// 	.httpOnly(false)
-		// 	.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
-		// 	.path("/")
-		// 	.build();
-		//
-		// ResponseCookie accessCookie = ResponseCookie.from("access-token", accessToken)
-		// 	.httpOnly(false)
-		// 	.maxAge(JwtProvider.ACCESS_TOKEN_VALIDATE_TIME)
-		// 	.path("/")
-		// 	.build();
-
 		clearAuthenticationAttributes(request, response);
 
-		// response.addHeader("Set-Cookie", refreshCookie.toString());
-		// response.addHeader("Set-Cookie", accessCookie.toString());
-
 		getRedirectStrategy().sendRedirect(request, response,
-			"http://localhost:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken + "&join="
-				+ join); // 난이도 측정 페이지로 이동
+			"https://j8b103.p.ssafy.io/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
+				+ "&join="
+				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
 	}
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
 		MemberLevel memberLevel = MemberLevel.builder().levelExp(1).createdDate(LocalDateTime.now()).build();
-		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
+		MemberScore memberScore = MemberScore.builder().score(50000).createdDate(LocalDateTime.now()).build();
 
 		Optional<Member> oMember = memberRepository.findByUid(oAuth2User.getUid());
 		if (oMember.isEmpty()) {
