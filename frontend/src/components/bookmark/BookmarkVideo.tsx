@@ -85,7 +85,7 @@ const BookmarkVideo = () => {
         >
           <Grid
             container
-            justifyContent={'center'}
+            justifyContent={'flex-start'}
             style={{ height: '1%', width: '100%' }}
           >
             {videoBookmark.map((Thumnail, idx) => {
@@ -101,9 +101,9 @@ const BookmarkVideo = () => {
                     paddingLeft: '1%',
                     paddingRight: '1%',
                   }}
-                  lg={3}
-                  md={4}
-                  sm={6}
+                  lg={4}
+                  md={6}
+                  sm={8}
                   xs={12}
                   key={idx}
                 >
