@@ -50,9 +50,7 @@ const LayoutPage = () => {
 
   if (!isLogin && (pathname === '/profile' || pathname === '/bookmark')) {
     alert(
-      `로그인이 필요한 서비스입니다. islogin: ${isLogin} 결론: ${
-        !isLogin && (pathname === '/profile' || pathname === '/bookmark')
-      }`,
+      `로그인이 필요한 서비스입니다. ${isLogin}`,
     );
     // window.location.href = '/home';
   }
