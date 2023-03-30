@@ -42,8 +42,8 @@ const BookIn = styled.div`
   }
   .videoes {
     position: relative;
-    margin: 30;
-    padding: 30;
+    margin: 0;
+    padding: 0;
   }
 `;
 
@@ -86,7 +86,7 @@ const BookmarkVideo = () => {
           <Grid
             container
             justifyContent={'center'}
-            style={{ height: '1%', width: '90%' }}
+            style={{ height: '1%', width: '100%' }}
           >
             {videoBookmark.map((Thumnail, idx) => {
               return (
@@ -110,11 +110,11 @@ const BookmarkVideo = () => {
                   <Card
                     key={idx}
                     sx={{
-                      width: '100vw',
+                      width: '100%',
                       height: '50vh',
                       position: 'relative',
                       justifyContent: 'center',
-                      // alignItems: 'center',
+                      alignItems: 'center',
                       backgroundColor: 'pink',
                     }}
                     onClick={() => handleClick(Thumnail.watchId)}
@@ -135,7 +135,7 @@ const BookmarkVideo = () => {
                         style={{
                           height: '40%',
                           position: 'absolute',
-                          left: '99%',
+                          right: '%',
                         }}
                       ></img>
                       <CardMedia
