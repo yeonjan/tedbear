@@ -43,7 +43,7 @@ public class WordController {
 			.body(WordDto.WordSearchResponse.builder().wordInfo(wordInfo).sentenceContentList(list).build());
 	}
 
-	@GetMapping("/list")
+	@GetMapping("/bookmark/list")
 	public ResponseEntity<WordBookmarkDto.WordBookmarkListResponse> getWordBookMarkList(
 		@AuthenticationPrincipal CustomOAuth2User user, Pageable pageable) {
 		WordBookmarkDto.WordBookmarkListResponse wordBookmarkList = wordService.findWordBookmark(user.getUid(),
