@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import BookmarkSentence from 'components/profile/BookmarkSentence';
-import BookmarkVideo from 'components/profile/BookmarkVideo';
-import BookmarkWord from 'components/profile/BookmarkWord';
+import BookmarkSentence from 'components/bookmark/BookmarkSentence';
+import BookmarkVideo from 'components/bookmark/BookmarkVideo';
+import BookmarkWord from 'components/bookmark/BookmarkWord';
 //style
 const Bookmark = styled.div`
+  overflow: auto;
   position: relative;
   margin-left: 5vw;
   margin-top: 10vh;
+  padding: 10;
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};
   }
@@ -38,6 +40,7 @@ const Bookmark = styled.div`
     height: 10vh;
   }
   .paper {
+    position: relative;
     overflow: auto;
     max-height: 800px;
     border-radius: 20px;
