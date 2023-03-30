@@ -32,7 +32,7 @@ const Containter = styled.div`
 
 interface Props {
   data: Shorts[];
-  requestShorts: () => void;
+  requestShorts: (arg0: number) => void;
   nextPage: number;
 }
 
@@ -43,7 +43,7 @@ const ShortsPageNation = ({ data, requestShorts, nextPage }: Props) => {
   const handlerRight = () => {
     const nextPage = page + 1;
     setPage(prev => prev + 1);
-    requestShorts();
+    requestShorts(nextPage);
   };
 
   const handlerLeft = () => {
