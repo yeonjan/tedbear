@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getVideoBookmark } from 'utils/api/bookmarkApi';
-import VideoLevel from 'assets/img/videoLevel.svg';
+// import VideoLevel from 'assets/img/videoLevel.svg';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import Card from '@mui/material/Card';
@@ -42,8 +42,8 @@ const BookIn = styled.div`
   }
   .videoes {
     position: relative;
-    margin: 30;
-    padding: 30;
+    margin: 0;
+    padding: 0;
   }
 `;
 
@@ -85,8 +85,8 @@ const BookmarkVideo = () => {
         >
           <Grid
             container
-            justifyContent={'center'}
-            style={{ height: '1%', width: '90%' }}
+            justifyContent={'flex-start'}
+            style={{ height: '1%', width: '100%' }}
           >
             {videoBookmark.map((Thumnail, idx) => {
               return (
@@ -101,26 +101,32 @@ const BookmarkVideo = () => {
                     paddingLeft: '1%',
                     paddingRight: '1%',
                   }}
-                  lg={3}
-                  md={4}
-                  sm={6}
+                  lg={4}
+                  md={6}
+                  sm={8}
                   xs={12}
                   key={idx}
                 >
                   <Card
                     key={idx}
                     sx={{
-                      width: '100vw',
+                      width: '100%',
                       height: '50vh',
                       position: 'relative',
                       justifyContent: 'center',
-                      // alignItems: 'center',
+                      alignItems: 'center',
                       backgroundColor: 'pink',
                     }}
                     onClick={() => handleClick(Thumnail.watchId)}
                   >
-                    <CardActionArea>
-                      <img
+                    <CardActionArea
+                      sx={{
+                        height: '200px', // adjust the height as needed
+                        width: '400px',
+                      }}
+                    >
+                      {/* <img
+                        className="video-level"
                         src={VideoLevel}
                         style={{
                           height: '40%',
@@ -128,14 +134,14 @@ const BookmarkVideo = () => {
                           top: '4%',
                           left: '4%',
                         }}
-                      ></img>
+                      ></img> */}
                       <img
-                        src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
                         className="book-mark"
+                        src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
                         style={{
-                          height: '40%',
+                          height: '50%',
                           position: 'absolute',
-                          left: '99%',
+                          left: '20%',
                         }}
                       ></img>
                       <CardMedia
@@ -157,13 +163,20 @@ const BookmarkVideo = () => {
                         sx={{
                           width: '100vw',
                           height: '30vh',
-                          position: 'absolute',
                           justifyContent: 'center',
                           alignItems: 'center',
                           overflow: 'auto',
                         }}
                       >
-                        <Typography component="div">
+                        <Typography
+                          component="div"
+                          sx={{
+                            position: 'absolute',
+                            width: '350px',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
                           {Thumnail.title}
                         </Typography>
                       </CardContent>
