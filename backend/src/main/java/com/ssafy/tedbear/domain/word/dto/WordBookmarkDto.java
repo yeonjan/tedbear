@@ -26,8 +26,8 @@ public class WordBookmarkDto {
 	public static class WordBookmarkList {
 		List<WordDto.WordSearchResponse> wordBookmarkList;
 
-		public WordBookmarkList() {
-
+		public WordBookmarkList(List<WordDto.WordSearchResponse> wordBookmarkList) {
+			this.wordBookmarkList = wordBookmarkList;
 		}
 	}
 }

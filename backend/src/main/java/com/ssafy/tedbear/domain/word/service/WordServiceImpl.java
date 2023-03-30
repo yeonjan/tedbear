@@ -1,10 +1,12 @@
 package com.ssafy.tedbear.domain.word.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.ssafy.tedbear.domain.word.entity.WordSentence;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ public class WordServiceImpl {
 	private final WordRepository wordRepository;
 	private final WordSentenceRepository wordSentenceRepository;
 	private final WordBookmarkRepository wordBookmarkRepository;
+
 	private final FindMemberService findMemberService;
 
 	/***
@@ -92,13 +95,26 @@ public class WordServiceImpl {
 		wordBookmarkRepository.delete(bookmark);
 	}
 
-	public List<WordBookmark> findWordBookmark(String memberUid, Pageable pageable) {
+	public List<WordDto.WordSearchResponse> findWordBookmark(String memberUid, Pageable pageable) {
 		Member member = findMemberService.findMember(memberUid);
-		List<WordBookmark> bmk = wordBookmarkRepository.findByMember(member).stream().collect(Collectors.toList());
-		for (int i = 0; i < bmk.size(); i++) {
-			System.out.println(bmk.get(i).getWord());
+		List<Word> wordList = wordBookmarkRepository.findByWordList(member, pageable).stream().collect(Collectors.toList()); // 페이지별로 단어 가져오기
+
+		List<String> sentenceContentList;
+		List<WordDto.WordSearchResponse> wordBookmarkLists = new ArrayList<>();
+		for(Word word : wordList){
+			sentenceContentList = new ArrayList<>();
+			sentenceContentList.add(word.getWordSentenceList().get(0).getSentence().getContent());
+			sentenceContentList.add(word.getWordSentenceList().get(1).getSentence().getContent());
+			sentenceContentList.add(word.getWordSentenceList().get(2).getSentence().getContent());
+
+			WordDto.SearchWord wordInfo = WordDto.SearchWord.builder()
+					.content(word.getContent())
+					.mean(word.getMean())
+					.wordNo(word.getNo()).build();
+
+			wordBookmarkLists.add(WordDto.WordSearchResponse.builder().wordInfo(wordInfo).sentenceContentList(sentenceContentList).build());
 		}
-		return bmk;
+		return wordBookmarkLists;
 	}
 
 }

@@ -2,9 +2,12 @@ package com.ssafy.tedbear.domain.word.controller;
 
 import java.util.List;
 
+import com.ssafy.tedbear.domain.word.entity.Word;
+import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.tedbear.domain.word.dto.WordBookmarkDto;
 import com.ssafy.tedbear.domain.word.dto.WordDto;
-import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.word.service.WordServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -31,10 +33,10 @@ public class WordController {
 	private final WordServiceImpl wordService;
 
 	@GetMapping("/search")
-	public ResponseEntity<WordDto.WordSearchResponse> searchWord(WordDto.Request query, Pageable pageable) {
+	public ResponseEntity<WordDto.WordSearchResponse> searchWord(@AuthenticationPrincipal CustomOAuth2User user, WordDto.Request query, Pageable pageable) {
 		String word = query.getQuery();
 		List<String> list = wordService.searchWordRelatedSentence(word, pageable);
-		WordDto.SearchWord wordInfo = wordService.searchWordDetail("271521", word);
+		WordDto.SearchWord wordInfo = wordService.searchWordDetail(user.getUid(), word);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
@@ -42,21 +44,21 @@ public class WordController {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<?> getWordBookMarkList(Pageable pageable) {
-		List<WordBookmark> m = wordService.findWordBookmark("271521", pageable);
+	public ResponseEntity<?> getWordBookMarkList(@AuthenticationPrincipal CustomOAuth2User user, Pageable pageable) {
+		List<WordDto.WordSearchResponse> m = wordService.findWordBookmark(user.getUid(), pageable);
 		return ResponseEntity.status(HttpStatus.OK).body(m);
 	}
 
 	@PostMapping("/bookmark")
-	public ResponseEntity<?> saveWordBookmark(@RequestBody WordBookmarkDto wordBookmarkDto) {
+	public ResponseEntity<?> saveWordBookmark(@AuthenticationPrincipal CustomOAuth2User user, @RequestBody WordBookmarkDto wordBookmarkDto) {
 		// Autentication에서 uid 가져와서 밑에 넣기!
-		wordService.saveWordBookmark("271521", wordBookmarkDto);
+		wordService.saveWordBookmark(user.getUid(), wordBookmarkDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/bookmark")
-	public ResponseEntity<?> deleteWordBookmark(@RequestBody WordBookmarkDto wordBookmarkDto) {
-		wordService.deleteWordBookmark("271521", wordBookmarkDto);
+	public ResponseEntity<?> deleteWordBookmark(@AuthenticationPrincipal CustomOAuth2User user, @RequestBody WordBookmarkDto wordBookmarkDto) {
+		wordService.deleteWordBookmark(user.getUid(), wordBookmarkDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
