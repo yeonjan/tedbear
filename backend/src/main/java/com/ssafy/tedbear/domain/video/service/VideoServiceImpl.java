@@ -47,7 +47,7 @@ public class VideoServiceImpl implements VideoService {
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
-		log.info("[VideoRecommendList] : {}",recommendScoreFlag);
+		log.info("[VideoRecommendList] : {}", recommendScoreFlag);
 		List<Video> recommendVideoList = null;
 		do {
 			recommendVideoList = (videoRepository.findByScoreBetween(
@@ -88,7 +88,7 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public VideoInfoDto getWatchingRecent(String memberUid) {
 		Member member = findMemberService.findMember(memberUid);
-
+		System.out.println(member.getNo());
 		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(
 			member, false);
 
