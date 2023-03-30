@@ -7,6 +7,7 @@ import { useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
 import { device } from './../utils/mediaQuery';
 import CrossWordAnswerPage from './CrossWordAnswerPage';
+import Swal from 'sweetalert2';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -184,6 +185,7 @@ const CrossWordPage = () => {
     answers: [...Array(size)].map(() => Array(size).fill('')),
     dir: null,
   });
+  const [finish, setFinish] = useState(false);
 
   const findClue = useCallback(
     (clueNum, tab) => {
@@ -549,7 +551,18 @@ const CrossWordPage = () => {
   };
 
   const handleAnswer = () => {
-    console.log('정답 확인드가자~');
+    // console.log(state.current);
+    // const answer = 0
+    // clueList.forEach(item => {
+    //   for (let i = 0; i < item.length; i++)
+    // })
+
+    Swal.fire({
+      title: '개발 중입니다.',
+      text: '빠른 시일 내에 정답을 보여 드리겠습니당..ㅜ',
+      imageWidth: 400,
+      imageHeight: 200,
+    });
   };
 
   return (
@@ -615,7 +628,7 @@ const CrossWordPage = () => {
         <button onClick={() => handleAnswer()}>제출하기</button>
       </Content>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      <CrossWordAnswerPage answer={state.current}></CrossWordAnswerPage>
+      {/* {finish && <CrossWordAnswerPage state={state}></CrossWordAnswerPage>} */}
     </Wrapper>
   );
 };

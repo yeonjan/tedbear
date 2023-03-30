@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
-  min-width: 60%;
-  min-height: 60%;
+  width: 50%;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* z-index: 9999; */
+  z-index: 9999;
+  background-color: white;
   .main {
     grid-row: 2;
     grid-column: 1/3;
@@ -84,11 +85,24 @@ const Wrapper = styled.div`
   }
 `;
 
-const CrossWordAnswerPage = (props: any) => {
+const CrossWordAnswerPage = props => {
+  const [state, setState] = useState([]);
   useEffect(() => {
-    console.log(props.state);
+    setState(props.state.current.realAnswer.flat());
   }, []);
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper>
+      <div className="main">
+        {state.map((item, idx) => {
+          if (item !== '.') {
+            return <ins key={idx}>{item}</ins>;
+          } else {
+            return <del key={idx}></del>;
+          }
+        })}
+      </div>
+    </Wrapper>
+  );
 };
 
 export default CrossWordAnswerPage;
