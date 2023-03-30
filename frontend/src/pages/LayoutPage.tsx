@@ -49,12 +49,8 @@ const LayoutPage = () => {
   const { isLogin } = useSelector((state: any) => state.auth);
 
   if (!isLogin && (pathname === '/profile' || pathname === '/bookmark')) {
-    alert(
-      `로그인이 필요한 서비스입니다. islogin: ${isLogin} 결론: ${
-        !isLogin && (pathname === '/profile' || pathname === '/bookmark')
-      }`,
-    );
-    // window.location.href = '/home';
+    alert('로그인이 필요한 서비스입니다.');
+    window.location.href = '/home';
   }
 
   return !isLogin && (pathname === '/profile' || pathname === '/bookmark') ? (
