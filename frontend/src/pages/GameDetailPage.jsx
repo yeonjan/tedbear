@@ -120,6 +120,7 @@ const GameDetailPage = () => {
     setShowPaw7(false);
     setShowPaw8(false);
     setRetry(false);
+    handleNext(); // 문제 변경 필요
   };
 
   // 첫 문제
@@ -232,31 +233,31 @@ const GameDetailPage = () => {
       console.log('발바닥 True');
       setTimeout(() => {
         setShowPaw1(true);
-      }, 500);
+      }, 250);
       setTimeout(() => {
         setShowPaw2(true);
-      }, 1000);
+      }, 500);
       setTimeout(() => {
         setShowPaw3(true);
-      }, 1500);
+      }, 750);
       setTimeout(() => {
         setShowPaw4(true);
-      }, 2000);
+      }, 1000);
       setTimeout(() => {
         setShowPaw5(true);
-      }, 2500);
+      }, 1250);
       setTimeout(() => {
         setShowPaw6(true);
-      }, 3000);
+      }, 1500);
       setTimeout(() => {
         setShowPaw7(true);
-      }, 3500);
+      }, 1750);
       setTimeout(() => {
         setShowPaw8(true);
-      }, 4000);
+      }, 2000);
       setTimeout(() => {
         setRetry(true);
-      }, 4500);
+      }, 2250);
     }
   }, [correctAnswerCount]);
 
