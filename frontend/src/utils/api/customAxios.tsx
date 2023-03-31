@@ -43,8 +43,8 @@ authApi.interceptors.response.use(
       const accessToken = localStorage.getItem('accessToken');
       console.log(refreshToken)
       await axios
-        .post(`${BASE_URL}/reissue`, {
-          header: {
+        .get(`${BASE_URL}/reissue`, {
+          headers: {
             Authorization: `Bearer ${accessToken}`,
             Cookie: `refreshToken=${refreshToken}`,
           },
