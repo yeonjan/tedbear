@@ -93,7 +93,7 @@ public class SentenceController {
 		Member member = findMemberService.findMember(user.getName());
 		sentenceBookmarkService.saveSentenceBookmark(member, sentenceBookmarkDto);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/bookmark")
