@@ -27,7 +27,7 @@ const BookIn = styled.div`
   right: 0%;
 
   /* scroll */
-  height: 90%;
+  /* height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -36,7 +36,7 @@ const BookIn = styled.div`
     height: 15%;
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
-  }
+  } */
 
   .play-shorts:hover {
     opacity: 0.5;
@@ -87,7 +87,6 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease-in-out;

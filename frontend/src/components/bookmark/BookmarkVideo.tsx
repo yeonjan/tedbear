@@ -23,23 +23,11 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  /* position: absolute; */
   max-height: 800px;
   margin: 10px;
   padding: 10px;
   overflow: hidden;
-
-  /* 스크롤 */
-  /* height: 90%;
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  } */
+  right: 0%;
 
   .videoes {
     position: relative;

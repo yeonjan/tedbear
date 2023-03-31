@@ -5,14 +5,14 @@ import BookmarkVideo from 'components/bookmark/BookmarkVideo';
 import BookmarkWord from 'components/bookmark/BookmarkWord';
 
 const Bookmark = styled.div`
-  overflow: hidden;
   position: relative;
   margin-left: 5vw;
   margin-top: 10vh;
   padding: 10;
+  overflow: scroll;
 
   /* scroll */
-  /* height: 90%;
+  height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -21,7 +21,7 @@ const Bookmark = styled.div`
     height: 15%;
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
-  } */
+  }
 
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};

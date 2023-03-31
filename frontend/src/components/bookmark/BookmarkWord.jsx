@@ -52,7 +52,6 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease-in-out;
