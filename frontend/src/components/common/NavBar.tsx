@@ -7,6 +7,7 @@ import { ReactComponent as Game } from 'assets/img/game.svg';
 import { ReactComponent as CrossIcon } from 'assets/img/crossicon.svg';
 import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
+import { ReactComponent as Signin } from 'assets/img/signin.svg';
 import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
 import { SetStateAction, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -140,7 +141,8 @@ const IconName = styled.div<OpenStyledProps>`
   font-weight: 500;
   font-size: 14px;
   margin-left: 16px;
-  display: ${OpenStyledProps => (!OpenStyledProps.open ? 'none' : 'block')};
+  visibility: ${OpenStyledProps =>
+    !OpenStyledProps.open ? 'hidden' : 'visible'};
   transition: all 0.3s ease;
 `;
 
@@ -212,6 +214,10 @@ const StyledSignout = styled(Signout)`
   width: 24px;
 `;
 
+const StyledSignin = styled(Signin)`
+  width: 24px;
+`;
+
 const NavBar2 = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
@@ -237,7 +243,7 @@ const NavBar2 = (props: Props) => {
   const onSignOut = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       dispatch(logout());
-      window.location.href = '/home';
+      window.location.href = '/';
     }
   };
 
@@ -255,12 +261,12 @@ const NavBar2 = (props: Props) => {
         {/* </ToggleBtn> */}
       </ToggleBox>
       <LogoBox>
-        <Link to="/">
+        <Link to="/home">
           <IconDiv open={props.open}>
             <StyledLogoSmall />
           </IconDiv>
         </Link>
-        <Link to="/">
+        <Link to="/home">
           <IconName open={props.open}>
             <span>TEDBEAR</span>
           </IconName>
@@ -336,7 +342,7 @@ const NavBar2 = (props: Props) => {
         ) : (
           <ListBoxBottom open={props.open} onClick={onSignIn}>
             <IconDiv open={props.open}>
-              <StyledSignout />
+              <StyledSignin />
             </IconDiv>
             <IconName open={props.open}>
               <span>SIGNIN</span>

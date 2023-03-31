@@ -19,8 +19,7 @@ const SeungPage = () => {
       localStorage.setItem('accessToken', accessToken);
       setCookie('refreshToken', refreshToken, { path: '/' });
       dispatch(login());
-      console.log(join);
-      join ? navigate('/home') : navigate('level');
+      join ? navigate('level') : navigate('/home');
     }
   }, []);
 

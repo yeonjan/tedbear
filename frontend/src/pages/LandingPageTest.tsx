@@ -44,6 +44,7 @@ import LandingMan1 from 'assets/img/landingMan1.svg';
 import LandingMan2 from 'assets/img/landingMan2.svg';
 import Bubble from 'assets/img/bubble.svg';
 import BigLogo from 'assets/img/bigLogo.svg';
+import { useNavigate } from 'react-router-dom';
 
 // 인터페이스
 interface Props {
@@ -61,6 +62,7 @@ interface AnimationStyledProps1 {
 
 interface AnimationStyledProps2 {
   inView2: boolean;
+  toggle: boolean;
 }
 
 interface AnimationStyledProps3 {
@@ -321,6 +323,36 @@ const TextBox = styled.div`
     width: 60%;
     height: 100%;
   }
+
+  p {
+    color: ${props => props.theme.whiteColor};
+    position: absolute;
+    text-decoration: underline;
+    cursor: pointer;
+
+    @media ${device.mobile} {
+      top: 70%;
+      font-size: 16px;
+    }
+
+    @media ${device.tablet} {
+      top: 70%;
+      font-size: 18px;
+    }
+
+    @media ${device.laptop} {
+      top: 45%;
+      font-size: 18px;
+      left: 10%;
+    }
+
+    @media ${device.desktop} {
+      top: 40%;
+      font-size: 14px;
+      left: 40%;
+      font-weight: lighter;
+    }
+  }
 `;
 
 const Title = styled.div`
@@ -370,12 +402,12 @@ const SubTitle = styled.div<AnimationStyledProps1>`
   border-right: 2px solid;
   overflow: hidden;
   white-space: nowrap;
-  width: 33.1ch;
+  width: 30.5ch;
 
   ${AnimationStyledProps1 =>
     AnimationStyledProps1.inView1
       ? css`
-          animation: ${typing} 2s steps(34), ${blink} 1s steps(1);
+          animation: ${typing} 2s steps(24), ${blink} 1s steps(1);
         `
       : ``}
 
@@ -807,8 +839,9 @@ const Content = styled.div`
 `;
 
 // BOX1
-const Box1 = styled.div`
-  background-color: ${props => props.theme.bgColor};
+const Box1 = styled.div<AnimationStyledProps2>`
+  background-color: ${props =>
+    !props.toggle ? `${props.theme.whiteColor}` : `${props.theme.blackColor}`};
   position: relative;
   /* height: 500px; */
   z-index: 1;
@@ -1065,7 +1098,8 @@ const DescListEl1 = styled.li<AnimationStyledProps2>`
   box-shadow: 6px 6px 20px #61616142;
 
   position: relative;
-  background: ${props => props.theme.bgColor};
+  background: ${props =>
+    !props.toggle ? `${props.theme.whiteColor}` : `${props.theme.blackColor}`};
   // 1.5s ease-in-out 0s 1 normal none running ${fadeIn2};
   color: ${props => props.theme.textColor2};
   margin-bottom: 16px;
@@ -1760,6 +1794,12 @@ const LandingPageTest = (props: Props) => {
     setBoxIndex(el);
   };
 
+  // 메인 페이지로 이동
+  const navigate = useNavigate();
+  const goMain = () => {
+    navigate('/home');
+  };
+
   return (
     <Wrapper>
       {/* <FullPage duration={100}> */}
@@ -1784,7 +1824,8 @@ const LandingPageTest = (props: Props) => {
               TedBear로 영어 스피킹 연습을 해보세요!
               <InView onChange={setInView1}></InView>
             </SubTitle>
-            <StartBtn onClick={() => setModalOpen(true)}>Get Started</StartBtn>
+            <StartBtn onClick={() => setModalOpen(true)}>시작하기</StartBtn>
+            <p onClick={goMain}>둘러보기</p>
           </TextBox>
           <ImgBox>
             <SmogImg src={Smog} />
@@ -1802,12 +1843,12 @@ const LandingPageTest = (props: Props) => {
       {/* </Slide> */}
       {/* <Slide> */}
       <Content>
-        <Box1 ref={firstBox}>
+        <Box1 ref={firstBox} inView2={inView2} toggle={props.toggle}>
           <BackBox toggle={props.toggle}></BackBox>
-          <TextTitle1 inView2={inView2}>
+          <TextTitle1 inView2={inView2} toggle={props.toggle}>
             <span>테드베어(TEDBEAR)</span>는?
           </TextTitle1>
-          <TextSubTitle1 inView2={inView2}>
+          <TextSubTitle1 inView2={inView2} toggle={props.toggle}>
             <p>
               테드로 영어를 쉽게 배울 수 있는 사이트입니다.
               <br />
@@ -1817,8 +1858,8 @@ const LandingPageTest = (props: Props) => {
             </p>
           </TextSubTitle1>
           <DescList ref={descList}>
-            <InView onChange={setInView2}></InView>
-            <DescListEl1 inView2={inView2}>
+            <InView onChange={setInView2} triggerOnce={true}></InView>
+            <DescListEl1 inView2={inView2} toggle={props.toggle}>
               <LandingVideoImg src={LandingVideo} />
               <div>
                 <ElTitle>VIDEO</ElTitle>
@@ -1829,7 +1870,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl1>
-            <DescListEl2 inView2={inView2}>
+            <DescListEl2 inView2={inView2} toggle={props.toggle}>
               <LandingMicImg src={LandingMic} />
               <div>
                 <ElTitle>SPEAKING</ElTitle>
@@ -1839,7 +1880,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl2>
-            <DescListEl3 inView2={inView2}>
+            <DescListEl3 inView2={inView2} toggle={props.toggle}>
               <LandingPuzzleImg src={LandingPuzzle} />
               <div>
                 <ElTitle>GAME</ElTitle>
@@ -1850,7 +1891,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl3>
-            <DescListEl4 inView2={inView2}>
+            <DescListEl4 inView2={inView2} toggle={props.toggle}>
               <LandingCheckImg src={LandingCheck} />
               <div>
                 <ElTitle>CHECK</ElTitle>

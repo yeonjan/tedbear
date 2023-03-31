@@ -4,6 +4,18 @@ import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { learningVideo } from 'utils/api/searchApi';
 import { SearchedVideo } from './../utils/api/searchApi';
+import styled from 'styled-components';
+
+const ContentDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: ${props => props.theme.bgColor};
+`;
+
+const BottomDiv = styled.div`
+  height: '10vh';
+  background-color: ${props => props.theme.bgColor};
+`;
 
 const StillLearningPage = () => {
   const [video, setVideo] = useState<SearchedVideo[]>([]);
@@ -36,7 +48,7 @@ const StillLearningPage = () => {
       <h1 style={{ textAlign: 'center', marginTop: '2%' }}>
         {video.length ? '학습 중인 영상' : '학습 중인 영상이 없습니다.'}
       </h1>
-      <div style={{ display: 'flex', justifyContent: 'center' }} ref={ref}>
+      <ContentDiv ref={ref}>
         <Grid
           container
           justifyContent={'start'}
@@ -66,8 +78,8 @@ const StillLearningPage = () => {
             );
           })}
         </Grid>
-      </div>
-      <div ref={ref} style={{ height: '10vh' }}></div>
+      </ContentDiv>
+      <BottomDiv ref={ref}></BottomDiv>
     </div>
   );
 };

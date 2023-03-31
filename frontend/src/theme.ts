@@ -37,6 +37,7 @@ export const lightTheme: DefaultTheme = {
   highlightColor: '#FFE4C6',
   speakBox: '#FFF6EC',
   learningBoxColor2: '#FFFFFF',
+  bgColor2: '#FFFFFF',
 
   // 레벨 색깔 빨주노초파남보동은금
   badgeRed:
@@ -100,11 +101,12 @@ export const darkTheme: DefaultTheme = {
   highlightColor: '#967663',
   speakBox: '#FFD4A4',
   learningBoxColor2: '#D7D7D7',
+  bgColor2: '#000000',
 
   // 레벨 색깔 빨주노초파남보동은금
   // 레벨 색깔 빨주노초파남보동은금
   badgeRed:
-    'invert(90%) sepia(17%) saturate(7004%) hue-rotate(303deg) brightness(108%) contrast(103%)',
+    'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
   badgeOrange:
     'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
   badgeYellow:
@@ -114,7 +116,7 @@ export const darkTheme: DefaultTheme = {
   badgeBlue:
     'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
   badgeIndigo:
-    'iinvert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+    'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
   badgePurple:
     'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
   badgeBronze:
