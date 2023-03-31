@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from 'redux/user';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import styled from 'styled-components';
 
 const SeungPage = () => {
   const queryParams = new URLSearchParams(document.location.search);
@@ -17,8 +18,8 @@ const SeungPage = () => {
     if (accessToken && refreshToken) {
       localStorage.setItem('accessToken', accessToken);
       setCookie('refreshToken', refreshToken, { path: '/' });
-      // localStorage.setItem('refreshToken', refreshToken);
       dispatch(login());
+      console.log(join);
       join ? navigate('/home') : navigate('level');
     }
   }, []);
