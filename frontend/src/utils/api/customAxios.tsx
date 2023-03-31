@@ -46,7 +46,7 @@ authApi.interceptors.response.use(
         .post(`${BASE_URL}/reissue`, {
           header: {
             Authorization: `Bearer ${accessToken}`,
-            Cookie: refreshToken,
+            Cookie: `refreshToken=${refreshToken}`,
           },
         })
         .then(res => {
