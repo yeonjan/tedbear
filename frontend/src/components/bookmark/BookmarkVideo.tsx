@@ -27,11 +27,10 @@ const BookIn = styled.div`
   max-height: 800px;
   margin: 10px;
   padding: 10px;
-  overflow-y: auto;
+  overflow: hidden;
 
   /* 스크롤 */
-  /* border: 1px solid black; */
-  height: 90%;
+  /* height: 90%;
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -40,7 +39,8 @@ const BookIn = styled.div`
     height: 15%;
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
-  }
+  } */
+
   .videoes {
     position: relative;
     margin: 0;
