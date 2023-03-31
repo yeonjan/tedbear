@@ -220,7 +220,26 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
+	@Transactional
 	public void cleanData() {
+		// 포함된 문장의 개수가 10개 미만인 영상들 모두 삭제
+		int videoCnt = 0;
+		List<Video> videoList = videoRepository.findAll();
+		for (Video video : videoList) {
+			if (video.getSentenceList().size() < 10) {
+				videoRepository.delete(video);
+				System.out.println(video.getTitle());
+			}
+		}
+		//
+		// 영어단어로만 이루어지지 않은 단어 모두 삭제
+		List<Word> wordList = wordRepository.findAll();
+		for (Word word : wordList) {
+			if (!word.getContent().matches("^[a-zA-Z]*$") | word.getContent().length() <= 2) {
+				wordRepository.delete(word);
+				System.out.println(word.getContent());
 
+			}
+		}
 	}
 }

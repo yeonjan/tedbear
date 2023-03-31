@@ -62,6 +62,12 @@ public class Video {
 	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
 	private List<Sentence> sentenceList = new ArrayList<>();
 
+	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
+	private List<VideoBookmark> bookmarkList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
+	private List<WatchingVideo> watchingVideoList = new ArrayList<>();
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_no")
 	private VideoCategory videoCategory;
