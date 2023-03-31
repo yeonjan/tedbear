@@ -13,6 +13,7 @@ const BookIn = styled.div`
   overflow-y: auto;
   right: 0%;
   height: 90%;
+
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -47,7 +48,15 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-right: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
   .mean-container {
     max-width: 100%;
@@ -57,6 +66,15 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
   .sentence-container {
     max-width: 100%;
@@ -66,6 +84,15 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
 `;
 
