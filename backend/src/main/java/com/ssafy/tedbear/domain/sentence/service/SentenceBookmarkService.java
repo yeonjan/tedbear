@@ -41,10 +41,11 @@ public class SentenceBookmarkService {
 		return new SentenceBookmarkStatusDto(isBookmarked);
 	}
 
-	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Long memberId, Pageable pageable) {
-		List<SentenceBookmarkDetailDto> bookmarkedList = sentenceBookmarkRepository.findSentenceByMember(memberId,
+	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Member member, Pageable pageable) {
+		List<Sentence> bookmarkedSenteceList = sentenceBookmarkRepository.findSentenceByMember(member,
 			pageable).getContent();
-		return new SentenceBookmarkDetailDto.ListResponse(bookmarkedList);
+
+		return new SentenceBookmarkDetailDto.ListResponse(bookmarkedSenteceList);
 	}
 
 }
