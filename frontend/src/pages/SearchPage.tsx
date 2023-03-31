@@ -23,6 +23,7 @@ import buttonLeft from 'assets/img/buttonLeft.svg';
 import buttonRight from 'assets/img/buttonRight.svg';
 
 const VideoWrapper = styled.div`
+  color: ${props => props.theme.textColor1};
   display: flex;
   position: relative;
   width: 100%;
@@ -55,7 +56,7 @@ const VideoWrapper = styled.div`
     padding: 2%;
     &:hover {
       cursor: pointer;
-      color: #7e7d7d;
+      color: ${props => props.theme.mainLightColor};
       transition: all 0.3s;
       transform: translateY(3px);
     }
@@ -72,7 +73,7 @@ const VideoWrapper = styled.div`
     }
 
     @media ${device.desktop} {
-      font-size: 25px;
+      font-size: 24px;
     }
   }
 `;
@@ -131,12 +132,13 @@ const StickySearchBar = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin-left: 2%;
+  padding-left: 2%;
   .short-wrapper {
     padding-bottom: 5%;
     padding-top: 2%;
     margin-left: 2%;
   }
+  background-color: ${props => props.theme.bgColor2};
 `;
 
 interface Props {
