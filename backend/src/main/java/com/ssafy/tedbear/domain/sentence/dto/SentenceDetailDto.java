@@ -27,7 +27,7 @@ public class SentenceDetailDto {
 
 	public SentenceDetailDto(Sentence sentence) {
 		this.no = sentence.getNo();
-		this.score = sentence.getScore();
+		this.score = sentence.getScore() == 0 ? 10 : (sentence.getScore() - 1) / 10000;
 		this.startTime = sentence.getStartTime();
 		this.endTime = sentence.getEndTime();
 		this.content = sentence.getContent();
@@ -48,6 +48,6 @@ public class SentenceDetailDto {
 	}
 
 	public static List<String> ContentListResponse(List<Sentence> list) {
-		return list.stream().map(c -> c.getContent()).collect(Collectors.toList());
+		return list.stream().map(Sentence::getContent).collect(Collectors.toList());
 	}
 }
