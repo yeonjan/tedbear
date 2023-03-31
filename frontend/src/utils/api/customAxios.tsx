@@ -41,11 +41,13 @@ authApi.interceptors.response.use(
       console.log('access 만료!! post 보내기 전!!');
       const refreshToken = cookie.get('refreshToken');
       const accessToken = localStorage.getItem('accessToken');
+      console.log(refreshToken);
       await axios
-        .post(`${BASE_URL}/reissue`, {
-          header: {
+        .get(`${BASE_URL}/reissue`, {
+          headers: {
+            withCredentials: true,
             Authorization: `Bearer ${accessToken}`,
-            cookie: refreshToken,
+            Cookie: `refreshToken=${refreshToken}`,
           },
         })
         .then(res => {

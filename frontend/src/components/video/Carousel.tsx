@@ -100,7 +100,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       left: 10%;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 5px;
       @media ${device.mobile} {
         font-size: 6px;
@@ -114,7 +114,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       }
 
       @media ${device.desktop} {
-        font-size: 13px;
+        font-size: 15px;
       }
     }
   }

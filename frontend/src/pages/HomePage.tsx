@@ -67,6 +67,7 @@ const ShortsTitle = styled.span`
 
 const Button = styled.button<{ changeColor?: number }>`
   padding: 3%;
+  cursor: pointer;
   background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #ffdbb3, #fec88e)'
@@ -92,6 +93,7 @@ const Button = styled.button<{ changeColor?: number }>`
 `;
 
 const LeftButton = styled.button<{ changeColor?: number }>`
+  cursor: pointer;
   border-radius: 16px 0 0 16px;
   background: ${props =>
     props.changeColor
@@ -123,6 +125,8 @@ const LeftButton = styled.button<{ changeColor?: number }>`
 `;
 
 const RightButton = styled.button<{ changeColor?: number }>`
+  cursor: pointer;
+
   border-radius: 0px 16px 16px 0px;
   background: ${props =>
     props.changeColor
