@@ -9,19 +9,6 @@ const Bookmark = styled.div`
   margin-left: 5vw;
   margin-top: 10vh;
   padding: 10;
-  overflow: scroll;
-
-  /* scroll */
-  height: 90%;
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  }
 
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};
@@ -54,7 +41,6 @@ const Bookmark = styled.div`
   }
   .paper {
     position: relative;
-    overflow: auto;
     max-height: 800px;
     border-radius: 20px;
     width: 80vw;
@@ -64,6 +50,18 @@ const Bookmark = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+
+    /* paper's scroll */
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 15%;
+      background-color: ${props => props.theme.mainLightColor};
+      border-radius: 20px;
+    }
   }
   .statistics {
     background-color: blue;
