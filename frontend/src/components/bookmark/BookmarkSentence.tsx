@@ -26,18 +26,6 @@ const BookIn = styled.div`
   overflow: hidden;
   right: 0%;
 
-  /* scroll */
-  /* height: 90%;
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  } */
-
   .play-shorts:hover {
     opacity: 0.5;
     cursor: pointer;

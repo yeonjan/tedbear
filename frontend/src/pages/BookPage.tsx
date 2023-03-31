@@ -51,7 +51,6 @@ const Bookmark = styled.div`
     justify-content: center;
     align-items: center;
     overflow: auto;
-
     /* paper's scroll */
     &::-webkit-scrollbar {
       width: 8px;

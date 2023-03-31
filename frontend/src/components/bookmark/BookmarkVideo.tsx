@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
-// import VideoLevel from 'assets/img/videoLevel.svg';
 import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
