@@ -64,16 +64,15 @@ public class SentenceController {
 	@PostMapping("/shorts")
 	public ResponseEntity<?> saveShortsLog(@RequestBody MemberShortsLogDto.Request shorLogRequest,
 		@AuthenticationPrincipal CustomOAuth2User user) {
-		Member member = findMemberService.findMember(user.getName());
-		memberShortsLogService.saveMemberShortsLog(member, shorLogRequest.getSentenceNo());
+		memberShortsLogService.watchedShorts(user.getName(), shorLogRequest.getSentenceNo());
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
 	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition,
 		@PageableDefault(sort = "startTime") Pageable pageable, @AuthenticationPrincipal CustomOAuth2User user) {
-		Member member = findMemberService.findMember(user.getName());
-		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(member, searchCondition, pageable);
+		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(user.getName(), searchCondition,
+			pageable);
 		return new ResponseEntity<>(listResponse, HttpStatus.OK);
 	}
 

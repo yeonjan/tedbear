@@ -105,8 +105,9 @@ public class SentenceService {
 		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
-	public SentenceDetailDto.ListResponse searchSentence(Member member, SearchDto.Request condition,
+	public SentenceDetailDto.ListResponse searchSentence(String memberUid, SearchDto.Request condition,
 		Pageable pageable) {
+		Member member = findMemberService.findMember(memberUid);
 		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable).getContent();
 		updateBookmarkSentence(member, searchList);
 
