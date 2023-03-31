@@ -38,7 +38,7 @@ authApi.interceptors.response.use(
     const { config, response } = error;
     const originalRequest = config;
     if (response.status === 401) {
-      console.log('access 보내기 전!');
+      console.log('access 만료!! post 보내기 전!!');
       const refreshToken = cookie.get('refreshToken');
       const accessToken = localStorage.getItem('accessToken');
       await axios
@@ -49,6 +49,8 @@ authApi.interceptors.response.use(
           },
         })
         .then(res => {
+          console.log('access 다시 받기 성공!! 200 status!!');
+
           if (res.status === 200) {
             const newAccessToken = res.headers.Authorization;
 
@@ -60,9 +62,11 @@ authApi.interceptors.response.use(
         })
         .catch(err => {
           if (err.response.status === 401) {
+            console.log('refresh도 만료 됐짜너!! 다시 로그인해!');
+
             localStorage.removeItem('accessToken');
             cookie.remove('refreshToken');
-            alert('토큰 만료! 재로그인 해주세요');
+            alert('리프레시 토큰 만료! 재로그인 해주세요');
             window.location.href = '/';
           }
         });
