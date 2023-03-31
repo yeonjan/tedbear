@@ -45,6 +45,7 @@ authApi.interceptors.response.use(
       await axios
         .get(`${BASE_URL}/reissue`, {
           headers: {
+            withCredentials: true,
             Authorization: `Bearer ${accessToken}`,
             Cookie: `refreshToken=${refreshToken}`,
           },
