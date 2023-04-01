@@ -8,14 +8,11 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const BookIn = styled.div`
-  position: absolute;
-  max-height: 800px;
-  margin: 30px 30px 30px 30px;
-  padding: 30px 30px 30px 30px;
-  overflow-y: auto;
+  max-height: 80vh;
+  padding: 30px;
   right: 0%;
-  height: 90%;
-
+  overflow: auto;
+  /* paper's scroll */
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -25,6 +22,9 @@ const BookIn = styled.div`
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
   }
+  scroll-behavior: auto;
+  //
+
   .book-mark:hover {
     opacity: 0.5;
     cursor: pointer;
@@ -50,15 +50,11 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    /* border: 1px solid #ccc; // Add a border */
+    margin-right: 10px;
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .mean-container {
     max-width: 100%;
@@ -67,16 +63,10 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .sentence-container {
     max-width: 100%;
@@ -86,15 +76,10 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .empty-caution {
     font-size: 50px;
@@ -102,6 +87,12 @@ const BookIn = styled.div`
   }
   .study-button {
     background: ${props => props.theme.pointLightColor};
+  }
+  .button-set {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -150,7 +141,7 @@ const BookmarkWord = () => {
     <BookIn>
       <div className="words">
         {wordBookmarkList.length === 0 ? (
-          <div>
+          <div className="button-set">
             <p className="empty-caution">북마크가 비어있어요!</p>
             <Button
               className="study-button"
@@ -161,7 +152,7 @@ const BookmarkWord = () => {
                 margin: '40px',
                 padding: '10px',
                 width: '15vw',
-                height: '15vh',
+                height: '10vh',
                 borderRadius: '15px',
                 fontSize: '30px',
               }}

@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
-// import VideoLevel from 'assets/img/videoLevel.svg';
 import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
@@ -23,15 +22,11 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  position: absolute;
-  max-height: 800px;
-  margin: 10px;
+  height: 80vh;
   padding: 10px;
-  overflow-y: auto;
-
-  /* 스크롤 */
-  /* border: 1px solid black; */
-  height: 90%;
+  right: 0%;
+  overflow: auto;
+  /* paper's scroll */
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -41,6 +36,8 @@ const BookIn = styled.div`
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
   }
+  scroll-behavior: auto;
+  //
   .videoes {
     position: relative;
     margin: 0;
@@ -52,6 +49,12 @@ const BookIn = styled.div`
   }
   .study-button {
     background: ${props => props.theme.pointLightColor};
+  }
+  .button-set {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -94,7 +97,7 @@ const BookmarkVideo = () => {
     <BookIn>
       <div className="videoes">
         {videoBookmark.length === 0 ? (
-          <div>
+          <div className="button-set">
             <p className="empty-caution">북마크가 비어있어요!</p>
             <Button
               className="study-button"
@@ -105,7 +108,7 @@ const BookmarkVideo = () => {
                 margin: '40px',
                 padding: '10px',
                 width: '15vw',
-                height: '15vh',
+                height: '10vh',
                 borderRadius: '15px',
                 fontSize: '30px',
               }}
@@ -131,6 +134,8 @@ const BookmarkVideo = () => {
                     marginTop: '2%',
                     paddingLeft: '1%',
                     paddingRight: '1%',
+                    width: '80vw',
+                    height: '80vh',
                   }}
                   lg={4}
                   md={6}
@@ -141,8 +146,8 @@ const BookmarkVideo = () => {
                   <Card
                     key={idx}
                     sx={{
-                      width: '100%',
-                      height: '45vh',
+                      width: '80vw',
+                      height: '80vh',
                       position: 'relative',
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -152,8 +157,8 @@ const BookmarkVideo = () => {
                   >
                     <CardActionArea
                       sx={{
-                        height: '200px',
-                        width: '380px',
+                        height: '100%',
+                        width: '100',
                       }}
                     >
                       {/* <img
@@ -185,7 +190,7 @@ const BookmarkVideo = () => {
                         }
                         alt=""
                         sx={{
-                          height: '200px',
+                          height: '220px',
                           width: '380px',
                         }}
                       />
@@ -193,19 +198,19 @@ const BookmarkVideo = () => {
                         key={idx}
                         sx={{
                           width: '100vw',
-                          height: '30vh',
+                          height: '100vh',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          overflow: 'auto',
                         }}
                       >
                         <Typography
                           component="div"
                           sx={{
-                            position: 'absolute',
-                            width: '350px',
-                            justifyContent: 'center',
+                            // position: 'absolute',
+                            // justifyContent: 'center',
                             alignItems: 'center',
+                            width: '360px',
+                            height: '80vh',
                           }}
                         >
                           {Thumnail.title}

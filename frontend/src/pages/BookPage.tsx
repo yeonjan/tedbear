@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import BookmarkSentence from 'components/bookmark/BookmarkSentence';
 import BookmarkVideo from 'components/bookmark/BookmarkVideo';
 import BookmarkWord from 'components/bookmark/BookmarkWord';
-//style
+
 const Bookmark = styled.div`
-  overflow: auto;
   position: relative;
   margin-left: 5vw;
   margin-top: 10vh;
   padding: 10;
+
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};
   }
@@ -30,8 +30,8 @@ const Bookmark = styled.div`
       font-size: 130%;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       :hover {
-        background-color: #c1bbe4; /* add a hover effect */
-        cursor: pointer; /* change cursor to pointer on mouse over */
+        background-color: #c1bbe4;
+        cursor: pointer;
       }
     }
   }
@@ -41,13 +41,16 @@ const Bookmark = styled.div`
   }
   .paper {
     position: relative;
-    overflow: auto;
     max-height: 800px;
     border-radius: 20px;
     width: 80vw;
     height: 80vh;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
   }
   .statistics {
     background-color: blue;

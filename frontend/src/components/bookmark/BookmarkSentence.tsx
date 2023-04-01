@@ -5,7 +5,6 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import Play from 'assets/img/play.svg';
 import { useNavigate } from 'react-router-dom';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 
@@ -21,17 +20,11 @@ interface IBookmarkSentence {
 }
 
 const BookIn = styled.div`
-  position: absolute;
-  max-height: 800px;
-  margin: 30px 30px 30px 30px;
-  padding: 30px 30px 30px 30px;
-  overflow-y: auto;
-
-  /* 스크롤 */
-  /* border: 1px solid black; */
-
+  height: 80vh;
+  padding: 30px;
   right: 0%;
-  height: 90%;
+  overflow: auto;
+  /* paper's scroll */
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -41,75 +34,61 @@ const BookIn = styled.div`
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
   }
+  scroll-behavior: auto;
+  //
   .play-shorts:hover {
-    opacity: 0.5; /* change opacity when hovered */
-    cursor: pointer; /* change cursor to pointer when hovered */
+    opacity: 0.5;
+    cursor: pointer;
   }
   .book-mark:hover {
-    opacity: 0.5; /* change opacity when hovered */
-    cursor: pointer; /* change cursor to pointer when hovered */
+    opacity: 0.5;
+    cursor: pointer;
   }
-
   .row {
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
   }
-
   .bookmark-container {
     height: 40px;
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: left;
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
   .play-shorts-container {
     height: 40px;
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
   .content-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
-
   .translation-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .empty-caution {
     font-size: 50px;
@@ -117,6 +96,12 @@ const BookIn = styled.div`
   }
   .study-button {
     background: ${props => props.theme.pointLightColor};
+  }
+  .button-set {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -149,14 +134,6 @@ const BookmarkSentence = () => {
     }
   }, [inView, loading]);
 
-  // const fetchMore = async () => {
-  //   const data: IBookmarkSentence[] = await getSentenceBookmark();
-  //   // setSentenceBookmark(data);
-  //   console.log(data);
-  //   setSentenceBookmark([...sentenceBookmark, ...data]);
-  //   setHasMore(data.length > 0); // true
-  // };
-
   const handlePlay = () => {
     navigate('/home');
   };
@@ -169,7 +146,7 @@ const BookmarkSentence = () => {
     <BookIn>
       <div className="sentences">
         {sentenceBookmark.length === 0 ? (
-          <div>
+          <div className="button-set">
             <p className="empty-caution">북마크가 비어있어요!</p>
             <Button
               className="study-button"
@@ -180,7 +157,7 @@ const BookmarkSentence = () => {
                 margin: '40px',
                 padding: '10px',
                 width: '15vw',
-                height: '15vh',
+                height: '10vh',
                 borderRadius: '15px',
                 fontSize: '30px',
               }}

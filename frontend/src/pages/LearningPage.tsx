@@ -32,6 +32,7 @@ import Chart from 'react-apexcharts';
 import DictionaryModal from 'components/learning/dictionaryModal';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { warn } from 'console';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -263,6 +264,7 @@ const SentenceBox = styled.div`
   overflow-y: scroll;
   margin: 10px;
   padding: 0 32px;
+  color: #1a1a1a;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -275,8 +277,8 @@ const SentenceBox = styled.div`
   }
 
   p {
-    font-weight: bold;
-    font-size: 14px;
+    /* font-weight: bold; */
+    font-size: 16px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -297,7 +299,6 @@ const MicBox = styled.div<SpeakerBoxProps>`
       return `${props.theme.learningBoxCorrect}`;
     } else {
       // 기본
-      console.log('기본');
       return `${props.theme.learningBoxDefaultColor}`;
     }
   }};
@@ -309,9 +310,11 @@ const MicBox = styled.div<SpeakerBoxProps>`
   justify-content: space-evenly;
   margin: 0px 10px 10px;
   padding-top: 10px;
+  color: #1a1a1a;
+
   p {
     padding: 0px 32px;
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
     height: 80%;
     overflow-y: scroll;
@@ -695,7 +698,7 @@ const LearningPage = () => {
     const watchTime = setInterval(() => {
       // 현재 시청 시간 state 저장
       const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
-
+      console.log('watch');
       setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
@@ -716,16 +719,22 @@ const LearningPage = () => {
       setHighlight(true);
       setSelected(idx);
     }, 1000);
+
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
-      const data = {
-        videoNo: videoNumber,
-        videoProgressTime: videoTime.toString(),
-      };
-      const onRecordWatching = async () => {
-        await postCurrentVideo(data);
-      };
-      onRecordWatching();
+      console.log('언마운트');
+      if (isLogin) {
+        const data = {
+          videoNo: videoNumber,
+          videoProgressTime: videoTime.toString(),
+        };
+
+        const onRecordWatching = async () => {
+          await postCurrentVideo(data);
+        };
+        onRecordWatching();
+      }
+
       clearInterval(watchTime);
 
       // 마이크 끠
@@ -817,11 +826,13 @@ const LearningPage = () => {
 
   // 정답 매칭
 
+  const [check1, setCheck1] = useState<boolean>(false);
+  const [check2, setCheck2] = useState<boolean>(false);
   // 문자열 배열에 담기
   const onMatching = () => {
     // 스크립트 특수문자 제거하기
     // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
-    const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/]/gim;
+    const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/[]]/gim;
     // const str = 'AdmiN, **{}()! 1234.안녕[]<>\\/?';
     // const temp2 = str.replace(reg, '');
     const answer = videoDesc?.sentenceInfoList[selected].content
@@ -871,17 +882,31 @@ const LearningPage = () => {
       };
       postSpeakResult();
 
-      Swal.fire(
-        '<p>스피킹 결과가 <br/>경험치에 반영되었습니다.</p>',
-        '',
-        'success',
-      );
+      if (!check2) {
+        Swal.fire({
+          title: '<p>스피킹 결과가 <br/>경험치에 반영되었습니다.</p>',
+          icon: 'success',
+          input: 'checkbox',
+          inputPlaceholder: '다시 보지 않기',
+        }).then(el => {
+          if (el.value) {
+            setCheck2(true);
+          }
+        });
+      }
     } else {
-      Swal.fire(
-        '<p>테드베어 회원이 되셔서 <br/>경험치를 올려보세요!</p>',
-        '',
-        'warning',
-      );
+      if (!check1) {
+        Swal.fire({
+          title: '<p>테드베어 회원이 되셔서 <br/>경험치를 올려보세요!</p>',
+          icon: 'warning',
+          input: 'checkbox',
+          inputPlaceholder: '다시 보지 않기',
+        }).then(el => {
+          if (el.value) {
+            setCheck1(true);
+          }
+        });
+      }
     }
   };
 

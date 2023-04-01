@@ -71,6 +71,7 @@ const SentenceBox = styled.div`
   border-radius: 12px;
   color: white;
   width: 100%;
+  height: 20%;
   left: 0%;
   padding: 2%;
   bottom: 0%;
