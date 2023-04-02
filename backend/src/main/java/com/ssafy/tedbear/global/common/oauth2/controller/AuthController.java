@@ -43,6 +43,7 @@ public class AuthController {
 		if (newAccessToken == null) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
+		log.info("new access-token: {}", newAccessToken);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", newAccessToken);
