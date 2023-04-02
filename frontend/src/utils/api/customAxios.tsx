@@ -55,7 +55,7 @@ authApi.interceptors.response.use(
 
           if (res.status === 200) {
             const newAccessToken = res.headers.Authorization;
-            console.log(res, '새로 받은 access token');
+            console.log(res.headers, '새로 받은 access token');
             console.log('이게 새로 받은 access token이야: ' + newAccessToken);
 
             originalRequest.headers.Authorization = newAccessToken;
