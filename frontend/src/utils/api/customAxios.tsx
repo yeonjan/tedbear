@@ -55,6 +55,7 @@ authApi.interceptors.response.use(
 
           if (res.status === 200) {
             const newAccessToken = res.headers.Authorization;
+            console.log(res, '새로 받은 access token');
 
             originalRequest.headers.Authorization = newAccessToken;
             localStorage.setItem('accessToken', newAccessToken);
