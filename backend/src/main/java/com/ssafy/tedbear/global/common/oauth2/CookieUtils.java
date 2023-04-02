@@ -1,10 +1,13 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 public class CookieUtils {
 
 	public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
@@ -16,7 +19,7 @@ public class CookieUtils {
 				}
 			}
 		}
-
+		log.warn("refresh token이 cookie에 없음");
 		return Optional.empty();
 	}
 }
