@@ -58,7 +58,7 @@ authApi.interceptors.response.use(
             console.log(res.headers.authorization, '새로 받은 access token');
             console.log('이게 새로 받은 access token이야: ' + newAccessToken);
 
-            originalRequest.headers.Authorization = newAccessToken;
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             localStorage.setItem('accessToken', newAccessToken);
 
             return axios(originalRequest);
