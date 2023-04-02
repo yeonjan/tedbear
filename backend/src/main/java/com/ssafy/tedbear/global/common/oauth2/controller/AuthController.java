@@ -33,11 +33,15 @@ public class AuthController {
 		oldAccessToken = oldAccessToken.substring(7);
 		log.info("oldAccessToken: {}", oldAccessToken);
 
+		if(oldAccessToken == null) return ResponseEntity.badRequest().body("액세스 토큰이 없음");
+
 		// refresh-token 가져오기
 		String refreshToken = CookieUtils.getCookie(request, "refreshToken")
 			.orElseThrow(() -> new RuntimeException("refresh token이 없습니다."))
 			.getValue();
 		log.info("refreshToken: {}", refreshToken);
+
+		if(refreshToken == null) return ResponseEntity.badRequest().body("리프레시 토큰이 없음");
 
 		String newAccessToken = authService.reissueAccessToken(oldAccessToken, refreshToken);
 		if (newAccessToken == null) {
