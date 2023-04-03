@@ -292,6 +292,7 @@ const SearchPage = () => {
     } else {
       deleteVideoBookmark({ videoNo: video.no });
     }
+    console.log(video.no, copy[idx].bookMarked)
     setVideo(copy);
   };
 
