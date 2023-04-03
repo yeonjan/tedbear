@@ -2244,7 +2244,6 @@ const LandingPageTest = (props: Props) => {
   const navigate = useNavigate();
   const goMain = () => {
     localStorage.removeItem('accessToken');
-    cookie.remove('refreshToken');
     dispatch(logout());
     navigate('/home');
   };
