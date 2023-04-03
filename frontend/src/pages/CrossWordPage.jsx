@@ -80,14 +80,14 @@ const Wrapper = styled.div`
       }
     }}
     grid-gap: 2px;
-    /* @media screen and (min-width: 900px) {
+    @media screen and (min-width: 900px) {
       grid-row: 2/4;
       grid-column: 1;
       display: grid;
       grid-template-rows: repeat(8, 5vw);
       grid-template-columns: repeat(8, 5vw);
       grid-gap: 2px;
-    } */
+    }
   }
   ins,
   del {
