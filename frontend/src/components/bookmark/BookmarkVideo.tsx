@@ -14,6 +14,7 @@ import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
+  no: number;
   thumbnailUrl: string;
   title: string;
   watchId: string;
