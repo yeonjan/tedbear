@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
-<<<<<<< HEAD
-const BASE_URL = 'https://ted-bear.com/api';
-=======
-// const BASE_URL = 'https://j8b103.p.ssafy.io/api';
+
 const BASE_URL = 'https://ted-bear.com/api';
 
->>>>>>> 07eb9d1aa216a6781215fd7740d6edf07d2410a4
 const cookie = new Cookies();
 
 export const authApi = axios.create({
