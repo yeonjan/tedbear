@@ -16,9 +16,9 @@ import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
 import { Paper } from '@mui/material';
-import { handleSuccessState, handleErrorState } from 'redux/snack';
 import { useDispatch } from 'react-redux';
-import SnackBar from 'components/common/SnackBar';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 // style
 const StyledLevel = styled.div`
@@ -78,10 +78,6 @@ const StyledLevel = styled.div`
       border-radius: 20px;
     }
     position: absolute;
-    /* width: 30vw; */
-    /* height: 30vh; */
-    /* top: 30%; */
-    /* left: 58%; */
     overflow: auto;
     font-size: 20px;
     display: flex;
@@ -113,7 +109,8 @@ const GameDetailPage = () => {
   const [showPaw7, setShowPaw7] = useState(false);
   const [showPaw8, setShowPaw8] = useState(false);
   const [retry, setRetry] = useState(false);
-  const [guide, setGuide] = useState(true);
+  const [correct, setCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
 
   const handleRetry = () => {
     setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
@@ -130,14 +127,22 @@ const GameDetailPage = () => {
     handleNext(); // 문제 변경 필요
   };
 
+  const handleCorrect = () => {
+    setCorrect(false);
+  };
+
+  const handleIncorrect = () => {
+    setIncorrect(false);
+  };
+
   // 첫 문제
   useEffect(() => {
     async function fetchData() {
       await authApi
         .get(`game/word`)
         .then(response => {
-          console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(`누적정답횟수${correctAnswerCount}`);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -146,7 +151,7 @@ const GameDetailPage = () => {
           setHintList(hint);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     fetchData();
@@ -159,8 +164,8 @@ const GameDetailPage = () => {
       await authApi
         .get(`game/word`)
         .then(response => {
-          console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(`누적정답횟수${correctAnswerCount}`);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -169,7 +174,7 @@ const GameDetailPage = () => {
           setHintList(hint);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     fetchData();
@@ -186,10 +191,10 @@ const GameDetailPage = () => {
       },
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
-        console.log(error.data);
+        // console.log(error.data);
       });
   }
 
@@ -204,49 +209,42 @@ const GameDetailPage = () => {
       fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
       setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
       setCorrectAnswerCount(correctAnswerCount + 1);
-      console.log(`맞은개수${correctAnswerCount}`);
+      // console.log(`맞은개수${correctAnswerCount}`);
       setInput(''); // Clear the input box
-      alert('Correct');
-      // dispatch(
-      //   handleSuccessState({
-      //     open: true,
-      //     message: '정답입니다!',
-      //     severity: 'success',
-      //   }),
-      //   console.log('Dispatch'),
-      // );
+      // alert('Correct');
+      setCorrect(true);
+      setTimeout(() => {
+        setCorrect(false);
+      }, 300);
 
       if (correctAnswerCount === 1) {
-        console.log('한개맞힘');
+        // console.log('한개맞힘');
         handleNext();
         // 첫번째 조각 띄우기
         setSelectedAlbum(2);
       } else if (correctAnswerCount === 2) {
-        console.log('두개맞힘');
+        // console.log('두개맞힘');
         handleNext();
         // 두번째 조각도 띄우기
         setSelectedAlbum(3);
       } else if (correctAnswerCount === 3) {
-        console.log('세개맞힘');
+        // console.log('세개맞힘');
         handleNext();
         setSelectedAlbum(4);
       } else if (correctAnswerCount === 4) {
-        console.log('네개맞힘');
+        // console.log('네개맞힘');
         setSelectedAlbum(5);
         // 전부 다 맞힐 때에 미션 완료! handleNext와 무관!
         // navigate('/game/complete');
       }
     } else {
-      alert('Incorrect');
-      // dispatch(
-      //   handleErrorState({
-      //     open: true,
-      //     message: 'An error occurred!',
-      //     // severity: 'warning', // set the 'severity' value to 'warning'
-      //   }),
-      //   console.log('Dispatch'),
-      // );
-      console.log('Incorrect');
+      // alert('Incorrect');
+      setTimeout(() => {
+        setIncorrect(true);
+        setTimeout(() => {
+          setIncorrect(false);
+        }, 300);
+      }, 100);
       setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
       setInput(''); // Clear the input box
     }
@@ -254,10 +252,7 @@ const GameDetailPage = () => {
 
   // 발바닥 애니메이션
   useEffect(() => {
-    console.log('발바닥 useEffect');
-    console.log(correctAnswerCount);
     if (correctAnswerCount === 5) {
-      console.log('발바닥 True');
       setTimeout(() => {
         setShowPaw1(true);
       }, 250);
@@ -289,9 +284,9 @@ const GameDetailPage = () => {
   }, [correctAnswerCount]);
 
   const handleHint = () => {
-    console.log(hintList.startTime);
-    console.log(hintList.endTime);
-    console.log(hintList.watchId);
+    // console.log(hintList.startTime);
+    // console.log(hintList.endTime);
+    // console.log(hintList.watchId);
   };
 
   return (
@@ -377,7 +372,7 @@ const GameDetailPage = () => {
               left: '50%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -392,7 +387,7 @@ const GameDetailPage = () => {
               top: '50%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -407,7 +402,7 @@ const GameDetailPage = () => {
               top: '50%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -422,7 +417,7 @@ const GameDetailPage = () => {
               top: '80%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -436,7 +431,7 @@ const GameDetailPage = () => {
               left: '10%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -450,7 +445,7 @@ const GameDetailPage = () => {
               left: '90%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -465,7 +460,7 @@ const GameDetailPage = () => {
               top: '90%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -480,7 +475,7 @@ const GameDetailPage = () => {
               top: '90%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           />
         )}
@@ -497,12 +492,72 @@ const GameDetailPage = () => {
               top: '30%',
               opacity: 1,
               position: 'absolute',
-              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+              zIndex: 9999,
             }}
           >
             <RefreshIcon
-              style={{ width: '20rem', height: '20rem', left: '50%' }}
+              style={{
+                width: '20rem',
+                height: '20rem',
+                left: '50%',
+                color: 'blue',
+                opacity: 0.5,
+              }}
             ></RefreshIcon>
+          </IconButton>
+        )}
+      </div>
+      <div>
+        {correct && (
+          <IconButton
+            onClick={handleCorrect}
+            style={{
+              boxShadow: 3,
+              width: '20rem',
+              height: '20rem',
+              left: '38%',
+              top: '30%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999,
+            }}
+          >
+            <CheckCircleIcon
+              style={{
+                width: '20rem',
+                height: '20rem',
+                left: '50%',
+                color: 'green',
+                opacity: 0.5,
+              }}
+            ></CheckCircleIcon>
+          </IconButton>
+        )}
+      </div>
+      <div>
+        {incorrect && (
+          <IconButton
+            onClick={handleIncorrect}
+            style={{
+              boxShadow: 3,
+              width: '20rem',
+              height: '20rem',
+              left: '38%',
+              top: '30%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999,
+            }}
+          >
+            <CancelIcon
+              style={{
+                width: '20rem',
+                height: '20rem',
+                left: '50%',
+                color: 'red',
+                opacity: 0.5,
+              }}
+            ></CancelIcon>
           </IconButton>
         )}
       </div>
