@@ -44,7 +44,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
 			// .httpOnly(true)
-			.domain("ted-bear.com")
 			.secure(true)
 			.sameSite("none")
 			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
