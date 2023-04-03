@@ -44,10 +44,10 @@ authApi.interceptors.response.use(
       console.log(refreshToken);
       await axios
         .get(`${BASE_URL}/reissue`, {
+          withCredentials: true,
           headers: {
-            withCredentials: true,
             Authorization: `Bearer ${accessToken}`,
-            Cookie: `refreshToken=${refreshToken}`,
+            // Cookie: `refreshToken=${refreshToken}`,
           },
         })
         .then(res => {
