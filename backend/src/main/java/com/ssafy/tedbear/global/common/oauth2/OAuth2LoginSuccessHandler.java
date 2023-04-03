@@ -39,14 +39,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 
-		join=false;
+		join = false;
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                .httpOnly(true)
-                .maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
-                .path("/")
-                .build();
+			.httpOnly(true)
+			.secure(true)
+			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
+			.path("/")
+			.build();
 
 		clearAuthenticationAttributes(request, response);
 
