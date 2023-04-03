@@ -94,6 +94,10 @@ const BookmarkVideo = () => {
     navigate('/home');
   };
 
+  const handleMark = () => {
+    console.log('북마크를 켜고 끄고');
+  };
+
   return (
     <BookIn>
       <div className="videoes">
@@ -175,6 +179,7 @@ const BookmarkVideo = () => {
                       <img
                         className="book-mark"
                         src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                        onClick={handleMark}
                         style={{
                           height: '50%',
                           position: 'absolute',
