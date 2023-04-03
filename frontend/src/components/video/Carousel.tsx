@@ -55,16 +55,25 @@ const Wrapper = styled.div`
   width: 80vw;
 `;
 
-const ContentBox = styled.div<{ transition: string; transform: number }>`
+const ContentBox = styled.div<{
+  transition: string;
+  transform: number;
+  showLength: number;
+}>`
   display: flex;
   height: 30vh;
+  width: 66.6%;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform * 33.3}%);
+  transform: translateX(
+    -${props => (props.transform * 100) / props.showLength}%
+  );
   @media (max-width: 768px) {
-    transform: translateX(-${props => props.transform * 50}%);
+    transform: translateX(
+      -${props => (props.transform * 100) / (props.showLength - 1)}%
+    );
   }
   .wrapper {
-    width: 31.3%;
+    width: ${props => 100 / props.showLength - 2}%;
     position: relative;
     flex-shrink: 0;
     flex-grow: 1;
@@ -78,7 +87,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       transition: 0.4s;
     }
     @media (max-width: 768px) {
-      width: 48%;
+      width: ${props => 100 / (props.showLength - 1) - 2}%;
     }
     .main-img {
       border-radius: 16px;
@@ -124,6 +133,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
 interface Props {
   data: HomeRecomm[];
   setVideoData: React.Dispatch<React.SetStateAction<HomeRecomm[]>>;
+  showLength: number;
 }
 
 const RootWrapper = styled.div`
@@ -152,7 +162,7 @@ const RootWrapper = styled.div`
   }
 `;
 
-const Carousel = ({ data, setVideoData }: Props) => {
+const Carousel = ({ data, setVideoData, showLength }: Props) => {
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(3);
@@ -214,7 +224,12 @@ const Carousel = ({ data, setVideoData }: Props) => {
       <img onClick={next} className="left-btn" src={rightButton} alt="" />
       <div>
         <Wrapper>
-          <ContentBox transition={transStyle} transform={currentIndex}>
+          <ContentBox
+            transition={transStyle}
+            transform={currentIndex}
+            showLength={showLength}
+          >
+            <div style={{ width: '33%', height: '200px' }}></div>
             {dataList.map((Thumnail, idx) => {
               return (
                 <div className="wrapper" key={idx}>

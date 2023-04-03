@@ -304,7 +304,11 @@ const HomePage = () => {
         </div>
         <VideoTitle>추천 영상</VideoTitle>
         {videoData.length !== 0 && (
-          <Carousel data={videoData} setVideoData={setVideoData}></Carousel>
+          <Carousel
+            data={videoData}
+            setVideoData={setVideoData}
+            showLength={2}
+          ></Carousel>
         )}
         <ShortsTitle>오늘의 문장</ShortsTitle>
         <ShortsCarousel
