@@ -36,7 +36,7 @@ spring:
           kakao:
             client-name: kakao
             client-id: ${KAKAO_CLIENT_ID}
-            redirect-uri: "https://ted-bear.com/oauth2/callback/{registrationId}"
+            redirect-uri: "https://ted-bear.com/api/oauth2/callback/{registrationId}"
             authorization-grant-type: authorization_code
             scope:
               - account_email
