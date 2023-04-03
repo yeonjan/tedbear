@@ -29,7 +29,7 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 		+ "order by ABS(st.score- :memberScore) asc limit 1", nativeQuery = true)
 	Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
 
-	// @Modifying(clearAutomatically = true)
-	// @Query()
-	// int removeBracket();
+	// @Modifying
+	// @Query(value = "UPDATE sentence_tb  SET content = TRIM(SUBSTRING_INDEX(content,':',-1)) WHERE content LIKE '%:%'", nativeQuery = true)
+	// void processSentence();
 }
