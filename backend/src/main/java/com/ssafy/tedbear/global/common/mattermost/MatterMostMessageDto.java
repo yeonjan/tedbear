@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
@@ -13,8 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class MatterMostMessageDto {
 
@@ -81,12 +81,13 @@ public class MatterMostMessageDto {
             StringBuilder sb = new StringBuilder();
 
             sb.append("# :no_entry_sign: ").append(e.getClass().getSimpleName()).append(" :no_entry_sign:").append("\n");
-            sb.append("### **Error Message**").append('\n').append('\n').append("```").append(e.getMessage()).append("```")
-                    .append('\n').append('\n');
             sb.append("### **Reqeust URL**")
+                    .append(' ')
                     .append('(')
                     .append(method)
                     .append(')').append('\n').append('\n').append("- " + uri).append('\n').append('\n');
+            sb.append("### **Error Message**").append('\n').append('\n').append("```").append(e.getMessage()).append("```")
+                    .append('\n').append('\n');
             sb.append("### **Parameters**").append('\n').append('\n').append(params).append('\n').append('\n');
             this.text = sb.toString();
             return this;

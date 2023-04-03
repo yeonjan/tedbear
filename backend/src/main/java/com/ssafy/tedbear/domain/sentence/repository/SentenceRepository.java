@@ -29,4 +29,7 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 		+ "order by ABS(st.score- :memberScore) asc limit 1", nativeQuery = true)
 	Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
 
+	// @Modifying(clearAutomatically = true)
+	// @Query()
+	// int removeBracket();
 }
