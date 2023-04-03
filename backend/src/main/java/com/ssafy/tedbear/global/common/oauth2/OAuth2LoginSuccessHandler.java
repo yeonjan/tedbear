@@ -43,7 +43,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-			// .httpOnly(true)
+			 .httpOnly(true)
 			.secure(true)
 			.sameSite("none")
 			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
