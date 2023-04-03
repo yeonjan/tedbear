@@ -41,10 +41,18 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		join=false;
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
+		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
+                .path("/")
+                .build();
+
 		clearAuthenticationAttributes(request, response);
 
+		response.addHeader("Set-Cookie", cookie.toString());
+
 		getRedirectStrategy().sendRedirect(request, response,
-			"http://localhost:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
+			"http://localhost:3000/seung?accessToken=" + accessToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
