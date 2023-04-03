@@ -34,9 +34,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 		String accessToken = jwtProvider.createAccessToken(authentication);
-		String refreshToken = jwtProvider.createRefreshToken(authentication);
+		String refreshToken = jwtProvider.createRefreshToken();
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
+
+		join=false;
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
 		clearAuthenticationAttributes(request, response);
@@ -53,7 +55,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		MemberScore memberScore = MemberScore.builder().score(50000).createdDate(LocalDateTime.now()).build();
 
 		Optional<Member> oMember = memberRepository.findByUid(oAuth2User.getUid());
+		log.info("member 있는지 확인:{}", oMember);
 		if (oMember.isEmpty()) {
+			log.info("회원가입 합니다.");
 			memberLevelRepository.save(memberLevel);
 			memberScoreRepository.save(memberScore);
 			join = true;

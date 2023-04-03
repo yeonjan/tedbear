@@ -71,8 +71,9 @@ public class Sentence {
 	@Transient
 	private boolean isBookmarked;
 
-	@OneToMany(mappedBy = "word", cascade = CascadeType.REMOVE)
-	private List<WordSentence> wordSentenceList = new ArrayList<>();
+	public Sentence(Long sentenceNo) {
+		this.no = sentenceNo;
+	}
 
 	//========//
 	public void setScores(double gf, double fr, double fk, int score) {

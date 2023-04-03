@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.game.dto.ClueDto;
@@ -26,6 +28,7 @@ import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.entity.WordSentence;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.domain.word.repository.WordSentenceRepository;
+import com.ssafy.tedbear.global.common.FindMemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,27 +43,33 @@ public class GameServiceImpl implements GameService {
 	private final MemberService memberService;
 	private final GameRecordRepository gameRecordRepository;
 	private final WordSentenceRepository wordSentenceRepository;
+	private final FindMemberService findMemberService;
 
 	@Override
-	public WordGameDto getQuestion(Member member) {
+	public WordGameDto getQuestion(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
+
 		Word randomWord = wordRepository.findNoByRand();
-
-		Optional<Sentence> sentence;
+		Pageable limitOne = PageRequest.of(0, 1);
+		List<Sentence> sentence;
 		do {
-			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore());
-		} while (!sentence.isPresent());
+			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore(), limitOne);
+		} while (sentence.isEmpty());
 
-		return new WordGameDto(randomWord, sentence.get());
+		return new WordGameDto(randomWord, sentence.get(0));
 	}
 
 	@Override
-	public void completeWordGame(Member member, WordGameResultDto wordGameResultDto) {
+	public void completeWordGame(String memberUid, WordGameResultDto wordGameResultDto) {
+		Member member = findMemberService.findMember(memberUid);
 		gameRecordRepository.save(wordGameResultDto.toEntity(member));
+
+		memberService.increaseMemberLevel(member, 600);
+		memberService.updateMemberScore(member, wordGameResultDto.getTryCnt() < 5 ? 400 : -500);
 	}
 
 	public CrossWordDto getCrossWord(int boardSize) {
-		List<Word> wordList = wordRepository
-			.findWordsForCrosswordGame()
+		List<Word> wordList = wordRepository.findWordsForCrosswordGame()
 			.stream()
 			.sorted(Comparator.comparing(x -> x.getContent().length()))
 			.collect(Collectors.toList());
@@ -154,8 +163,7 @@ public class GameServiceImpl implements GameService {
 		return new ClueDto(word, clueIdx, size * y + x, direction.toString());
 	}
 
-	private void putWord(Word word, int y, int x, Direction direction, int clueIdx, char[][] matrix,
-		int[][] board) {
+	private void putWord(Word word, int y, int x, Direction direction, int clueIdx, char[][] matrix, int[][] board) {
 		String content = word.getContent();
 		if (direction == Direction.ACROSS) {
 			for (int i = 0; i < content.length(); i++) {

@@ -3,7 +3,6 @@ package com.ssafy.tedbear.domain.sentence.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.member.service.MemberService;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
@@ -23,6 +23,7 @@ import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
+import com.ssafy.tedbear.global.common.FindMemberService;
 import com.ssafy.tedbear.global.common.SearchDto;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
@@ -37,18 +38,25 @@ public class SentenceService {
 	private final SentenceRepository sentenceRepository;
 	private final SpeakingRecordRepository speakingRecordRepository;
 	private final SentenceBookmarkRepository sentenceBookmarkRepository;
+	private final FindMemberService findMemberService;
+	private final MemberService memberService;
 	final int resultMaxCnt = 12;
 
-	public Sentence getSentence(Long sentenceNo) {
-		return sentenceRepository.findById(sentenceNo)
-			.orElseThrow(() -> new NoSuchElementException("해당 문장을 찾을 수 없습니다"));
+	//스피킹 완료
+	public void completeSpeaking(String memberUid, SpeakingDto.Request speakingDto) {
+		Member member = findMemberService.findMember(memberUid);
+
+		saveSpeakingRecord(member, speakingDto);
+		memberService.increaseMemberLevel(member, 400);
+		memberService.updateMemberScore(member, speakingDto.isMatchStatus() ? 800 : -500);
+
 	}
 
 	//스피킹 데이터 저장
 	public void saveSpeakingRecord(Member member, SpeakingDto.Request speakingDto) {
 		SpeakingRecord speakingRecord = SpeakingRecord.builder()
 			.matchStatus(speakingDto.isMatchStatus())
-			.sentence(getSentence(speakingDto.getSentenceNo()))
+			.sentence(new Sentence(speakingDto.getSentenceNo()))
 			.member(member)
 			.createdDate(LocalDateTime.now())
 			.build();
@@ -59,7 +67,8 @@ public class SentenceService {
 
 	//추천 문장 리스트 불러오기
 	@Transactional
-	public SentenceDetailDto.ListResponse getRecommendList(Member member, int delta) {
+	public SentenceDetailDto.ListResponse getRecommendList(String memberUid, int delta) {
+		Member member = findMemberService.findMember(memberUid);
 		int memberScore = member.getScore() + delta;
 		List<Sentence> sentenceList = getRecommendSentence(memberScore);
 
@@ -97,10 +106,10 @@ public class SentenceService {
 		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
-	public SentenceDetailDto.ListResponse searchSentence(Member member, SearchDto.Request condition,
+	public SentenceDetailDto.ListResponse searchSentence(String memberUid, SearchDto.Request condition,
 		Pageable pageable) {
-		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable)
-			.getContent();
+		Member member = findMemberService.findMember(memberUid);
+		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable).getContent();
 		updateBookmarkSentence(member, searchList);
 
 		return new SentenceDetailDto.ListResponse(searchList);

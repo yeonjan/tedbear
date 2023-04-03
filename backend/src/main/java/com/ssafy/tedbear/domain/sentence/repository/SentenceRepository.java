@@ -21,13 +21,21 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	@Query("select s from Sentence s join fetch s.video where s.content like %:query%")
 	Slice<Sentence> findSliceByContent(String query, Pageable pageable);
 
-	@Query(value = "select * "
-		+ "from sentence_tb st "
-		+ "         inner join word_sentence_tb wst on wst.sentence_no = st.no "
-		+ "    inner join video_tb vt on st.video_no = vt.no "
-		+ "where wst.word_no = :wordId "
-		+ "order by ABS(st.score- :memberScore) asc limit 1", nativeQuery = true)
-	Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
+
+	// @Query(value = "select * "
+	// 	+ "from sentence_tb st "
+	// 	+ "         inner join word_sentence_tb wst on wst.sentence_no = st.no "
+	// 	+ "    inner join video_tb vt on st.video_no = vt.no "
+	// 	+ "where wst.word_no = :wordId "
+	// 	+ "order by ABS(st.score- :memberScore) asc limit 1", nativeQuery = true)
+	// Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
+
+	@Query("select ws.sentence from WordSentence ws "
+		+ "join fetch ws.sentence.video "
+		+ "where ws.word.no = :wordId "
+		+ "order by ABS(ws.sentence.score - :memberScore)")
+	List<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore,Pageable pageable);
+
 
 	// @Modifying
 	// @Query(value = "UPDATE sentence_tb  SET content = TRIM(SUBSTRING_INDEX(content,':',-1)) WHERE content LIKE '%:%'", nativeQuery = true)
