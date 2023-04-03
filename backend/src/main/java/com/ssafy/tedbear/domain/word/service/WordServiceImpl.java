@@ -107,7 +107,7 @@ public class WordServiceImpl {
 			WordBookmarkDto.WordDetail wordDetail = WordBookmarkDto.WordDetail.builder()
 				.wordNo(word.getNo())
 				.content(word.getContent())
-				.mean(word.getContent())
+				.mean(word.getMean())
 				.build();
 
 			int size = wb.getWord().getWordSentenceList().size();

@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
@@ -39,20 +38,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 
-		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-			.httpOnly(true)
-			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
-			.path("/")
-			.build();
-
-		join = false;
+		join=false;
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
 		clearAuthenticationAttributes(request, response);
 
-		response.addHeader("Set-Cookie", cookie.toString());
 		getRedirectStrategy().sendRedirect(request, response,
-			"https://localhost:3000/seung?accessToken=" + accessToken
+			"http://localhost:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 

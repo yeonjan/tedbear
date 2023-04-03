@@ -2,13 +2,16 @@ package com.ssafy.tedbear.domain.game.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.game.dto.ClueDto;
@@ -26,6 +29,7 @@ import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.entity.WordSentence;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.domain.word.repository.WordSentenceRepository;
+import com.ssafy.tedbear.global.common.FindMemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,29 +44,35 @@ public class GameServiceImpl implements GameService {
 	private final MemberService memberService;
 	private final GameRecordRepository gameRecordRepository;
 	private final WordSentenceRepository wordSentenceRepository;
+	private final FindMemberService findMemberService;
 
 	@Override
-	public WordGameDto getQuestion(Member member) {
+	public WordGameDto getQuestion(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
+
 		Word randomWord = wordRepository.findNoByRand();
-
-		Optional<Sentence> sentence;
+		Pageable limitOne = PageRequest.of(0, 1);
+		List<Sentence> sentence;
 		do {
-			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore());
-		} while (!sentence.isPresent());
+			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore(), limitOne);
+		} while (sentence.isEmpty());
 
-		return new WordGameDto(randomWord, sentence.get());
+		return new WordGameDto(randomWord, sentence.get(0));
 	}
 
 	@Override
-	public void completeWordGame(Member member, WordGameResultDto wordGameResultDto) {
+	public void completeWordGame(String memberUid, WordGameResultDto wordGameResultDto) {
+		Member member = findMemberService.findMember(memberUid);
 		gameRecordRepository.save(wordGameResultDto.toEntity(member));
+
+		memberService.increaseMemberLevel(member, 600);
+		memberService.updateMemberScore(member, wordGameResultDto.getTryCnt() < 5 ? 400 : -500);
 	}
 
 	public CrossWordDto getCrossWord(int boardSize) {
-		List<Word> wordList = wordRepository
-			.findWordsForCrosswordGame()
+		List<Word> wordList = wordRepository.findWordsForCrosswordGame()
 			.stream()
-			.sorted(Comparator.comparing(x -> x.getContent().length()))
+			// .sorted(Comparator.comparing(x -> x.getContent().length()))
 			.collect(Collectors.toList());
 
 		// 게임판의 크기
@@ -100,9 +110,12 @@ public class GameServiceImpl implements GameService {
 		putWord(firstWord, firstY, firstX, firstDirection, CLUEIDX, matrix, board);
 		clueList.add(getClueDto(firstWord, CLUEIDX, firstDirection, firstY, firstX, SIZE));
 		CLUEIDX++;
-
-		while (wordList.size() > 0) {
-			Word word = wordList.remove(wordList.size() - 1);
+		Set<String> useContent = new HashSet<>();
+		// 전체 단어를 두바퀴 돌면서 최대한 채워넣기
+		for (int w = 0; w < wordList.size() * 2; w++) {
+			Word word = wordList.get(w % wordList.size());
+			if(useContent.contains(word.getContent()))
+				continue;
 
 			int canI = -1;
 			int canJ = -1;
@@ -130,9 +143,11 @@ public class GameServiceImpl implements GameService {
 			if (canPut) {
 				putWord(word, canI, canJ, canDirection, CLUEIDX, matrix, board);
 				clueList.add(getClueDto(word, CLUEIDX, canDirection, canI, canJ, SIZE));
+				useContent.add(word.getContent());
 				CLUEIDX++;
 			}
 		}
+
 		printState(matrix, board);
 
 		for (int i = 0; i < SIZE; i++) {
@@ -154,8 +169,7 @@ public class GameServiceImpl implements GameService {
 		return new ClueDto(word, clueIdx, size * y + x, direction.toString());
 	}
 
-	private void putWord(Word word, int y, int x, Direction direction, int clueIdx, char[][] matrix,
-		int[][] board) {
+	private void putWord(Word word, int y, int x, Direction direction, int clueIdx, char[][] matrix, int[][] board) {
 		String content = word.getContent();
 		if (direction == Direction.ACROSS) {
 			for (int i = 0; i < content.length(); i++) {

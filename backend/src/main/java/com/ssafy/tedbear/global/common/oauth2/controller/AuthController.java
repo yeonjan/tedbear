@@ -33,6 +33,10 @@ public class AuthController {
 		oldAccessToken = oldAccessToken.substring(7);
 		log.info("oldAccessToken: {}", oldAccessToken);
 
+		if(oldAccessToken == null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없음");
+		}
+
 		// refresh-token 가져오기
 		String refreshToken = CookieUtils.getCookie(request, "refreshToken")
 			.orElseThrow(() -> new RuntimeException("refresh token이 없습니다."))
@@ -43,6 +47,7 @@ public class AuthController {
 		if (newAccessToken == null) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
+		log.info("new access-token: {}", newAccessToken);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", newAccessToken);
