@@ -109,7 +109,7 @@ public class SecurityConfig {
 
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedHeaders(List.of("*"));
-		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
+		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowCredentials(true); // 클라이언트 요청이 쿠키를 통해 자격 증명을 하는 경우 true
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
