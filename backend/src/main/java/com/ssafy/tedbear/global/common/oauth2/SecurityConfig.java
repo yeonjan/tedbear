@@ -84,7 +84,7 @@ public class SecurityConfig {
 
 			.and()
 			.redirectionEndpoint()
-			.baseUri("/oauth2/callback/*")
+			.baseUri("/api/oauth2/callback/*")
 
 			.and()
 			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦
