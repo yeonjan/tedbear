@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
+
 const BASE_URL = 'https://ted-bear.com/api';
 
 const cookie = new Cookies();
