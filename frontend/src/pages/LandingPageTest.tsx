@@ -2210,7 +2210,7 @@ const LandingPageTest = (props: Props) => {
   // 로그인 팝업창
   // const [modalOpen, setModalOpen] = useState<boolean>(false);
   const KakaoLogin = () => {
-    window.location.href = 'https://ted-bear.com/api/oauth/kakao';
+    window.location.href = 'https://ted-bear.com/oauth/kakao';
   };
 
   // 다크모드, 라이트모드 설정
