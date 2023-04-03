@@ -48,6 +48,7 @@ authApi.interceptors.response.use(
           headers: {
             Authorization: `Bearer ${accessToken}`,
             // Cookie: `refreshToken=${refreshToken}`,
+            Cookie: document.cookie,
           },
         })
         .then(res => {
