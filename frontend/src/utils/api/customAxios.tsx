@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
-const BASE_URL = 'https://j8b103.p.ssafy.io/api';
+const BASE_URL = 'https://ted-bear.com/api';
 const cookie = new Cookies();
 
 export const authApi = axios.create({
@@ -44,10 +44,10 @@ authApi.interceptors.response.use(
       console.log(refreshToken);
       await axios
         .get(`${BASE_URL}/reissue`, {
+          withCredentials: true,
           headers: {
-            withCredentials: true,
             Authorization: `Bearer ${accessToken}`,
-            Cookie: `refreshToken=${refreshToken}`,
+            Cookie: document.cookie,
           },
         })
         .then(res => {
