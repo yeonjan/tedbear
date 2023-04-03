@@ -80,14 +80,6 @@ const Wrapper = styled.div`
       }
     }}
     grid-gap: 2px;
-    @media screen and (min-width: 900px) {
-      grid-row: 2/4;
-      grid-column: 1;
-      display: grid;
-      grid-template-rows: repeat(8, 5vw);
-      grid-template-columns: repeat(8, 5vw);
-      grid-gap: 2px;
-    }
   }
   ins,
   del {
@@ -628,6 +620,7 @@ const CrossWordPage = () => {
   const handleAnswer = () => {
     let correct = 0;
     let copy = [...wordList];
+    let array = [];
     clueList.forEach(item => {
       let mine = '';
       const { index, dir, length, answer } = item;
@@ -652,12 +645,16 @@ const CrossWordPage = () => {
       }
       if (mine === answer) {
         correct += 1;
-        for (let i = 0; i < length; i++) {
-          if (dir === 'ACROSS') {
-            copy[index + i].hightlight = true;
-          } else {
-            copy[index + i * size].hightlight = true;
-          }
+        array.push(item);
+      }
+    });
+    array.forEach(item => {
+      const { index, dir, length } = item;
+      for (let i = 0; i < length; i++) {
+        if (dir === 'ACROSS') {
+          copy[index + i].hightlight = true;
+        } else {
+          copy[index + i * size].hightlight = true;
         }
       }
     });
