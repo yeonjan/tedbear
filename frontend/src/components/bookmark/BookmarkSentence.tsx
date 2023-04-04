@@ -144,14 +144,12 @@ const BookmarkSentence = () => {
   }, [inView, loading]);
 
   const handlePlay = (shorts: any) => {
-    delete shorts.bookmaked;
-    console.log(shorts);
     setShorts(shorts);
     setModalOpen(true);
   };
 
   const handleBookmark = () => {
-    // navigate('/home');
+    navigate('/home');
   };
 
   const handleMark = () => {

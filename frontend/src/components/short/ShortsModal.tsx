@@ -191,7 +191,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
           />
-          {shorts?.bookmarked && isLogin && (
+          {shorts?.no && isLogin && (
             <img
               src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
               style={{
