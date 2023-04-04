@@ -162,8 +162,8 @@ const BookmarkVideo = () => {
                   <Card
                     key={idx}
                     sx={{
-                      width: '80vw',
-                      height: '80vh',
+                      width: '100%',
+                      height: '100%',
                       position: 'relative',
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -218,8 +218,8 @@ const BookmarkVideo = () => {
                       <CardContent
                         key={idx}
                         sx={{
-                          width: '100vw',
-                          height: '100vh',
+                          // width: '100vw',
+                          // height: '100vh',
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
@@ -230,8 +230,8 @@ const BookmarkVideo = () => {
                             // position: 'absolute',
                             // justifyContent: 'center',
                             alignItems: 'center',
-                            width: '360px',
-                            height: '80vh',
+                            width: '100%',
+                            // height: '80vh',
                           }}
                         >
                           {Thumnail.title}
