@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { authApi } from 'utils/api/customAxios';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 
 const BookIn = styled.div`
   max-height: 80vh;
