@@ -9,12 +9,16 @@ import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 import { useOutletContext } from 'react-router-dom';
 import ShortsModal from 'components/short/ShortsModal';
+import {
+  postSentenceBookmark,
+  deleteSentenceBookmark,
+} from 'utils/api/learningApi';
 
 interface IBookmarkSentence {
   no: number;
   content: string;
   translation: string;
-  bookMarked: boolean;
+  bookmarked: boolean;
   score: number;
   watchId: string;
   startTime: number;
@@ -113,31 +117,34 @@ interface Props {
 }
 
 const BookmarkSentence = () => {
+  const navigate = useNavigate();
   const [shorts, setShorts] = useState(null);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
-  const navigate = useNavigate();
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
     [],
   );
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView({ threshold: 0 });
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
   const fetchData = async () => {
     setLoading(true);
-    const data: IBookmarkSentence[] = await getSentenceBookmark(page);
+    const data: IBookmarkSentence[] = await getSentenceBookmark(page + 1);
     if (data.length) {
-      setSentenceBookmark(data);
+      // setSentenceBookmark(data);
+      setSentenceBookmark(sentenceBookmark.concat(...data));
       console.log(data);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('fetch');
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    console.log('useEffect!');
+    console.log('inviewloading');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }
@@ -152,8 +159,18 @@ const BookmarkSentence = () => {
     navigate('/home');
   };
 
-  const handleMark = () => {
+  const handleMark = (sen: IBookmarkSentence, idx: number) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...sentenceBookmark];
+    copy[idx].bookmarked = !copy[idx].bookmarked;
+    console.log(sen.bookmarked);
+    if (copy[idx].bookmarked) {
+      postSentenceBookmark({ sentenceNo: sen.no });
+    } else {
+      deleteSentenceBookmark({ sentenceNo: sen.no });
+    }
+    console.log(sen.no, copy[idx].bookmarked);
+    setSentenceBookmark(copy);
   };
 
   return (
@@ -181,13 +198,16 @@ const BookmarkSentence = () => {
           </div>
         ) : (
           <div className="sentence">
-            {sentenceBookmark.map(sen => (
+            {sentenceBookmark.map((sen, idx) => (
               <div className="row" key={sen.no}>
                 <div className="bookmark-container">
                   <img
                     className="book-mark"
-                    src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
-                    onClick={handleMark}
+                    src={sen.bookmarked ? BookmarkFull : BookmarkEmpty}
+                    onClick={() => {
+                      handleMark(sen, idx);
+                    }}
+                    style={{ zIndex: 9999 }}
                   ></img>
                 </div>
                 <div className="play-shorts-container">

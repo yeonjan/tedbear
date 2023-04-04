@@ -15,7 +15,7 @@ interface IBookmarkVideo {
 }
 export const getVideoBookmark = async (page: number) => {
   const params = {
-    size: 8,
+    size: 10,
     page,
   };
 
@@ -35,7 +35,7 @@ interface IBookmarkSentence {
       no: number;
       content: string;
       translation: string;
-      bookMarked: boolean;
+      bookmarked: boolean;
       score: number;
       watchId: string;
       startTime: number;

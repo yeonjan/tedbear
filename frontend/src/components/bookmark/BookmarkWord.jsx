@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { authApi } from 'utils/api/customAxios';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { postWordBookmark, deleteWordBookmark } from 'utils/api/learningApi';
 
 const BookIn = styled.div`
   max-height: 80vh;
@@ -108,15 +109,16 @@ const BookmarkWord = () => {
     async function fetchData() {
       setLoading(true);
       setError(null);
-      await authApi
+      await authApi(page + 1)
         .get(`word/bookmark/list`)
         .then(response => {
-          console.log('then');
-          console.log(response.data);
           const listData = response.data.wordBookmarkList.map((item, index) => {
             return { ...item, bookmarked: true, id: index };
           });
-          setWordBookmarkList(listData);
+          if (listData.length) {
+            setWordBookmarkList(wordBookmarkList.concat(...listData));
+            setLoading(false);
+          }
         })
         .catch(error => {
           console.log(error.data);
@@ -124,7 +126,7 @@ const BookmarkWord = () => {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     console.log('Loading');
@@ -136,8 +138,18 @@ const BookmarkWord = () => {
   const handleBookmark = () => {
     navigate('/home');
   };
-  const handleMark = () => {
+
+  const handleMark = (item, idx) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...wordBookmarkList];
+    copy[idx].bookmarked = !copy[idx].bookmarked;
+    if (copy[idx].bookmarked) {
+      postWordBookmark({ wordNumber: item.wordNo });
+    } else {
+      deleteWordBookmark({ wordNumber: item.wordNo });
+    }
+    console.log(item.wordNo, copy[idx].bookmarked);
+    setWordBookmarkList(copy);
   };
 
   return (
@@ -167,13 +179,16 @@ const BookmarkWord = () => {
           <div className="word">
             <div>
               {wordBookmarkList.length > 0 &&
-                wordBookmarkList.map(item => (
+                wordBookmarkList.map((item, idx) => (
                   <div className="row" key={item.id}>
                     <div className="bookmark-container">
                       <img
                         className="book-mark"
-                        src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
-                        onClick={handleMark}
+                        src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
+                        onClick={() => {
+                          handleMark(item, idx);
+                        }}
+                        style={{ zIndex: 9999 }}
                       ></img>
                     </div>
                     <div className="content-container">

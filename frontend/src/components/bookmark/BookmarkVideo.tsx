@@ -12,7 +12,7 @@ import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
-
+import { postVideoBookmark, deleteVideoBookmark } from 'utils/api/learningApi';
 interface IBookmarkVideo {
   no: number;
   thumbnailUrl: string;
@@ -72,10 +72,11 @@ const BookmarkVideo = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const data: IBookmarkVideo[] = await getVideoBookmark(page);
+    const data: IBookmarkVideo[] = await getVideoBookmark(page + 1);
     if (data.length) {
-      setVideoBookmark(data);
+      setVideoBookmark(videoBookmark.concat(...data));
       console.log(data);
+      setLoading(false);
     }
   };
 
@@ -94,8 +95,18 @@ const BookmarkVideo = () => {
     navigate('/home');
   };
 
-  const handleMark = () => {
+  const handleMark = (Thumnail: IBookmarkVideo, idx: number) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...videoBookmark];
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    console.log(Thumnail.bookMarked);
+    if (copy[idx].bookMarked) {
+      postVideoBookmark({ videoNo: Thumnail.no });
+    } else {
+      deleteVideoBookmark({ videoNo: Thumnail.no });
+    }
+    console.log(Thumnail.no, copy[idx].bookMarked);
+    setVideoBookmark(copy);
   };
 
   return (
@@ -151,14 +162,14 @@ const BookmarkVideo = () => {
                   <Card
                     key={idx}
                     sx={{
-                      width: '80vw',
-                      height: '80vh',
+                      width: '100%',
+                      height: '100%',
                       position: 'relative',
                       justifyContent: 'center',
                       alignItems: 'center',
                       backgroundColor: '#ffffff',
                     }}
-                    onClick={() => handleClick(Thumnail.watchId)}
+                    // onClick={() => handleClick(Thumnail.watchId)}
                   >
                     <CardActionArea
                       sx={{
@@ -177,13 +188,16 @@ const BookmarkVideo = () => {
                         }}
                       ></img> */}
                       <img
-                        className="book-mark"
                         src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                        onClick={handleMark}
+                        className="book-mark"
+                        onClick={() => {
+                          handleMark(Thumnail, idx);
+                        }}
                         style={{
                           height: '50%',
                           position: 'absolute',
                           left: '20%',
+                          zIndex: 9999,
                         }}
                       ></img>
                       <CardMedia
@@ -199,12 +213,13 @@ const BookmarkVideo = () => {
                           height: '220px',
                           width: '380px',
                         }}
+                        onClick={() => handleClick(Thumnail.watchId)}
                       />
                       <CardContent
                         key={idx}
                         sx={{
-                          width: '100vw',
-                          height: '100vh',
+                          // width: '100vw',
+                          // height: '100vh',
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
@@ -215,8 +230,8 @@ const BookmarkVideo = () => {
                             // position: 'absolute',
                             // justifyContent: 'center',
                             alignItems: 'center',
-                            width: '360px',
-                            height: '80vh',
+                            width: '100%',
+                            // height: '80vh',
                           }}
                         >
                           {Thumnail.title}
