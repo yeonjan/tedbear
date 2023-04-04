@@ -8,11 +8,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 import { postVideoBookmark, deleteVideoBookmark } from 'utils/api/learningApi';
+
 interface IBookmarkVideo {
   no: number;
   thumbnailUrl: string;
@@ -168,7 +168,6 @@ const BookmarkVideo = () => {
                     }}
                     // onClick={() => handleClick(Thumnail.watchId)}
                   >
-                    {/* <CardActionArea> */}
                     {/* <img
                         className="video-level"
                         src={VideoLevel}
@@ -219,7 +218,6 @@ const BookmarkVideo = () => {
                         {Thumnail.title}
                       </Typography>
                     </CardContent>
-                    {/* </CardActionArea> */}
                   </Card>
                 </Grid>
               );
