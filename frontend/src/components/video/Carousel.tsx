@@ -51,7 +51,6 @@ const ViedoLevelImg = styled.img<BadgeProps>`
 
 const Wrapper = styled.div`
   overflow: hidden;
-  position: relative;
   width: 80vw;
 `;
 
@@ -62,7 +61,6 @@ const ContentBox = styled.div<{
 }>`
   display: flex;
   height: 30vh;
-  width: 66.6%;
   transition: ${props => props.transition};
   transform: translateX(
     -${props => (props.transform * 100) / props.showLength}%
@@ -222,40 +220,38 @@ const Carousel = ({ data, setVideoData, showLength }: Props) => {
     <RootWrapper>
       <img onClick={prev} className="right-btn" src={carouselButton} alt="" />
       <img onClick={next} className="left-btn" src={rightButton} alt="" />
-      <div>
-        <Wrapper>
-          <ContentBox
-            transition={transStyle}
-            transform={currentIndex}
-            showLength={showLength}
-          >
-            <div style={{ width: '33%', height: '200px' }}></div>
-            {dataList.map((Thumnail, idx) => {
-              return (
-                <div className="wrapper" key={idx}>
+      <Wrapper>
+        <div style={{ width: '30%', height: '30vh' }}></div>
+        <ContentBox
+          transition={transStyle}
+          transform={currentIndex}
+          showLength={showLength}
+        >
+          {dataList.map((Thumnail, idx) => {
+            return (
+              <div className="wrapper" key={idx}>
+                <img
+                  className="main-img"
+                  src={Thumnail.thumbnailUrl}
+                  onClick={() => handleClick(Thumnail.watchId)}
+                  alt=""
+                />
+                <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
+                {isLogin && (
                   <img
-                    className="main-img"
-                    src={Thumnail.thumbnailUrl}
-                    onClick={() => handleClick(Thumnail.watchId)}
-                    alt=""
-                  />
-                  <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
-                  {isLogin && (
-                    <img
-                      src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                      className="book-mark"
-                      onClick={() => {
-                        handleVideoBm(Thumnail.no);
-                      }}
-                    ></img>
-                  )}
-                  <div className="title">{Thumnail.title}</div>
-                </div>
-              );
-            })}
-          </ContentBox>
-        </Wrapper>
-      </div>
+                    src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    className="book-mark"
+                    onClick={() => {
+                      handleVideoBm(Thumnail.no);
+                    }}
+                  ></img>
+                )}
+                <div className="title">{Thumnail.title}</div>
+              </div>
+            );
+          })}
+        </ContentBox>
+      </Wrapper>
     </RootWrapper>
   );
 };
