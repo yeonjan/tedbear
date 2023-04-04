@@ -99,6 +99,7 @@ const BookmarkVideo = () => {
     console.log('북마크를 켜고 끄고');
     const copy = [...videoBookmark];
     copy[idx].bookMarked = !copy[idx].bookMarked;
+    console.log(Thumnail.bookMarked);
     if (copy[idx].bookMarked) {
       postVideoBookmark({ videoNo: Thumnail.no });
     } else {
