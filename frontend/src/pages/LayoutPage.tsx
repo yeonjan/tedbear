@@ -38,7 +38,12 @@ const OutletWrapper = styled.div<OpenProps>`
   transition: all 0.5s ease;
   background-color: ${props => props.theme.bgColor};
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+
+  // 추가
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 
   @media (min-width: 900px) {
     left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
@@ -60,8 +65,8 @@ const DarkBackground = styled.div`
 const DictionaryImg = styled.img`
   width: 56px;
   z-index: 5;
-  position: absolute;
-  bottom: 24px;
+  position: fixed;
+  bottom: 16px;
   right: 24px;
   cursor: pointer;
 `;
