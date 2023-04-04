@@ -145,6 +145,7 @@ const BookmarkSentence = () => {
 
   const handlePlay = (shorts: any) => {
     delete shorts.bookmaked;
+    console.log(shorts)
     setShorts(shorts);
     setModalOpen(true);
   };
