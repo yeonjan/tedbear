@@ -23,7 +23,8 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  height: 80vh;
+  height: 100%;
+  width: 100%;
   padding: 10px;
   right: 0%;
   overflow: auto;
@@ -41,8 +42,8 @@ const BookIn = styled.div`
   //
   .videoes {
     position: relative;
-    margin: 0;
-    padding: 0;
+    height: 100%;
+    width: 100%;
   }
   .empty-caution {
     font-size: 50px;
@@ -136,7 +137,7 @@ const BookmarkVideo = () => {
           <Grid
             container
             justifyContent={'flex-start'}
-            style={{ height: '1%', width: '100%' }}
+            style={{ height: '100%', width: '100%' }}
           >
             {videoBookmark.map((Thumnail, idx) => {
               return (
@@ -150,34 +151,25 @@ const BookmarkVideo = () => {
                     marginTop: '2%',
                     paddingLeft: '1%',
                     paddingRight: '1%',
-                    width: '80vw',
-                    height: '80vh',
+                    width: '100%',
                   }}
                   lg={4}
                   md={6}
-                  sm={8}
+                  sm={6}
                   xs={12}
                   key={idx}
                 >
                   <Card
                     key={idx}
                     sx={{
+                      // height: '100%',
                       width: '100%',
-                      height: '100%',
                       position: 'relative',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#ffffff',
                     }}
                     // onClick={() => handleClick(Thumnail.watchId)}
                   >
-                    <CardActionArea
-                      sx={{
-                        height: '100%',
-                        width: '100',
-                      }}
-                    >
-                      {/* <img
+                    {/* <CardActionArea> */}
+                    {/* <img
                         className="video-level"
                         src={VideoLevel}
                         style={{
@@ -187,57 +179,47 @@ const BookmarkVideo = () => {
                           left: '4%',
                         }}
                       ></img> */}
-                      <img
-                        src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                        className="book-mark"
-                        onClick={() => {
-                          handleMark(Thumnail, idx);
-                        }}
-                        style={{
-                          height: '50%',
-                          position: 'absolute',
-                          left: '20%',
-                          zIndex: 9999,
-                        }}
-                      ></img>
-                      <CardMedia
-                        className="main-img"
-                        component="img"
-                        image={
-                          'https://i.ytimg.com/vi/' +
-                          Thumnail.watchId +
-                          '/maxresdefault.jpg'
-                        }
-                        alt=""
-                        sx={{
-                          height: '220px',
-                          width: '380px',
-                        }}
-                        onClick={() => handleClick(Thumnail.watchId)}
-                      />
-                      <CardContent
-                        key={idx}
-                        sx={{
-                          // width: '100vw',
-                          // height: '100vh',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
+                    <img
+                      src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                      className="book-mark"
+                      onClick={() => {
+                        handleMark(Thumnail, idx);
+                      }}
+                      style={{
+                        height: '15%',
+                        position: 'absolute',
+                        right: '5%',
+                        zIndex: 9999,
+                        cursor: 'pointer',
+                      }}
+                    ></img>
+                    <CardMedia
+                      component="img"
+                      image={
+                        'https://i.ytimg.com/vi/' +
+                        Thumnail.watchId +
+                        '/maxresdefault.jpg'
+                      }
+                      alt=""
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'green',
+                      }}
+                      onClick={() => handleClick(Thumnail.watchId)}
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        height="30px"
+                        style={{ fontSize: '90%' }}
                       >
-                        <Typography
-                          component="div"
-                          sx={{
-                            // position: 'absolute',
-                            // justifyContent: 'center',
-                            alignItems: 'center',
-                            width: '100%',
-                            // height: '80vh',
-                          }}
-                        >
-                          {Thumnail.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
+                        {Thumnail.title}
+                      </Typography>
+                    </CardContent>
+                    {/* </CardActionArea> */}
                   </Card>
                 </Grid>
               );
