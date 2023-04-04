@@ -55,7 +55,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		response.addHeader("Set-Cookie", cookie.toString());
 
 		getRedirectStrategy().sendRedirect(request, response,
-			"https://localhost:3000/seung?accessToken=" + accessToken
+			"http://localhost:3000/seung?accessToken=" + accessToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
