@@ -43,9 +43,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-			 .httpOnly(true)
+			.httpOnly(true)
 			.secure(true)
-//			.sameSite("none")
+			//			.sameSite("none")
 			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
 			.path("/")
 			.build();
@@ -55,7 +55,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		response.addHeader("Set-Cookie", cookie.toString());
 
 		getRedirectStrategy().sendRedirect(request, response,
-			"https://ted-bear.com/seung?accessToken=" + accessToken
+			"https://localhost:3000/seung?accessToken=" + accessToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
