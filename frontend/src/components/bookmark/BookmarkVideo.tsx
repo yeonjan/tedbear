@@ -12,7 +12,7 @@ import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
-import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
+import { postVideoBookmark, deleteVideoBookmark } from 'utils/api/learningApi';
 interface IBookmarkVideo {
   no: number;
   thumbnailUrl: string;

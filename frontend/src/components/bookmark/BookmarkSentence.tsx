@@ -9,7 +9,10 @@ import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 import { useOutletContext } from 'react-router-dom';
 import ShortsModal from 'components/short/ShortsModal';
-import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
+import {
+  postSentenceBookmark,
+  deleteSentenceBookmark,
+} from 'utils/api/learningApi';
 
 interface IBookmarkSentence {
   no: number;
@@ -162,9 +165,9 @@ const BookmarkSentence = () => {
     const copy = [...sentenceBookmark];
     copy[idx].bookMarked = !copy[idx].bookMarked;
     if (copy[idx].bookMarked) {
-      postVideoBookmark({ sentenceNo: sen.no });
+      postSentenceBookmark({ sentenceNo: sen.no });
     } else {
-      deleteVideoBookmark({ sentenceNo: sen.no });
+      deleteSentenceBookmark({ sentenceNo: sen.no });
     }
     console.log(sen.no, copy[idx].bookMarked);
     setSentenceBookmark(copy);
