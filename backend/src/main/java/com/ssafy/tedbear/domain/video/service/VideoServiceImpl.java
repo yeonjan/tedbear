@@ -141,9 +141,8 @@ public class VideoServiceImpl implements VideoService {
 	@Transactional
 	public void saveWatchingRecord(String memberUid, WatchingVideoInfoDto request) {
 		Member member = findMemberService.findMemberOnlyMember(memberUid);
-
-		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
+
 		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findByMemberAndVideo(member, video);
 		if (optionalWatchingVideo.isPresent()) {
 			WatchingVideo existWatchingVideo = optionalWatchingVideo.get();
