@@ -1,17 +1,31 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import cx from 'classnames';
-import styled, { css } from 'styled-components';
 import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
-import Ellipse from 'assets/img/Ellipse.svg';
 import { device } from './../utils/mediaQuery';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import styled, { css } from 'styled-components';
+
+const StyledForm = styled(FormControl)`
+  label {
+    color: ${props => props.theme.textColor1};
+  }
+  svg {
+    fill: ${props => props.theme.textColor1};
+  }
+  fieldset {
+    border-color: ${props => props.theme.textColor1};
+  }
+  #demo-simple-select {
+    color: ${props => props.theme.textColor1};
+  }
+`;
 
 const Replay = styled.div`
   width: 100%;
@@ -115,6 +129,7 @@ const Wrapper = styled.div`
       scale: 1.05;
       transition: 0.4s;
       z-index: 10;
+    }
   }
 
   ins[data-clue]:before {
@@ -373,6 +388,7 @@ const CrossWordPage = () => {
 
   const fetchData = async () => {
     const data = await getCrossWord(size);
+    console.log(data);
     setWordList(
       data.array.map(item => {
         return {
@@ -725,11 +741,10 @@ const CrossWordPage = () => {
               m: 1,
               width: '20%',
               marginLeft: '6%',
-              backgroundColor: 'white',
             }}
             size="small"
           >
-            <FormControl fullWidth>
+            <StyledForm fullWidth>
               <InputLabel id="demo-simple-select-label">Mode</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -742,7 +757,7 @@ const CrossWordPage = () => {
                 <MenuItem value={'Normal'}>Normal</MenuItem>
                 <MenuItem value={'Hard'}>Hard</MenuItem>
               </Select>
-            </FormControl>
+            </StyledForm>
           </Box>
         )}
         <div className="main">

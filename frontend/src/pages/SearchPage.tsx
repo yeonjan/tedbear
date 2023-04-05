@@ -9,20 +9,15 @@ import {
 } from 'utils/api/searchApi';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
 import { useOutletContext } from 'react-router-dom';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import buttonLeft from 'assets/img/buttonLeft.svg';
-import buttonRight from 'assets/img/buttonRight.svg';
 import { useSelector } from 'react-redux';
 import Badge from 'components/common/Badge';
+import Spinner from 'components/common/Spinner';
 
 const ViedoLevelImg = styled.div`
   height: 15%;
@@ -152,29 +147,6 @@ interface Props {
 }
 
 const SearchPage = () => {
-  // const SlickArrowLeft = ({ ...props }) => (
-  //   <img src={buttonLeft} alt="prevArrow" {...props} />
-  // );
-
-  // const SlickArrowRight = () => (
-  //   <img
-  //     src={buttonRight}
-  //     alt="nextArrow"
-  //     onClick={() => {
-  //       requestShorts(1);
-  //     }}
-  //   />
-  // );
-
-  // const settings = {
-  //   infinite: false,
-  //   speed: 500,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 4,
-  //   prevArrow: <SlickArrowLeft />,
-  //   nextArrow: <SlickArrowRight />,
-  // };
-
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8개 추가');
@@ -272,6 +244,7 @@ const SearchPage = () => {
 
   return (
     <Wrapper>
+      {/* {loading && <Spinner></Spinner>} */}
       {modalOpen && (
         <ShortsModal
           setShortsData={setShortsData}
@@ -282,75 +255,67 @@ const SearchPage = () => {
       <StickySearchBar>
         <SearchBar fetchData={fetchData}></SearchBar>
       </StickySearchBar>
-
-      <VideoTitle>관련 영상</VideoTitle>
-      {videos.map((video, idx) => {
-        return (
-          <VideoWrapper key={idx}>
-            <img
-              src={video.thumbnailUrl}
-              alt=""
-              className="thumbnail"
-              onClick={() => {
-                handleClick(video.watchId);
-              }}
-            />
-            <ViedoLevelImg>
-              <Badge score={video.score} />
-            </ViedoLevelImg>
-            {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
-            {isLogin && (
-              <img
-                src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
-                className="book-mark"
-                onClick={() => {
-                  handleVideoBm(video, idx);
-                }}
-              ></img>
-            )}
-            <div
-              className="content"
-              onClick={() => {
-                handleClick(video.watchId);
-              }}
-            >
-              {video.title}
-            </div>
-          </VideoWrapper>
-        );
-      })}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
-      </div>
-      <VideoTitle>관련 문장</VideoTitle>
-      <div className="short-wrapper">
-        <ShortsPageNation
-          data={props}
-          upStreamPage={next}
-          requestShorts={requestShorts}
-          setOpenModal={setModalOpen}
-          setShortsId={setShorts}
-          searchWord={searchWord}
-        ></ShortsPageNation>
-      </div>
-      {/* <Slider {...settings}>
-        {shortsData.map((item, idx) => {
-          return (
-            <img
-              key={idx}
-              className="main-img"
-              src={`https://i.ytimg.com/vi/${item.watchId}/hq${
-                (idx % 3) + 1
-              }.jpg`}
-              alt=""
-              // onClick={() => {
-              //   setOpenModal(true);
-              //   setShortsId(Thumnail);
-              // }}
-            ></img>
-          );
-        })}
-      </Slider> */}
+      {videos.length !== 0 && (
+        <>
+          <VideoTitle>관련 영상</VideoTitle>
+          {videos.map((video, idx) => {
+            return (
+              <VideoWrapper key={idx}>
+                <img
+                  src={video.thumbnailUrl}
+                  alt=""
+                  className="thumbnail"
+                  onClick={() => {
+                    handleClick(video.watchId);
+                  }}
+                />
+                <ViedoLevelImg>
+                  <Badge score={video.score} />
+                </ViedoLevelImg>
+                {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
+                {isLogin && (
+                  <img
+                    src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    className="book-mark"
+                    onClick={() => {
+                      handleVideoBm(video, idx);
+                    }}
+                  ></img>
+                )}
+                <div
+                  className="content"
+                  onClick={() => {
+                    handleClick(video.watchId);
+                  }}
+                >
+                  {video.title}
+                </div>
+              </VideoWrapper>
+            );
+          })}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
+          </div>
+        </>
+      )}
+      {props.length !== 0 && (
+        <>
+          <VideoTitle>관련 문장</VideoTitle>
+          <div className="short-wrapper">
+            <ShortsPageNation
+              data={props}
+              upStreamPage={next}
+              requestShorts={requestShorts}
+              setOpenModal={setModalOpen}
+              setShortsId={setShorts}
+              searchWord={searchWord}
+            ></ShortsPageNation>
+          </div>
+        </>
+      )}
+      {props.length == 0 && videos.length == 0 && (
+        <VideoTitle>관련 영상이 없습니다.</VideoTitle>
+      )}
     </Wrapper>
   );
 };

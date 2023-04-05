@@ -16,10 +16,8 @@ import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'theme';
 import { useState } from 'react';
-
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import StillLearningPage from 'pages/StillLearningPage';
+import CompletedPage from 'pages/CompletedPage';
 import SearchPage from 'pages/SearchPage';
 import CrossWordPage from './pages/CrossWordPage';
 import CrossWordCoverPage from './pages/CrossWordCoverPage';
@@ -48,6 +46,7 @@ function App() {
             <Route path="/learning/:videoId" element={<LearningPage />} />
             <Route path="/bookmark" element={<BookPage />} />
             <Route path="/still-learn" element={<StillLearningPage />} />
+            <Route path="/completed-learn" element={<CompletedPage />} />
             <Route path="/search/:content?" element={<SearchPage />} />
             <Route path="/cross-word" element={<CrossWordPage />} />
             <Route path="/cross-word/cover" element={<CrossWordCoverPage />} />
