@@ -144,17 +144,21 @@ public class VideoServiceImpl implements VideoService {
 
 		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
-		WatchingVideo watchingVideo = watchingVideoRepository.findByMemberAndVideo(member, video)
-			.map(WatchingVideo::setUpdatedDateNow)
-			.map(existWatchingVideo -> existWatchingVideo.setVideoProgressTime(request.getVideoProgressTime()))
-			.orElse(WatchingVideo.builder()
+		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findByMemberAndVideo(member, video);
+		if (optionalWatchingVideo.isPresent()) {
+			WatchingVideo existWatchingVideo = optionalWatchingVideo.get();
+			existWatchingVideo.setUpdatedDateNow();
+			existWatchingVideo.setVideoProgressTime(request.getVideoProgressTime());
+		} else {
+			watchingVideoRepository.save(WatchingVideo.builder()
 				.video(video)
 				.member(member)
 				.updatedDate(LocalDateTime.now())
 				.videoProgressTime(request.getVideoProgressTime())
 				.videoStatus(false)
 				.build());
-		watchingVideoRepository.save(watchingVideo);
+		}
+
 	}
 
 	@Override
