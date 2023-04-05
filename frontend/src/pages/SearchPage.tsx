@@ -9,7 +9,6 @@ import {
 } from 'utils/api/searchApi';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
 import { useOutletContext } from 'react-router-dom';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
@@ -18,7 +17,6 @@ import ShortsPageNation from 'components/short/ShortsPageNation';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 import { useSelector } from 'react-redux';
 import Badge from 'components/common/Badge';
-import Spinner from 'components/common/Spinner';
 
 const ViedoLevelImg = styled.div`
   height: 15%;
@@ -170,8 +168,12 @@ const SearchPage = () => {
   const fetchData = async (content: string) => {
     setSearchWord(content);
     const videoData = await searchVideoData(content, 0);
+    setVideo(videoData);
     const shortData = await searchSenData(content, 0);
     const shortData2 = await searchSenData(content, 1);
+    setProps(shortData);
+    const combinedData = shortData.concat(shortData2);
+    setShortsData(combinedData);
     console.log(videoData, shortData, shortData2);
     if (shortData2.length) {
       setShortPage(1);
@@ -179,11 +181,6 @@ const SearchPage = () => {
     } else {
       setShortPage(0);
     }
-    setProps(shortData);
-    const combinedData = shortData.concat(shortData2);
-    setShortsData(combinedData);
-
-    setVideo(videoData);
     setPage(0);
     setLoading('+ 8개 추가');
   };
@@ -245,7 +242,6 @@ const SearchPage = () => {
 
   return (
     <Wrapper>
-      {/* {loading && <Spinner></Spinner>} */}
       {modalOpen && (
         <ShortsModal
           setShortsData={setShortsData}
