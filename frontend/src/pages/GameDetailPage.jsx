@@ -24,12 +24,38 @@ import { useOutletContext } from 'react-router-dom';
 
 // style
 const StyledLevel = styled.div`
+  display: flex;
+  width: 100%;
   position: relative;
+  padding: 24px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+
+  @media (min-width: 900px) {
+    height: 100vh;
+    flex-direction: row;
+  }
+
   .hint-button {
-    background-color: #ff8d5b;
+    width: 100px;
+    padding: 16px 24px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: ${props => props.theme.pointColor};
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     .hint-button-text {
       color: white;
+    }
+
+    &:hover {
+      background-color: #e86e35;
+      transition: all 0.3s;
+      transform: translateY(3px);
+      /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
     }
   }
   .check-button {
@@ -65,9 +91,11 @@ const StyledLevel = styled.div`
     text-align: center;
   }
   .problem-text {
-    padding-right: 10px;
+    /* padding-right: 10px; */
     /* 스크롤 */
     /* border: 1px solid black; */
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     height: 80%;
     &::-webkit-scrollbar {
@@ -79,14 +107,142 @@ const StyledLevel = styled.div`
       background-color: ${props => props.theme.pointColor};
       border-radius: 20px;
     }
-    position: absolute;
-    overflow: auto;
+    /* position: absolute; */
     font-size: 20px;
     display: flex;
     align-items: top; // 맨 윗줄 안 잘리게
     justify-content: center;
+    /* align-items: center; */
     color: white;
   }
+`;
+
+const Poster = styled.div`
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    /* height: 100%; */
+  }
+
+  @media (min-width: 900px) {
+    width: 50%;
+    height: 100%;
+  }
+`;
+
+const StyledAlbum = styled(Album)`
+  padding: 30;
+  margin: 10px;
+  transform: translate(0%, 0%);
+
+  @media (max-width: 425px) {
+    height: 300px;
+    width: 300px;
+  }
+
+  @media (min-width: 425px) {
+    height: 400px;
+    width: 400px;
+  }
+
+  @media (min-width: 900px) {
+    height: 500px;
+    width: 500px;
+  }
+`;
+
+const QuestionBox = styled.div`
+  /* position: relative; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 900px) {
+    width: 100%;
+    /* height: 100%; */
+  }
+
+  @media (min-width: 900px) {
+    width: 50%;
+    height: 100%;
+  }
+`;
+
+const StyledPaper = styled(Paper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 600px;
+  /* padding: 100; */
+  /* margin: 20; */
+  position: relative;
+  /* left: 50%; */
+  /* transform: translate(0%, 7%); */
+  border-radius: 20;
+  position: relative;
+`;
+
+const StyledPaper2 = styled(Paper)`
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 20%;
+  position: absolute;
+
+  @media (max-width: 400px) {
+    width: 260px;
+    height: 330px;
+    left: calc(50% - 130px);
+  }
+
+  @media (min-width: 400px) {
+    width: 320px;
+    height: 330px;
+    left: calc(50% - 160px);
+  }
+
+  @media (min-width: 470px) {
+    width: 380px;
+    height: 330px;
+    left: calc(50% - 190px);
+  }
+
+  @media (min-width: 560px) {
+    width: 480px;
+    height: 330px;
+    left: calc(50% - 250px);
+  }
+
+  @media (min-width: 900px) {
+    width: 380px;
+    height: 330px;
+    left: calc(50% - 190px);
+  }
+
+  @media (min-width: 1140px) {
+    width: 500px;
+    height: 330px;
+    left: calc(50% - 250px);
+  }
+
+  .problem-text {
+    height: 100%;
+  }
+`;
+
+const StyledPaper3 = styled(Paper)`
+  width: 70%;
+  height: 10%;
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  bottom: 32px;
 `;
 
 const GameDetailPage = () => {
@@ -147,6 +303,7 @@ const GameDetailPage = () => {
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           // console.log(response.data);
+          console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -292,22 +449,71 @@ const GameDetailPage = () => {
     setModalOpen(true);
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const userAnswer = e.target[0].value.toLowerCase();
+    if (userAnswer === answer) {
+      e.target[0].value = '';
+      fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
+      setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
+      setCorrectAnswerCount(correctAnswerCount + 1);
+      // console.log(`맞은개수${correctAnswerCount}`);
+      setInput(''); // Clear the input box
+      // alert('Correct');
+      setCorrect(true);
+      setTimeout(() => {
+        setCorrect(false);
+      }, 300);
+
+      if (correctAnswerCount === 1) {
+        // console.log('한개맞힘');
+        handleNext();
+        // 첫번째 조각 띄우기
+        setSelectedAlbum(2);
+      } else if (correctAnswerCount === 2) {
+        // console.log('두개맞힘');
+        handleNext();
+        // 두번째 조각도 띄우기
+        setSelectedAlbum(3);
+      } else if (correctAnswerCount === 3) {
+        // console.log('세개맞힘');
+        handleNext();
+        setSelectedAlbum(4);
+      } else if (correctAnswerCount === 4) {
+        // console.log('네개맞힘');
+        setSelectedAlbum(5);
+        // 전부 다 맞힐 때에 미션 완료! handleNext와 무관!
+        // navigate('/game/complete');
+      }
+    } else {
+      // alert('Incorrect');
+      setTimeout(() => {
+        setIncorrect(true);
+        setTimeout(() => {
+          setIncorrect(false);
+        }, 300);
+      }, 100);
+      setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
+      setInput(''); // Clear the input box
+    }
+  };
+
   return (
     <StyledLevel change={showSwitch}>
-      <div>
+      <Poster>
         {selectedAlbum === 1 && (
-          <Album
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
-          ></Album>
+          <StyledAlbum
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
+          ></StyledAlbum>
         )}
         {selectedAlbum === 2 && (
           <AlbumA
@@ -365,7 +571,8 @@ const GameDetailPage = () => {
             }}
           ></AlbumD>
         )}
-      </div>
+      </Poster>
+      {/* // 발바닥들  */}
       <div>
         {showPaw1 && (
           <img
@@ -483,6 +690,8 @@ const GameDetailPage = () => {
           />
         )}
       </div>
+
+      {/* 발바닥 끝 */}
       <div>
         {retry && (
           <IconButton
@@ -564,43 +773,42 @@ const GameDetailPage = () => {
           </IconButton>
         )}
       </div>
-      <div>
-        <Paper
+      <QuestionBox>
+        <StyledPaper
           elevation={3}
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '40vw',
-            height: '80vh',
-            padding: 100,
-            margin: 20,
-            position: 'relative',
-            left: '50%',
-            transform: 'translate(0%, 7%)',
+            //   justifyContent: 'center',
+            //   alignItems: 'center',
+            //   width: '40vw',
+            //   height: '80vh',
+            //   padding: 100,
+            //   margin: 20,
+            //   position: 'relative',
+            //   left: '50%',
+            //   transform: 'translate(0%, 7%)',
             borderRadius: 20,
           }}
         >
-          {' '}
-          <Paper
+          <StyledPaper2
             className="problem-paper"
             elevation={3}
             style={{
-              width: '35vw',
-              height: '40vh',
+              // width: '35vw',
+              // height: '40vh',
               paddingTop: 30,
               paddingBottom: 30,
               paddingLeft: 30,
               paddingRight: 30,
-              margin: 20,
+              // margin: 20,
               borderRadius: 20,
               backgroundColor: '#FEAD55',
-              position: 'absolute',
-              justifyContent: 'center',
-              alignItems: 'center',
-              top: '40%' /* vertically center the button */,
-              right: '2%' /* position the button to the right */,
-              transform:
-                'translateY(-50%)' /* adjust vertical position after centering */,
+              // position: 'absolute',
+              // justifyContent: 'center',
+              // alignItems: 'center',
+              // top: '40%' /* vertically center the button */,
+              // right: '2%' /* position the button to the right */,
+              // transform:
+              //   'translateY(-50%)' /* adjust vertical position after centering */,
             }}
           >
             <Typography className="problem-text">
@@ -609,58 +817,62 @@ const GameDetailPage = () => {
               <br></br>
               {translation}
             </Typography>
-          </Paper>
-          <Paper
+          </StyledPaper2>
+          <StyledPaper3
             elevation={3}
             style={{
-              width: '30vw',
-              height: '1vh',
+              //   width: '30vw',
+              //   height: '1vh',
               padding: 30,
-              margin: 30,
+              //   margin: 30,
               borderRadius: 20,
               backgroundColor: '#8F84CE',
-              position: 'absolute',
-              justifyContent: 'center',
-              alignItems: 'center',
-              top: '80%' /* vertically center the button */,
-              right: '9%' /* position the button to the right */,
-              transform:
-                'translateY(-50%)' /* adjust vertical position after centering */,
+              //   position: 'absolute',
+              //   justifyContent: 'center',
+              //   alignItems: 'center',
+              //   top: '80%' /* vertically center the button */,
+              //   right: '9%' /* position the button to the right */,
+              //   transform:
+              //     'translateY(-50%)' /* adjust vertical position after centering */,
             }}
           >
             <div>
-              <input
-                className="input"
-                type="text"
-                placeholder="Enter your Answer"
-                onChange={handleInput}
-              ></input>
-              <Button
+              <form onSubmit={handleSubmit}>
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Enter your Answer"
+                  onChange={handleInput}
+                ></input>
+              </form>
+              {/* <Button
                 className="check-button"
                 onClick={handleCheck}
                 style={{
                   position: 'absolute',
-                  top: '25%' /* vertically center the button */,
-                  right: '-20%' /* position the button to the right */,
+                  top: '25%' ,
+                  right: '-20%' ,
                   transform:
-                    'translateY(-50%)' /* adjust vertical position after centering */,
+                    'translateY(-50%)',
                 }}
                 sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
               >
                 <p className="check-button-text">제출</p>
-              </Button>
+              </Button> */}
             </div>
-          </Paper>
+          </StyledPaper3>
           <Button
             className="hint-button"
             onClick={handleHint}
-            style={{
-              position: 'absolute',
-              top: '8%' /* vertically center the button */,
-              right: '3%' /* position the button to the right */,
-              transform:
-                'translateY(-50%)' /* adjust vertical position after centering */,
-            }}
+            style={
+              {
+                // position: 'absolute',
+                // top: '8%' /* vertically center the button */,
+                // right: '3%' /* position the button to the right */,
+                // transform:
+                //   'translateY(-50%)' /* adjust vertical position after centering */,
+              }
+            }
             sx={{ width: '6vw', height: '6vh', padding: 1, margin: 2 }}
           >
             <p className="hint-button-text">힌트</p>
@@ -693,8 +905,8 @@ const GameDetailPage = () => {
               <ArrowForwardIosIcon />
             </p>
           </IconButton>
-        </Paper>
-      </div>
+        </StyledPaper>
+      </QuestionBox>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
     </StyledLevel>
   );

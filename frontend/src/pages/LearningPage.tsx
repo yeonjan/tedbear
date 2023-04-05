@@ -74,6 +74,7 @@ const Wrapper = styled.div`
 `;
 
 const ScoreChart = styled.div`
+  transition: 0.5s;
   background-color: #ffffffed;
   border-radius: 16px;
   box-shadow: 6px 6px 8px #00000042;
@@ -743,6 +744,13 @@ const LearningPage = () => {
   };
 
   useEffect(() => {
+    if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
+      const el =
+        document.querySelectorAll<HTMLElement>('.script-element')[selected];
+
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     // 문장 북마크 여부 가져오기
     const getSentenceBookmark = async () => {
       const data = await getSentenceBookmarkState(senetenceId);
@@ -783,12 +791,16 @@ const LearningPage = () => {
   useEffect(() => {
     const watchTime = setInterval(() => {
       // setIntervalTime(old => old + 1);
+
+      let idx = selected;
+      if (videoTime < Math.floor(Number(youtubePlayer?.getCurrentTime()))) {
+        idx = 0;
+      }
+
       const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
       setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
-      let idx = selected;
-      // const length = videoDesc?.sentenceInfoList.length;
       while (!flag) {
         if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
           if (
@@ -801,6 +813,9 @@ const LearningPage = () => {
           }
           idx++;
         }
+      }
+      if (videoDesc?.sentenceInfoList[idx].no != undefined) {
+        setSentenceId(videoDesc?.sentenceInfoList[idx].no);
       }
       setHighlight(true);
       setSelected(idx);
@@ -833,55 +848,70 @@ const LearningPage = () => {
   // 학습 완료
   const onComplete = () => {
     if (isLogin) {
-      if (window.confirm('학습 완료 하시겠습니까?')) {
-        // 학습 왼료 정보 보내기
-        const data = {
-          videoNo: videoNumber,
-          videoProgressTime: videoTime.toString(),
-        };
-        const onCompleteVideo = async () => {
-          await postCompletedVideo(data);
-        };
-        onCompleteVideo();
-
-        Swal.fire({
-          title: '<p> 영상의 난이도가 어떠셨나요? </p>',
-          icon: 'question',
-          showCloseButton: false,
-          showDenyButton: true,
-          showCancelButton: true,
-          focusConfirm: false,
-          confirmButtonText: '쉬워요',
-          cancelButtonText: '평범해요',
-          denyButtonText: '어려워요',
-        }).then(result => {
-          let data = {};
-          if (result.isConfirmed) {
-            // 쉬워요
-            data = {
-              difficulty: 'easy',
-            };
-          } else if (result.isDenied) {
-            // 어려워요
-            data = {
-              difficulty: 'hard',
-            };
-          } else {
-            // 평범해요
-            data = {
-              difficulty: 'normal',
-            };
-          }
-
-          // api 보내기
-          const postFeel = async () => {
-            await feelDifficulty(data);
+      Swal.fire({
+        title: '<p> 학습 완료 하시겠습니까? </p>',
+        icon: 'question',
+        showCloseButton: false,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+      }).then(result => {
+        if (result.isConfirmed) {
+          // 학습 왼료 정보 보내기
+          const data = {
+            videoNo: videoNumber,
+            videoProgressTime: videoTime.toString(),
           };
-          postFeel();
-        });
-      }
+
+          const onCompleteVideo = async () => {
+            await postCompletedVideo(data);
+          };
+          onCompleteVideo();
+
+          Swal.fire({
+            title: '<p> 영상의 난이도가 어떠셨나요? </p>',
+            icon: 'question',
+            showCloseButton: false,
+            showDenyButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: '쉬워요',
+            cancelButtonText: '평범해요',
+            denyButtonText: '어려워요',
+          }).then(result => {
+            let data = {};
+            if (result.isConfirmed) {
+              // 쉬워요
+              data = {
+                difficulty: 'easy',
+              };
+            } else if (result.isDenied) {
+              // 어려워요
+              data = {
+                difficulty: 'hard',
+              };
+            } else {
+              // 평범해요
+              data = {
+                difficulty: 'normal',
+              };
+            }
+
+            // api 보내기
+            const postFeel = async () => {
+              await feelDifficulty(data);
+            };
+            postFeel();
+          });
+        }
+      });
     } else {
-      alert('로그인 후 이용해주세요.');
+      Swal.fire({
+        title: '<p>로그인 후 이용해주세요.</p>',
+        icon: 'warning',
+        confirmButtonText: '확인',
+      });
     }
   };
 
@@ -914,8 +944,13 @@ const LearningPage = () => {
     resetTranscript();
   };
 
-  // 정답 매칭
+  useEffect(() => {
+    return () => {
+      SpeechRecognition.stopListening();
+    };
+  }, []);
 
+  // 정답 매칭
   const [check1, setCheck1] = useState<boolean>(false);
   const [check2, setCheck2] = useState<boolean>(false);
   // 문자열 배열에 담기
@@ -1201,10 +1236,15 @@ const LearningPage = () => {
               </div>
             </div>
           </ContentRightTop>
-          <ContentRightMiddle>
+          <ContentRightMiddle className="scriptBox">
             {videoDesc?.sentenceInfoList.map((el, index) => {
               return (
-                <ScriptEl key={index} selected={selected} highlight={highlight}>
+                <ScriptEl
+                  className="script-element"
+                  key={index}
+                  selected={selected}
+                  highlight={highlight}
+                >
                   <English
                     onClick={() => onSentenceClick(index, el.startTime, el.no)}
                   >
