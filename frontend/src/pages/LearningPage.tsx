@@ -769,7 +769,6 @@ const LearningPage = () => {
 
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
-      console.log('언마운트');
 
       clearInterval(watchTime);
     };
@@ -777,7 +776,7 @@ const LearningPage = () => {
 
   useEffect(() => {
     return () => {
-      if (isLogin) {
+      if (isLogin && videoNumber != 0) {
         const data = {
           videoNo: videoNumber,
           videoProgressTime: videoTime.toString(),
@@ -790,7 +789,7 @@ const LearningPage = () => {
       // 마이크 끄기
       SpeechRecognition.stopListening();
     };
-  }, []);
+  }, [videoNumber, videoTime]);
 
   // 학습 완료
   const onComplete = () => {
