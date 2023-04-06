@@ -313,9 +313,9 @@ const SearchPage = () => {
           </div>
         </>
       )}
-      {props.length == 0 && videos.length == 0 && (
-        <VideoTitle>관련 영상이 없습니다.</VideoTitle>
-      )}
+      // {props.length == 0 && videos.length == 0 && (
+      //   <VideoTitle>관련 영상이 없습니다.</VideoTitle>
+      // )}
     </Wrapper>
   );
 };
