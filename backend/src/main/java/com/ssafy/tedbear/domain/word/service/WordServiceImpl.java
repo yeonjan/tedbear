@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.ssafy.tedbear.domain.word.dto.WordBookmarkDto;
 import com.ssafy.tedbear.domain.word.dto.WordDto;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.entity.WordBookmark;
+import com.ssafy.tedbear.domain.word.entity.WordSentence;
 import com.ssafy.tedbear.domain.word.repository.WordBookmarkRepository;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.domain.word.repository.WordSentenceRepository;
@@ -93,13 +95,10 @@ public class WordServiceImpl {
 	public WordBookmarkDto.WordBookmarkListResponse findWordBookmark(String memberUid, Pageable pageable) {
 		Member member = findMemberService.findMember(memberUid);
 
-		List<String> sentenceContentList;
 		List<WordBookmarkDto.WordList> wordBookmarkLists = new ArrayList<>();
 		List<WordBookmark> wordBookmarks = wordBookmarkRepository.findByMember(member, pageable).getContent();
 
 		for (WordBookmark wb : wordBookmarks) {
-			sentenceContentList = new ArrayList<>();
-
 			Word word = wb.getWord();
 			WordBookmarkDto.WordDetail wordDetail = WordBookmarkDto.WordDetail.builder()
 				.wordNo(word.getNo())
@@ -107,20 +106,10 @@ public class WordServiceImpl {
 				.mean(word.getMean())
 				.build();
 
-			int size = wb.getWord().getWordSentenceList().size();
-			if (size < 3) {
-				for (int i = 0; i < size; i++) {
-					sentenceContentList.add(wb.getWord().getWordSentenceList().get(i).getSentence().getContent());
-				}
-			} else {
-				for (int i = 0; i < 3; i++) {
-					sentenceContentList.add(wb.getWord().getWordSentenceList().get(i).getSentence().getContent());
-				}
-			}
-			wordBookmarkLists.add(WordBookmarkDto.WordList.builder()
-				.wordInfo(wordDetail)
-				.sentenceContentList(sentenceContentList)
-				.build());
+			Pageable limitThree = PageRequest.of(0, 3);
+			List<WordSentence> wordSenteceList = wordSentenceRepository.findTop3ByWord(word, limitThree);
+
+			wordBookmarkLists.add(new WordBookmarkDto.WordList(wordDetail, wordSenteceList));
 		}
 		return new WordBookmarkDto.WordBookmarkListResponse(wordBookmarkLists);
 	}

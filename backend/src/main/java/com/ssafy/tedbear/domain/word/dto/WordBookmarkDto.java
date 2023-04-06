@@ -2,10 +2,12 @@ package com.ssafy.tedbear.domain.word.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.entity.WordBookmark;
+import com.ssafy.tedbear.domain.word.entity.WordSentence;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -40,11 +42,18 @@ public class WordBookmarkDto {
 		String mean;
 	}
 
-	@Builder
 	@Getter
 	public static class WordList {
 		WordDetail wordInfo;
 		List<String> sentenceContentList;
+
+		public WordList(WordDetail wordInfo, List<WordSentence> wordSenteceList) {
+			this.wordInfo = wordInfo;
+			this.sentenceContentList = wordSenteceList.stream()
+				.map(ws -> ws.getSentence().getContent())
+				.collect(Collectors.toList());
+
+		}
 	}
 
 }
