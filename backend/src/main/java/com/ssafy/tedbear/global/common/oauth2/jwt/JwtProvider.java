@@ -28,7 +28,7 @@ public class JwtProvider {
 
 	private final String SECRET_KEY;
 
-	  public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60 * 30; // 30분
+	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60 * 30; // 30분
 	public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
 	private final String AUTHORITIES_KEY = "role";
 
@@ -71,7 +71,6 @@ public class JwtProvider {
 
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
-
 		Collection<? extends GrantedAuthority> authorities =
 			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
