@@ -43,7 +43,6 @@ const ImgBox = styled.div`
 const CrossWordCoverPage = () => {
   const navigate = useNavigate();
   const handleStart = () => {
-    console.log('시작 버튼을 클릭');
     navigate('/cross-word');
   };
   return (

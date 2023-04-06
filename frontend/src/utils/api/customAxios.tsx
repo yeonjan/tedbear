@@ -36,7 +36,6 @@ authApi.interceptors.response.use(
     const { config, response } = error;
     const originalRequest = config;
     if (response.status === 401) {
-      console.log('access 만료!! post 보내기 전!!');
       const accessToken = localStorage.getItem('accessToken');
       await axios
         .get(`${BASE_URL}/reissue`, {
@@ -46,12 +45,8 @@ authApi.interceptors.response.use(
           },
         })
         .then(res => {
-          console.log('access 다시 받기 성공!! 200 status!!');
-
           if (res.status === 200) {
             const newAccessToken = res.headers.authorization;
-            console.log(res.headers.authorization, '새로 받은 access token');
-            console.log('이게 새로 받은 access token이야: ' + newAccessToken);
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             localStorage.setItem('accessToken', newAccessToken);

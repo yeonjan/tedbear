@@ -140,9 +140,9 @@ const Stop = styled.div`
 
 const CrossWordAnswerPage = props => {
   const navigate = useNavigate();
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(props.state.current);
-  });
+  }); */
 
   const goHome = () => {
     navigate('/home');

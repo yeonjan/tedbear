@@ -171,7 +171,7 @@ const SearchPage = () => {
     const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content, 0);
     const shortData2 = await searchSenData(content, 1);
-    console.log(videoData, shortData, shortData2);
+
     if (shortData2.length) {
       setShortPage(1);
       setNext(true);
@@ -190,15 +190,14 @@ const SearchPage = () => {
   const requestVideo = async () => {
     if (loading === '+ 8개 추가') {
       setLoading('Loading...');
-      console.log(searchWord);
+
       const videoData = await searchVideoData(searchWord, page + 1);
       if (videoData.length) {
         setVideo(prev => prev.concat(videoData));
         setLoading('+ 8개 추가');
-        console.log('비디오 갯수', videoData.length, page);
+
         setPage(prev => prev + 1);
       } else {
-        console.log('data가 없습니다.');
         setLoading('영상이 없습니다.');
       }
     }
@@ -211,11 +210,10 @@ const SearchPage = () => {
         setShortsData(prev => prev.concat(shortData));
         setShortPage(prev => prev + 1);
       } else {
-        console.log('더이상 없어!');
         setNext(false);
       }
     }
-    console.log('성공!', nextPage);
+
     const copy = shortsData.slice(nextPage * 5, nextPage * 5 + 5);
     setProps(copy);
   };
@@ -238,7 +236,7 @@ const SearchPage = () => {
     } else {
       deleteVideoBookmark({ videoNo: video.no });
     }
-    console.log(video.no, copy[idx].bookMarked);
+
     setVideo(copy);
   };
 
@@ -313,9 +311,9 @@ const SearchPage = () => {
           </div>
         </>
       )}
-      {props.length == 0 && videos.length == 0 && (
+      {/* {props.length == 0 && videos.length == 0 && (
         <VideoTitle>관련 영상이 없습니다.</VideoTitle>
-      )}
+      )} */}
     </Wrapper>
   );
 };

@@ -17,6 +17,4 @@ export const getLearningVideo = async () => {
     method: 'get',
     url: '/video/watching/list',
   });
-
-  console.log(data);
 };
