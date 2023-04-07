@@ -1,17 +1,23 @@
 # 🐻 TEDBEAR - TED 영상 추천 서비스
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6a623a7-7854-4422-9d4c-dfaad9126e02/Untitled.png)
+
+![Untitled](%F0%9F%90%BB%20TEDBEAR%20-%20TED%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%20%E1%84%8E%E1%85%AE%E1%84%8E%E1%85%A5%E1%86%AB%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%2053cecc23f7654b33ac2b3be0e7cafcf8/Untitled.png)
 
 ## TEDBEAR 링크(PC 화면) : [https://ted-bear.com](https://ted-bear.com/)
 
 ## 소개 영상(UCC) : [https://www.youtube.com/watch?v=oBeBMTgwBQ0](https://www.youtube.com/watch?v=oBeBMTgwBQ0)
 
-### 👣 프로젝트 진행 기간
 ---
+
+# 👣 프로젝트 진행 기간
+
+---
+
 2023.02.20(월) ~ 2023.04.07(금) (39일간 진행)
 
 SSAFY 8기 2학기 특화프로젝트 - TEDBEAR
 
-### 🐻 TEDBEAR - 배경
+# 🐻 TEDBEAR - 배경
+
 ---
 
 취업을 준비하는데 OPIC, TOEIC SPEAKING 등의 영어 말하기 점수를 요구하는 기업이 많아지면서, 영어 공부의 중요성이 대두되고 있습니다.
@@ -20,7 +26,7 @@ SSAFY 8기 2학기 특화프로젝트 - TEDBEAR
 
 TEDBEAR는 영어 말하기를 공부하는 사람들을 위해 탄생한 TED 강연 영상 추천 서비스 입니다.
 
-### 👣 TEDBEAR - 개요
+# 👣 TEDBEAR - 개요
 
 ---
 
@@ -30,9 +36,34 @@ TEDBEAR는 미국의 유명한 강연회인 TED와 배워의 음가를 차용한
 
 TEDBEAR는 이용자의 실력에 맞는 TED 영상, 문장을 추천해주고 말하기 연습 기능, 단어 퍼즐과 십자말풀이 등을 제공하여 영어 학습을 효과적으로 도와주는 웹서비스 입니다.
 
-문장에 “Gunning-Fog Index”, “flesch-reading-ease” 등의 지표를 활용하여 난이도를 부여하고,  포함된 문장의 난이도 평균으로 영상에 난이도를 부여합니다. 이용자의 행위에 따라 영어 실력을 지속적으로 업데이트 하면서, 가장 효과적인 영상과 문장을 학습할수 있도록 도와줍니다.
+# 🐻 주요 기능
 
-## **✔ 주요 기술**
+---
+
+### 영상, 문장 추천
+
+- 문장에 “Gunning-Fog Index”, “flesch-reading-ease” 등의 지표를 활용하여 난이도를 부여합니다.
+- 영상에 포함된 문장의 난이도 평균으로 난이도를 부여합니다.
+- 이용자의 행위에 따라 영어 실력을 지속적으로 업데이트 합니다.
+- 이용자의 실력에 맞는 TED 영상과 문장을 추천해줍니다.
+
+### 영상 학습
+
+- TED 영상과 동기화된 스크립트를 보면서 학습할수 있습니다.
+- 문장 별 번역본을 제공합니다.
+- 문장을 따라 말할며 연습할수 있습니다.
+
+### 단어 퍼즐, 십자말풀이 게임
+
+- 단어 퍼즐과 십자말풀기 게임을 통해 재미있게 단어와 문장을 학습할수 있습니다.
+- 해당 단어가 포함된 문장을 쇼츠 형태의 힌트로 제공하여 단어와 문장을 효과적으로 학습할수 있습니다.
+
+### 단어 사전
+
+- 단어의 뜻과, 해당 단어가 포함된 문장과 영상을 함께 제공합니다.
+- 검증된 TED 영상에 포함된 예문으로 단어를 학습할수 있습니다.
+
+## 👣 **주요 기술**
 
 ---
 
@@ -68,7 +99,7 @@ TEDBEAR는 이용자의 실력에 맞는 TED 영상, 문장을 추천해주고 �
 - Nginx ****1.23.4
 - SSL
 
-## **✔ 프로젝트 파일 구조**
+## 🐻 **프로젝트 파일 구조**
 
 ### Backend
 
@@ -81,19 +112,19 @@ tedbear
 |   |-- model
 |   |-- sentence
 |   |-- video
-|   `-- word
+|   └-- word
 `-- global
     |-- common
     |   |-- mattermost
-    |   `-- oauth2
+    |   └-- oauth2
     |-- config
     |-- error
-    `-- util
-        `-- data
+    └-- util
+        └-- data
             |-- controller
             |-- dto
             |-- exception
-            `-- service
+            └-- service
 ```
 
 ### FrontEnd
@@ -101,9 +132,9 @@ tedbear
 ```markdown
 tedbear
 |-- public
-`-- src
+└-- src
     |-- assets
-    |   `-- img
+    |   └-- img
     |-- components
     |   |-- bookmark
     |   |-- common
@@ -112,14 +143,14 @@ tedbear
     |   |-- profile
     |   |-- puzzle
     |   |-- short
-    |   `-- video
+    |   └-- video
     |-- pages
     |-- redux
-    `-- utils
-        `-- api
+    └-- utils
+        └-- api
 ```
 
-## ✔ 협업 툴
+## 👣 협업 툴
 
 ---
 
@@ -130,7 +161,7 @@ tedbear
 - MatterMost
 - Webex
 
-## ✔ 협업 환경
+## 🐻 협업 환경
 
 ---
 
@@ -151,20 +182,41 @@ tedbear
     - 피그마 피그잼을 이용한 유저 플로우 설계
     - 피그마 디자인을 이용한 와이어 프레임 설계
     - 발표 자료 제작과 중간 결과물 실시간 공유
-    
-    ## ✔ 팀원 역할 분배
-    
-    ---
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7415f17f-4cb6-4f94-aa21-bd2f50c78b97/Untitled.png)
-    
-    ## Contact Us
-    
-    | 성명 | 깃허브아이디 | 기술스택 |
-    | --- | --- | --- |
-    | 박일규 |  | JAVA / SpringBoot |
-    | 박서영 |  | JAVA / SpringBoot |
-    | 정혜주 |  | JAVA / SpringBoot |
-    | 윤승환 |  | SpringBoot / React |
-    | 장유하 |  | React + Recoil |
-    | 정혜주 |  | Vue / React |
+
+## 👣 팀원 역할 분배
+
+---
+
+![Untitled](%F0%9F%90%BB%20TEDBEAR%20-%20TED%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%20%E1%84%8E%E1%85%AE%E1%84%8E%E1%85%A5%E1%86%AB%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%2053cecc23f7654b33ac2b3be0e7cafcf8/Untitled%201.png)
+
+## Contact Us
+
+| 성명 | 깃허브아이디 | 기술스택 |
+| --- | --- | --- |
+| 박일규 | repeater1384 | JAVA / SpringBoot |
+| 박서영 | SEOYOUNG-cloud | JAVA / SpringBoot |
+| 정연진 | yeonjan | JAVA / SpringBoot |
+| 윤승환 |  | SpringBoot / React |
+| 장유하 |  | React + Recoil |
+| 정혜주 | hyejoojung719 | Vue / React |
+
+## 🐻 프로젝트 산출물
+
+---
+
+- 기능명세어
+- 먼아;ㅣ
+- ㅁㄴ어리ㅏ;
+- ㅁㄴ어라;
+
+## 👣 프로젝트 결과물
+
+---
+
+- 포팅메뉴얼 등등
+
+## 🐻 TEDBEAR 서비스 화면
+
+---
+
+- GIF 들어가야함ㅋ
