@@ -207,10 +207,10 @@ tedbear
 
 ---
 
-- 요구사항 명세서
-- API 명세서
+- [요구사항 명세서](https://blushing-friend-fae.notion.site/35220bca4fe84b5f9ec01b2782401f10)
+- [API 명세서](https://blushing-friend-fae.notion.site/BE-API-1d1fc2e2ef2041c5b531e557bc00dd27)
 - [ERD](https://www.erdcloud.com/d/Stfw9w3abZpp6nfAw)
-- 와이어프레임
+- [와이어프레임](https://www.figma.com/file/sQaMuizs6UCsLCZmc5FnQI/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-UI%2FUX?node-id=1297-799)
 
 
 ## 👣 프로젝트 결과물
