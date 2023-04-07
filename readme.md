@@ -7,7 +7,7 @@
 
 
 
-## 소개 영상(UCC) : [https://www.youtube.com/watch?v=oBeBMTgwBQ0](https://www.youtube.com/watch?v=oBeBMTgwBQ0)
+## 소개 영상(UCC) : [https://www.youtube.com/watch?v=ibgid94lf5Q](https://www.youtube.com/watch?v=ibgid94lf5Q)
 
 ---
 
