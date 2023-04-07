@@ -1,8 +1,11 @@
 # 🐻 TEDBEAR - TED 영상 추천 서비스
 
-![Untitled](%F0%9F%90%BB%20TEDBEAR%20-%20TED%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%20%E1%84%8E%E1%85%AE%E1%84%8E%E1%85%A5%E1%86%AB%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%2053cecc23f7654b33ac2b3be0e7cafcf8/Untitled.png)
+![main_logo](/uploads/a91000ae1ed646188a73422e02d37dd7/main_logo.png)
 
 ## TEDBEAR 링크(PC 화면) : [https://ted-bear.com](https://ted-bear.com/)
+
+
+
 
 ## 소개 영상(UCC) : [https://www.youtube.com/watch?v=oBeBMTgwBQ0](https://www.youtube.com/watch?v=oBeBMTgwBQ0)
 
@@ -187,7 +190,7 @@ tedbear
 
 ---
 
-![Untitled](%F0%9F%90%BB%20TEDBEAR%20-%20TED%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%20%E1%84%8E%E1%85%AE%E1%84%8E%E1%85%A5%E1%86%AB%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%2053cecc23f7654b33ac2b3be0e7cafcf8/Untitled%201.png)
+![team_introduce](/uploads/ae1cbd78500268de7e875f3a4bbf5c4e/team_introduce.png)
 
 ## Contact Us
 
