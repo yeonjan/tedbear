@@ -1,6 +1,7 @@
 # 🐻 TEDBEAR - TED 영상 추천 서비스
 
-![main_logo](/uploads/a91000ae1ed646188a73422e02d37dd7/main_logo.png)
+![main_logo](https://user-images.githubusercontent.com/60567697/230786967-03a1af92-170a-4210-b29f-410f9f5cba38.png)
+
 
 ## TEDBEAR 링크(PC 화면) : [https://ted-bear.com](https://ted-bear.com/)
 
