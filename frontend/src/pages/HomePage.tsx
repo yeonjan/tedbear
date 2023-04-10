@@ -292,6 +292,8 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const fetchData = async (difficulty: string) => {
+    const shorts = await getShortsRecomm(difficulty);
+    setShortsData(shorts);
     let data: HomeRecomm[] = await getVideoRecomm(difficulty);
     data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
     data = data.map(item => {
@@ -299,8 +301,6 @@ const HomePage = () => {
     });
     // slice로 복사된 객체 얕은 복사실행
     setVideoData(data);
-    const shorts = await getShortsRecomm(difficulty);
-    setShortsData(shorts);
   };
 
   useEffect(() => {
