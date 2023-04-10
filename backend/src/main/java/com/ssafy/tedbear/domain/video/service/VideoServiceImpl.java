@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -71,13 +72,13 @@ public class VideoServiceImpl implements VideoService {
 				.map(x -> x.getVideo().getNo())
 				.collect(Collectors.toSet());
 
+		Collections.shuffle(recommendVideoList
+			.stream()
+			.limit(resultMaxCnt)
+			.peek(x -> x.setBookmarked(bookmarkedVideoNoSet.contains(x.getNo())))
+			.collect(Collectors.toList()), new Random(10000));
 		return new VideoInfoListDto(
 			recommendVideoList
-				.stream()
-				.sorted(Comparator.comparingInt(a -> random.nextInt()))
-				.limit(resultMaxCnt)
-				.peek(x -> x.setBookmarked(bookmarkedVideoNoSet.contains(x.getNo())))
-				.collect(Collectors.toList())
 		);
 	}
 
