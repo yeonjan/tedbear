@@ -848,13 +848,13 @@ const GameDetailPage = () => {
                 <input
                   className="input"
                   type="text"
-                  placeholder="빈칸을 채워주세요!"
+                  placeholder="빈칸을 채워주세요."
                   onChange={handleInput}
                 ></input>
               </form>
               {/* <Button
                 className="check-button"
-                onClick={handleCheck}
+                onClick={handleCheck}s
                 style={{
                   position: 'absolute',
                   top: '25%' ,
