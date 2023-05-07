@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # Mysql Settings
-    url: jdbc:mysql://${MYSQL_IP}:3306/tedbearDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://mysql:3306/tedbearDB?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: ${MYSQL_ROOT_PASSWORD}
   mvc:
