@@ -190,7 +190,7 @@ tedbear
 
 ---
 
-![team_introduce](/uploads/ae1cbd78500268de7e875f3a4bbf5c4e/team_introduce.png)
+![team_introduce](/uploads/team_introduce.png)
 
 ## Contact Us
 
@@ -199,9 +199,9 @@ tedbear
 | 박일규 | repeater1384 | JAVA / SpringBoot |
 | 박서영 | SEOYOUNG-cloud | JAVA / SpringBoot |
 | 정연진 | yeonjan | JAVA / SpringBoot |
-| 윤승환 |  | SpringBoot / React |
-| 장유하 |  | React + Recoil |
-| 정혜주 | hyejoojung719 | Vue / React |
+| 윤승환 | asdryzx2 | React / Recoil |
+| 장유하 | Yuha0513 | React + Recoil |
+| 정혜주 | hyejoojung719 | React / Recoil |
 
 ## 🐻 프로젝트 산출물
 
@@ -220,4 +220,4 @@ tedbear
 - 아키텍쳐, CICD 구성도
 - 중간발표자료
 - 최종발표자료
-- 포팅메뉴얼
+- 포팅메뉴얼 (https://github.com/HMM-TERESTING/tedbear/blob/main/exec/tedbear_%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC_v2.pdf)
