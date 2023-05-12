@@ -220,4 +220,4 @@ tedbear
 - 아키텍쳐, CICD 구성도
 - 중간발표자료
 - 최종발표자료
-- 포팅메뉴얼 (https://github.com/HMM-TERESTING/tedbear/blob/main/exec/tedbear_%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC_v2.pdf)
+- [포팅메뉴얼](https://github.com/HMM-TERESTING/tedbear/blob/main/exec/tedbear_%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC_v2.pdf)
