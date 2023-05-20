@@ -200,7 +200,7 @@ tedbear
 | 박서영 | SEOYOUNG-cloud | JAVA / SpringBoot |
 | 정연진 | yeonjan | JAVA / SpringBoot |
 | 윤승환 | asdryzx2 | React / Recoil |
-| 장유하 | Yuha0513 | React + Recoil |
+| 장유하 | Yuha0513 | React / Recoil |
 | 정혜주 | hyejoojung719 | React / Recoil |
 
 ## 🐻 프로젝트 산출물
