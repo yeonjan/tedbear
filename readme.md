@@ -4,9 +4,6 @@
 
 ## TEDBEAR 링크(PC 화면) : [https://ted-bear.com](https://ted-bear.com/)
 
-
-
-
 ## 소개 영상(UCC) : [https://www.youtube.com/watch?v=ibgid94lf5Q](https://www.youtube.com/watch?v=ibgid94lf5Q)
 
 ---
@@ -33,7 +30,7 @@ TEDBEAR는 영어 말하기를 공부하는 사람들을 위해 탄생한 TED �
 
 ---
 
-*- TED와 함께 검증된 강연자의 비즈니스 회화를 들으며 영어를 공부하세요 -*
+_- TED와 함께 검증된 강연자의 비즈니스 회화를 들으며 영어를 공부하세요 -_
 
 TEDBEAR는 미국의 유명한 강연회인 TED와 배워의 음가를 차용한 BEAR🐻의 합성어입니다.
 
@@ -100,7 +97,7 @@ TEDBEAR는 이용자의 실력에 맞는 TED 영상, 문장을 추천해주고 �
 - Ubuntu 20.04 LTS
 - Jenkins 2.387.1
 - Docker Engine 23.0.1
-- Nginx ****1.23.4
+- Nginx \*\*\*\*1.23.4
 - SSL
 
 ## 🐻 **프로젝트 파일 구조**
@@ -110,25 +107,25 @@ TEDBEAR는 이용자의 실력에 맞는 TED 영상, 문장을 추천해주고 �
 ```markdown
 tedbear
 |-- domain
-|   |-- game
-|   |-- log
-|   |-- member
-|   |-- model
-|   |-- sentence
-|   |-- video
-|   └-- word
+| |-- game
+| |-- log
+| |-- member
+| |-- model
+| |-- sentence
+| |-- video
+| └-- word
 `-- global
-    |-- common
-    |   |-- mattermost
-    |   └-- oauth2
-    |-- config
-    |-- error
-    └-- util
-        └-- data
-            |-- controller
-            |-- dto
-            |-- exception
-            └-- service
+|-- common
+| |-- mattermost
+| └-- oauth2
+|-- config
+|-- error
+└-- util
+└-- data
+|-- controller
+|-- dto
+|-- exception
+└-- service
 ```
 
 ### FrontEnd
@@ -137,21 +134,21 @@ tedbear
 tedbear
 |-- public
 └-- src
-    |-- assets
-    |   └-- img
-    |-- components
-    |   |-- bookmark
-    |   |-- common
-    |   |-- learning
-    |   |-- level
-    |   |-- profile
-    |   |-- puzzle
-    |   |-- short
-    |   └-- video
-    |-- pages
-    |-- redux
-    └-- utils
-        └-- api
+|-- assets
+| └-- img
+|-- components
+| |-- bookmark
+| |-- common
+| |-- learning
+| |-- level
+| |-- profile
+| |-- puzzle
+| |-- short
+| └-- video
+|-- pages
+|-- redux
+└-- utils
+└-- api
 ```
 
 ## 👣 협업 툴
@@ -170,21 +167,21 @@ tedbear
 ---
 
 - Gitlab
-    - 코드의 버전을 관리
-    - “main”, “develop-be”, “develop-fe”의 브랜치를 개발 git-flow에 따라 관리
-    - 상세 기능 구현 시, “feature-be/(기능)”, “feature-fe/(기능)” 로 세부 브랜치 관리
-    - Gitmoji를 활용하여 정해진 commit style에 맞춰 커밋 기록 관리
+  - 코드의 버전을 관리
+  - “main”, “develop-be”, “develop-fe”의 브랜치를 개발 git-flow에 따라 관리
+  - 상세 기능 구현 시, “feature-be/(기능)”, “feature-fe/(기능)” 로 세부 브랜치 관리
+  - Gitmoji를 활용하여 정해진 commit style에 맞춰 커밋 기록 관리
 - JIRA
-    - 매주 목표량을 설정하여 Sprint 진행
-    - 업무의 할당량을 정하여 Story Point를 설정하고, In-Progress -> Done 순으로 작업
+  - 매주 목표량을 설정하여 Sprint 진행
+  - 업무의 할당량을 정하여 Story Point를 설정하고, In-Progress -> Done 순으로 작업
 - Notion
-    - 회의가 있을 때마다 회의록을 기록하여 보관
-    - 에러 사항에 대해 기록하고 해결법 공유
-    - 컨벤션 정리
-    - 유저플로우, 와이어프레임, 기능명세서, ERD, API 리스트 등 산출물 실시간 공유
+  - 회의가 있을 때마다 회의록을 기록하여 보관
+  - 에러 사항에 대해 기록하고 해결법 공유
+  - 컨벤션 정리
+  - 유저플로우, 와이어프레임, 기능명세서, ERD, API 리스트 등 산출물 실시간 공유
 - Figma
-    - 피그마 피그잼을 이용한 유저 플로우 설계
-    - 피그마 디자인을 이용한 와이어 프레임 설계
+  - 피그마 피그잼을 이용한 유저 플로우 설계
+  - 피그마 디자인을 이용한 와이어 프레임 설계
 
 ## 👣 팀원 역할 분배
 
@@ -194,14 +191,14 @@ tedbear
 
 ## Contact Us
 
-| 성명 | 깃허브아이디 | 기술스택 |
-| --- | --- | --- |
-| 박일규 | repeater1384 | JAVA / SpringBoot |
+| 성명   | 깃허브아이디   | 기술스택          |
+| ------ | -------------- | ----------------- |
+| 박일규 | repeater1384   | JAVA / SpringBoot |
 | 박서영 | SEOYOUNG-cloud | JAVA / SpringBoot |
-| 정연진 | yeonjan | JAVA / SpringBoot |
-| 윤승환 | asdryzx2 | React / Recoil |
-| 장유하 | Yuha0513 | React / Recoil |
-| 정혜주 | hyejoojung719 | React / Recoil |
+| 정연진 | yeonjan        | JAVA / SpringBoot |
+| 윤승환 | asdryzx2       | React / Recoil    |
+| 장유하 | Yuha0513       | React / Recoil    |
+| 정혜주 | hyejoojung719  | React / Recoil    |
 
 ## 🐻 프로젝트 산출물
 
@@ -212,12 +209,11 @@ tedbear
 - [ERD](https://www.erdcloud.com/d/Stfw9w3abZpp6nfAw)
 - [와이어프레임](https://www.figma.com/file/sQaMuizs6UCsLCZmc5FnQI/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-UI%2FUX?node-id=1297-799)
 
-
 ## 👣 프로젝트 결과물
 
 ---
 
 - 아키텍쳐, CICD 구성도
-- 중간발표자료
-- 최종발표자료
+- [중간발표자료](https://github.com/HMM-TERESTING/tedbear/blob/main/ppt/TedBear_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)
+- [최종발표자료](https://github.com/HMM-TERESTING/tedbear/blob/main/ppt/TedBear_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf)
 - [포팅메뉴얼](https://github.com/HMM-TERESTING/tedbear/blob/main/exec/tedbear_%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC_v2.pdf)
