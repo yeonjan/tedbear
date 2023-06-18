@@ -106,26 +106,27 @@ TEDBEAR는 이용자의 실력에 맞는 TED 영상, 문장을 추천해주고 �
 
 ```markdown
 tedbear
-|-- domain
-|     |-- game
-|     |-- log
-|     |-- member
-|     |-- model
-|     |-- sentence
-|     |-- video
-|     └-- word
-`-- global
-      |-- common
-      |     |-- mattermost
-      |     └-- oauth2
-      |-- config
-      |-- error
-      └-- util
-            └-- data
-            |-- controller
-            |-- dto
-            |-- exception
-            └-- service
+   |-- domain
+   |     |-- game
+   |     |-- log
+   |     |-- member
+   |     |-- model
+   |     |-- sentence
+   |     |-- video
+   |     └-- word
+   |
+   └-- global
+         |-- common
+         |     |-- mattermost
+         |     └-- oauth2
+         |-- config
+         |-- error
+         └-- util
+               └-- data
+                     |-- controller
+                     |-- dto
+                     |-- exception
+                     └-- service
 ```
 
 ### FrontEnd
