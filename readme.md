@@ -133,24 +133,30 @@ tedbear
 
 ```markdown
 tedbear
-|-- public
-└-- src
-|-- assets
-| └-- img
-|-- components
-| |-- bookmark
-| |-- common
-| |-- learning
-| |-- level
-| |-- profile
-| |-- puzzle
-| |-- short
-| └-- video
-|-- pages
-|-- redux
-└-- utils
-└-- api
+    |-- public
+    |     └-- src
+    |-- assets
+    |     └-- img
+    |-- components
+    |     |-- bookmark
+    |     |-- common
+    |     |-- learning
+    |     |-- level
+    |     |-- profile
+    |     |-- puzzle
+    |     |-- short
+    |     └-- video
+    |-- pages
+    |-- redux
+    └-- utils
+          └-- api
 ```
+
+## 👣 CI/CD 아키텍쳐
+
+---
+
+![CI/CD architecture](/uploads/architecture.png)
 
 ## 👣 협업 툴
 
@@ -214,7 +220,6 @@ tedbear
 
 ---
 
-- 아키텍쳐, CICD 구성도
 - [중간발표자료](https://github.com/HMM-TERESTING/tedbear/blob/main/ppt/TedBear_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)
 - [최종발표자료](https://github.com/HMM-TERESTING/tedbear/blob/main/ppt/TedBear_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf)
 - [포팅메뉴얼](https://github.com/HMM-TERESTING/tedbear/blob/main/exec/tedbear_%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC_v2.pdf)
